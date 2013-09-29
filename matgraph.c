@@ -1,6 +1,6 @@
 #include <malloc.h>
 #include <limits.h>
-#include <matrix.h>
+#include "matrix.h"
 #define maxV 20
 #define unseen 0
 
