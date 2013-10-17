@@ -91,7 +91,7 @@ int mat_count_words_in_line(FILEPOINTER fp, int *count)
                 (*count)++;
                 flag = 3;
             }
-            if(flag == -1) flag = 3;/*  line included to handle empty line */
+            if(flag == -1) flag = 4;/*  line included to handle empty line */
             else flag = 2;
         }
         else if (isspace(ch) || (ch =='\t') || (ch == ',') || (ch == '!') || (ch == '(') || (ch == ')') || (ch == '{') || (ch == '}') || (ch == '[') || (ch == ']'))
@@ -106,7 +106,7 @@ int mat_count_words_in_line(FILEPOINTER fp, int *count)
         else if(flag == 2) flag = 3;
         else flag = 0;
     }
-    if(flag !=-1) ungetc(ch, fp);
+    if(flag !=-1 && flag!=4) ungetc(ch, fp);
     if (ch == EOF)
     {
         if (flag == 0) (*count)++;
