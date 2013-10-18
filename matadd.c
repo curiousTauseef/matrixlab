@@ -28,7 +28,7 @@ MATRIX mat_add(MATRIX A, MATRIX B, MATRIX C)
 
 MATRIX mat_adds(MATRIX A, mtype s, MATRIX B)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
 
