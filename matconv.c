@@ -43,11 +43,11 @@ MATRIX int_vec2_mat(INT_VECTOR a, int direction)
 
 MATRIX mat_vectorize(MATRIX A, MATRIX result)
 {
-    int	i, j, m, n, flag = 0, k=0;
+    int i, j, m, n, flag = 0, k=0;
     m = MatCol(A);
     n = MatRow(A);
     if(result==A) flag =1;
-    if(result== NULL|| result ==A)if ((result = mat_creat( MatNumel(A), 1, UNDEFINED )) == NULL)
+    if(result== NULL|| result ==A)if((result = mat_creat( MatNumel(A), 1, UNDEFINED )) == NULL)
             return mat_error(MAT_MALLOC);
 
     #pragma omp parallel for private(j)
