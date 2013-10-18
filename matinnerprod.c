@@ -4,7 +4,7 @@
 
 mtype mat_innerprod(MATRIX A, MATRIX B)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     mtype p = 0.0;
     MATRIX	C;
     m = MatCol(A);
@@ -22,7 +22,7 @@ mtype mat_innerprod(MATRIX A, MATRIX B)
 
 mtype mat_norm_inf(MATRIX A)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     mtype max = 0.0, p ;
     m = MatCol(A);
     n = MatRow(A);
@@ -40,7 +40,7 @@ mtype mat_norm_inf(MATRIX A)
 
 mtype mat_norm_one(MATRIX A)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     mtype max = 0.0, p ;
     m = MatCol(A);
     n = MatRow(A);
@@ -58,7 +58,7 @@ mtype mat_norm_one(MATRIX A)
 
 mtype mat_norm_p(MATRIX A, mtype p)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     mtype norm_ = 0.0;
     m = MatCol(A);
     n = MatRow(A);
