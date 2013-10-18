@@ -5,7 +5,7 @@
 
 MATRIX mat_add(MATRIX A, MATRIX B, MATRIX C)
 {
-    int	i, j, m, n, o, p;
+    int i, j, m, n, o, p;
     m = MatCol(A);
     n = MatRow(A);
     o = MatCol(B);
