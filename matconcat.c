@@ -4,7 +4,7 @@
 
 MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
 {
-    int	i, j, m, n, o, p;
+    int i, j, m, n, o, p;
     MATRIX C;
     if(A == NULL)
     {
@@ -24,22 +24,22 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
         o = MatCol(B);
         p = MatRow(B);
     }
-    if (dim==1 && ((m==o) ||!((m==0)&&(o==0))))
+    if((dim==1)&&((m==o) ||!((m==0)&&(o==0))))
     {
         if((C = mat_creat(n+p, m, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
-        for (i = 0; i<m; i++)
+        for(i=0; i<m; i++)
         {
             for (j = 0; j<n; j++) C[j][i] = A[j][i];
             for (j = 0; j<p; j++) C[j+n][i] = B[j][i];
         }
         return C;
     }
-    if (dim==2 && ((n==p) ||!((n==0)&&(p==0))))
+    if((dim==2)&&((n==p) ||!((n==0)&&(p==0))))
     {
         if((C = mat_creat(n, m+o, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
-        for (i = 0; i<n; i++)
+        for(i=0; i<n; i++)
         {
             for (j = 0; j<m; j++) C[i][j] = A[i][j];
             for (j = 0; j<o; j++) C[i][j+m] = B[i][j];
@@ -64,8 +64,8 @@ INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
         if(Int_VecLen(result)!=(m+n)) return int_vec_error(INT_VEC_SIZEMISMATCH);
     }
     #pragma omp parallel for
-    for (i = 0; i<m; ++i) result[i] = A[i];
-    for (i = 0; i<n; ++i) result[i+m] = B[i];
+    for(i=0; i<m; ++i) result[i] = A[i];
+    for(i=0; i<n; ++i) result[i+m] = B[i];
     return result;
 }
 
