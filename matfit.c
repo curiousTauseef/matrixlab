@@ -114,7 +114,6 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc)
             default:
                 W = mat_bisquare_wt(res, madn_, madn_);
             }
-
         }
         mat_free(res);
         mat_free(res_);
@@ -128,7 +127,7 @@ MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc)
     int i, j, n;
     MATRIX A = 0, X = 0;
     n = MatRow(data);
-    A = mat_creat(n, degree + 1, ONES_MATRIX);
+    A = mat_creat(n, degree+1, ONES_MATRIX);
     for (i = 0; i<n; ++i)
     {
         for (j = degree-1; j>=0; --j) A[i][j] = data[i][0]*A[i][j+1];
