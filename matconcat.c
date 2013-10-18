@@ -52,7 +52,7 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
 
 INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
 {
-    int	i, m, n;
+    int i, m, n;
     m = Int_VecLen(A);
     n = Int_VecLen(B);
     if(result==NULL)
