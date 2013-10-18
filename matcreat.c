@@ -8,11 +8,11 @@ MATRIX _mat_creat(int row, int col)
 {
     MATRIX mat = NULL;
     int i;
-    if ((mat = (MATRIX)malloc(sizeof(mtype *)*(row+2))) == NULL)
+    if((mat = (MATRIX)malloc(sizeof(mtype *)*(row+2))) == NULL)
         return (mat_error( MAT_MALLOC ));
-    for (i=2; i<row+2; ++i)
+    for(i=2; i<row+2; ++i)
     {
-        if ((*((mtype **)(mat + i)) = (mtype *)malloc(sizeof(mtype)*col)) == NULL)
+        if((*((mtype **)(mat + i)) = (mtype *)malloc(sizeof(mtype)*col)) == NULL)
             return (mat_error(MAT_MALLOC));
     }
     *((int*)(mat)) = row;
@@ -23,7 +23,7 @@ MATRIX _mat_creat(int row, int col)
 MATRIX mat_creat(int row, int col, int type)
 {
     MATRIX A;
-    if ((A =_mat_creat(row, col)) != NULL)
+    if((A =_mat_creat(row, col)) != NULL)
     {
         return (mat_fill(A, type));
     }
@@ -84,7 +84,7 @@ int matstack_free(MATSTACK A)
 
 MATRIX mat_fill(MATRIX A, int type)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     switch(type)
@@ -120,36 +120,36 @@ MATRIX mat_fill(MATRIX A, int type)
 int mat_free(MATRIX A)
 {
     int i, n;
-    if (A==NULL)
+    if(A==NULL)
         return (0);
     n = MatRow(A);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         free(A[i]);
     }
     A = A-2;
     free(A);
-    return (1);
+    return 1;
 }
 
 INT_VECTOR _int_vec_creat(int length)
 {
-    INT_VECTOR	int_vector;
+    INT_VECTOR int_vector;
     if((int_vector = (int*)malloc(sizeof(int)*(length+1))) == NULL)
         return (int_vec_error(INT_VEC_MALLOC));
     int_vector[0] = length;
-    return (int_vector+1);
+    return(int_vector+1);
 }
 
 INT_VECTOR int_vec_creat(int length, int type)
 {
-    INT_VECTOR	A;
+    INT_VECTOR A;
     if((A =_int_vec_creat(length))!=NULL)
     {
         return (int_vec_fill(A, type));
     }
     else
-        return (NULL);
+        return(NULL);
 }
 
 INT_VECTOR int_vec_fill(INT_VECTOR A, int type)
@@ -179,7 +179,7 @@ int int_vec_free(INT_VECTOR A)
     Int_VecLen(A) = 0;
     free( A-1);
     A = NULL;
-    return (1);
+    return 1;
 }
 
 INT_VECSTACK _int_vecstack_creat(int length)
@@ -189,7 +189,7 @@ INT_VECSTACK _int_vecstack_creat(int length)
     if((int_vecstack = (INT_VECTOR *)malloc( sizeof(INT_VECTOR)*(1+length))) == NULL)
         return (int_vecstack_error( INT_VECSTACK_MALLOC ));
 
-    for (i=0; i<=length; ++i)
+    for(i=0; i<=length; ++i)
     {
         int_vecstack[i]= NULL;
     }
@@ -301,9 +301,9 @@ INT_VECTOR int_vec_copy(INT_VECTOR a)
     int	i, m;
     INT_VECTOR b;
     m = Int_VecLen(a);
-    if ((b = int_vec_creat(m, UNDEFINED )) == NULL)
+    if((b = int_vec_creat(m, UNDEFINED )) == NULL)
         return (NULL);
-    for (i=0; i<m; ++i) b[i] = a[i];
+    for(i=0; i<m; ++i) b[i] = a[i];
     return (b);
 }
 
@@ -315,8 +315,8 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
     if(result==NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
-    for (i=0; i<n; ++i)
-        for (j=0; j<m; ++j)
+    for(i=0; i<n; ++i)
+        for(j=0; j<m; ++j)
         {
             result[i][j] = A[i][j];
         }
@@ -332,8 +332,8 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
     if(result== NULL)if ((result = mat_creat( ei-si, ej-sj, UNDEFINED )) == NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
-    for (i=si; i<ei; ++i)
-        for (j=sj; j<ej; ++j)
+    for(i=si; i<ei; ++i)
+        for(j=sj; j<ej; ++j)
         {
             result[i-si][j-sj] = A[i][j];
         }
@@ -349,26 +349,26 @@ MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
     if(result== NULL)if ((result = mat_creat( m, n, UNDEFINED )) == NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
-    for (i=0; i<MatRow(A11); ++i)
-        for (j=0; j<MatCol(A11); ++j)
+    for(i=0; i<MatRow(A11); ++i)
+        for(j=0; j<MatCol(A11); ++j)
         {
             result[i][j] = A11[i][j];
         }
     #pragma omp parallel for private(j)
-    for (i=0; i<MatRow(A12); ++i)
-        for (j=0; j<MatCol(A12); ++j)
+    for(i=0; i<MatRow(A12); ++i)
+        for(j=0; j<MatCol(A12); ++j)
         {
             result[i][j+MatCol(A11)] = A12[i][j];
         }
     #pragma omp parallel for private(j)
-    for (i=0; i<MatRow(A21); ++i)
-        for (j=0; j<MatCol(A21); ++j)
+    for(i=0; i<MatRow(A21); ++i)
+        for(j=0; j<MatCol(A21); ++j)
         {
             result[i+MatRow(A21)][j] = A21[i][j];
         }
     #pragma omp parallel for private(j)
-    for (i=0; i<MatRow(A22); ++i)
-        for (j=0; j<MatCol(A22); ++j)
+    for(i=0; i<MatRow(A22); ++i)
+        for(j=0; j<MatCol(A22); ++j)
         {
             result[i+MatRow(A11)][j+MatCol(A22)] = A22[i][j];
         }
@@ -382,7 +382,7 @@ MATRIX mat_colcopy1(MATRIX A, MATRIX B, int cola, int colb)
 {
     int	i, n;
     n = MatRow(A);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         A[i][cola] = B[i][colb];
     }
@@ -395,7 +395,7 @@ int fgetmat(MATRIX A, FILEPOINTER fp)
     m = MatCol(A);
     n = MatRow(A);
     #pragma omp parallel for private(j)
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
 #if mtype_n == 0
         for (j=0; j<m; ++j) k += fscanf( fp, "%f", &A[i][j] );
 #elif mtype_n == 1
@@ -410,12 +410,12 @@ MATRIX mat_creat_diag(MATRIX diag_vals)
     MATRIX	A;
     if(MatCol(diag_vals)==1) sz = MatRow(diag_vals);
     else sz = MatCol(diag_vals);
-    if ((A = mat_creat( sz, sz , ZERO_MATRIX)) != NULL)
+    if((A = mat_creat( sz, sz , ZERO_MATRIX)) != NULL)
     {
         if(MatCol(diag_vals)==1)
-            for (i=0; i< sz; ++i) A[i][i] = diag_vals[i][0];
+            for(i=0; i< sz; ++i) A[i][i] = diag_vals[i][0];
         else
-            for (i=0; i< sz; ++i) A[i][i] = diag_vals[0][i];
+            for(i=0; i< sz; ++i) A[i][i] = diag_vals[0][i];
         return (A);
     }
     else
