@@ -54,7 +54,7 @@ int mat_lu(MATRIX A, MATRIX P)
 
 void mat_backsubs1(MATRIX A, MATRIX B, MATRIX X, MATRIX P, int xcol)
 {
-    int	i, j, k, n;
+    int i, j, k, n;
     mtype sum;
 
     n = MatCol(A);
