@@ -6,7 +6,7 @@ mtype mat_innerprod(MATRIX A, MATRIX B)
 {
     int i, j, m, n;
     mtype p = 0.0;
-    MATRIX	C;
+    MATRIX C;
     m = MatCol(A);
     n = MatRow(A);
     C = mat_mul_dot(A, B, NULL);
