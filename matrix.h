@@ -203,6 +203,30 @@ struct mat_graph
 typedef struct mat_graph mat_graph;
 typedef struct mat_graph *MAT_GRAPH;
 
+#ifndef MAT_KDTREE_MAX_DIMS
+#define MAT_KDTREE_MAX_DIMS 3
+#endif
+
+struct __kdnode
+{
+    mtype x[MAT_KDTREE_MAX_DIMS];
+    int idx;
+    struct __kdnode *left, *right;
+};
+typedef struct __kdnode mat_kdnode;
+typedef struct __kdnode* MAT_KDNODE;
+
+struct __mat_kdtree
+{
+    int ndims;
+    int length;
+    int _is_allocated;
+    MAT_KDNODE __data;
+    MAT_KDNODE kdtree;
+};
+typedef struct __mat_kdtree mat_kdtree;
+typedef struct __mat_kdtree* MAT_KDTREE;
+
 
 extern clock_t MAT_CLOCK_TIME;
 extern unsigned int MAT_SEED;
@@ -660,6 +684,16 @@ void mat_graph_dumpf(MAT_GRAPH g, int mst, FILEPOINTER fp);
 void mat_graph_dump(MAT_GRAPH g, int mst);
 void mat_graph_adjm_to_adjl(MAT_GRAPH g, MATRIX a);
 MAT_GRAPH mat_graph_reverse(MAT_GRAPH g, MAT_GRAPH r);
+
+/******************************************/
+/* kdtree */
+MAT_KDTREE mat_kdtree_make_tree(MATRIX a, MAT_KDTREE result);
+int mat_kdtree_free(MAT_KDTREE t);
+MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX a, MATRIX result);
+MAT_KDNODE __mat_kdtree_make_tree(MAT_KDNODE t, int len, int i, int dim);
+MAT_KDNODE __kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
+void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist);
+
 
 #ifdef __cplusplus
 }
