@@ -29,11 +29,81 @@ void mat_fnextline( FILE *fp)
     fprintf(fp, "\n");
 }
 
-MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, int functype)
+MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mtype))
 {
-    int m, n;
-    n = MatRow(a);
-    m = MatCol(a);
+    int m, n, o, p, i, j;
+    m = MatRow(a);
+    n = MatCol(a);
+
+    o = MatRow(b);
+    p = MatCol(b);
+    if(m<o && n==p && m==1)
+    {
+        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<o; ++i)
+        {
+            for(j=0; j<n; ++j)
+            {
+                result[i][j] = (*pt2func)(a[0][j], b[i][j]);
+            }
+        }
+    }
+    else if(m>o && n==p && o==1)
+    {
+        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<m; ++i)
+        {
+            for(j=0; j<n; ++j)
+            {
+                result[i][j] = (*pt2func)(a[i][j], b[0][j]);
+            }
+        }
+    }
+    else if(m==o && n<p && n==1)
+    {
+        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<m; ++i)
+        {
+            for(j=0; j<p; ++j)
+            {
+                result[i][j] = (*pt2func)(a[i][0], b[i][j]);
+            }
+        }
+    }
+    else if(m==o && n>p && p==1)
+    {
+        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<m; ++i)
+        {
+            for(j=0; j<n; ++j)
+            {
+                result[i][j] = (*pt2func)(a[i][j], b[i][0]);
+            }
+        }
+    }
+    else if(m==1 && p==1)
+    {
+        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<o; ++i)
+        {
+            for(j=0; j<n; ++j)
+            {
+                result[i][j] = (*pt2func)(a[0][j], b[i][0]);
+            }
+        }
+    }
+    else if(n==1 && o==1)
+    {
+        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        for(i=0; i<m; ++i)
+        {
+            for(j=0; j<p; ++j)
+            {
+                result[i][j] = (*pt2func)(a[i][0], b[0][j]);
+            }
+        }
+    }
+    else mat_error(MAT_SIZEMISMATCH);
     return result;
 }
 
