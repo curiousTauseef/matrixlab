@@ -123,7 +123,7 @@ MATRIX mat_dlmread(const char *fname)
     FILEPOINTER fp = NULL;
     MATRIX data = NULL;
 
-    if ((fp = fopen(fname,"r")) == NULL) gen_error(GEN_FNOTOPEN);
+    if ((fp = fopen(fname,"rb")) == NULL) gen_error(GEN_FNOTOPEN);
     while(!flag)
     {
         k = mat_isnumeric(fp);
@@ -141,7 +141,7 @@ MATRIX mat_dlmread(const char *fname)
     m = tmp;
     fclose(fp);
     if(m==0 || n==0) return mat_error(MAT_FNOTGETMAT);
-    fp = fopen(fname,"r");
+    fp = fopen(fname,"rb");
     data = mat_creat(n, m, ZERO_MATRIX);
     for (i = 0; i < n; ++i)
     {
@@ -201,7 +201,7 @@ int mat_read_word(FILEPOINTER fp, char *c_word)
 void mat_dlmwrite(const char *fname, MATRIX a)
 {
     FILEPOINTER fp;
-    fp = fopen(fname, "w");
+    fp = fopen(fname, "wb");
     if(fp==NULL) gen_error(GEN_FNOTOPEN);
     mat_fdump(a, fp);
 }
