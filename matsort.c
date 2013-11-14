@@ -1,35 +1,75 @@
 #include <stdio.h>
 #include "matrix.h"
 
-mtype mat_get_middle(MATRIX A)
-{
-    int	i=0, j=0, m, n;
-    m = MatCol(A);
-    n = MatRow(A);
-    if(m==1)
-    {
-        i= n/2;
-        if (n%2==0)  return(A[i-1][0]+A[i][0])/2;
-        else return(A[i][0]);
-    }
-    else  if(n==1)
-    {
-        j = m/2;
-        if (m%2==0)  return(A[0][j-1]+A[0][j])/2;
-        else return(A[0][j]);
-    }
-    else return -1;
-}
-
 mtype mat_median(MATRIX A)
 {
-    MATSTACK B;
+    MATRIX B;
     mtype med;
-    B = mat_qsort( A, 1, NULL);
-    if(MatRow(B[0])*MatCol(B[0])!=1) B[0] = mat_vectorize(B[0], B[0]);
-    med =  mat_get_middle(B[0]);
-    matstack_free(B);
+    int left = 0, right, pos, i, k;
+    mtype t, pivot;
+    B = mat_vectorize_tr(A, NULL);
+    right = MatRow(B)*MatCol(B)-1;
+    k = (right+1)/2;
+ #define __swap(a, b) {\
+		t = B[0][(a)];\
+		B[0][(a)] = B[0][(b)];\
+        B[0][(b)] = t;\
+	}
+	while(left<right)
+    {
+		pivot = B[0][k];
+		__swap(k, right);
+		for(i=pos=left; i<right; ++i)
+		{
+		    if(B[0][i]<pivot)
+			{
+			    __swap(i, pos);
+				++pos;
+			}
+		}
+		__swap(right, pos);
+		if(pos==k) break;
+		if(pos<k) left = pos+1;
+		else right = pos-1;
+	}
+	med = B[0][k];
+    mat_free(B);
     return med;
+}
+
+mtype mat_order_statistic(MATRIX A, int k)
+{
+    MATRIX B;
+    mtype korder;
+    int left = 0, right, pos, i;
+    mtype t, pivot;
+    B = mat_vectorize_tr(A, NULL);
+    right = MatRow(B)*MatCol(B)-1;
+ #define __swap(a, b) {\
+		t = B[0][(a)];\
+		B[0][(a)] = B[0][(b)];\
+        B[0][(b)] = t;\
+	}
+	while(left<right)
+    {
+		pivot = B[0][k];
+		__swap(k, right);
+		for(i=pos=left; i<right; ++i)
+		{
+			if(B[0][i]<pivot)
+			{
+				__swap(i, pos);
+				++pos;
+			}
+		}
+		__swap(right, pos);
+		if(pos==k) break;
+		if(pos<k) left = pos+1;
+		else right = pos-1;
+	}
+    korder = B[0][k];
+    mat_free(B);
+    return korder;
 }
 
 MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
