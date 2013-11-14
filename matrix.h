@@ -134,7 +134,7 @@ struct tree_node
 typedef struct tree_node *SEARCH_TREE;
 
 /******************************************/
-typedef	int *INT_VECTOR;
+typedef int *INT_VECTOR;
 
 /******************************************/
 typedef struct __mathead
@@ -147,11 +147,11 @@ typedef struct __matbody
     MATHEAD head;
     mtype *matrix;
 }	MATBODY;
-typedef	mtype **MATRIX;
+typedef mtype **MATRIX;
 
 /******************************************/
-typedef	INT_VECTOR *INT_VECSTACK;
-typedef	MATRIX *MATSTACK;
+typedef INT_VECTOR *INT_VECSTACK;
+typedef MATRIX *MATSTACK;
 
 typedef void **MATVEC_DPOINTER;
 
