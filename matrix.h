@@ -573,6 +573,7 @@ MATRIX mat_conv2(MATRIX a, MATRIX mask, MATRIX scratch, MATRIX result);
 INT_VECTOR mat_2int_vec(MATRIX a);
 MATRIX int_vec2_mat(INT_VECTOR a, int direction);
 MATRIX mat_vectorize(MATRIX a, MATRIX result);
+MATRIX mat_vectorize_tr(MATRIX a, MATRIX result);
 
 /******************************************/
 /* integration functions */
