@@ -475,8 +475,8 @@ MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B);
 
 /******************************************/
 /* sorting algorithms */
-mtype mat_get_middle(MATRIX A);
 mtype mat_median(MATRIX A);
+mtype mat_order_statistic(MATRIX A, int k);
 void __quicksort(MATRIX a, int l, int r, int offset, MATRIX ind);
 MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result);
 MATVEC_DPOINTER mat_max(MATRIX A, int dim);
