@@ -22,8 +22,8 @@ mtype mat_cofact(MATRIX A, int i, int j)
 
 mtype mat_det(MATRIX a)
 {
-    MATRIX	A, P;
-    int	i, j, n;
+    MATRIX A, P;
+    int i, j, n;
     mtype result;
     n = MatRow(a);
     A = mat_copy(a, NULL);
