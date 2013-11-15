@@ -81,21 +81,21 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc)
     tmp1 = mat_abs(Y, NULL);
     norm_th = 0.0001f*mat_sum(tmp1);
     mat_free(tmp1);
+    tmp1 = NULL;
 
     for(k=0; k<MAX_ITERS_RB && flag == 0; ++k)
     {
         X = mat_w_least_squares(A, Y, W, X);
 
-        tmp1 = mat_mul(A, X, NULL);
+        tmp1 = mat_mul(A, X, tmp1);
         res_ = mat_sub(tmp1, Y, res_);
-        mat_free(tmp1);
         if(k==0)
         {
             med = mat_median(res_);
-            tmp1 = mat_subs(res_, med,NULL);
+            tmp1 = mat_subs(res_, med, tmp1);
             tmp2 = mat_abs(tmp1, tmp2);
-            mat_free(tmp1);
-            madn_ = mat_median(tmp2)+(mtype)eps;/* *6.9414 */
+            madn_ = mat_median(tmp2)* 1.4826+(mtype)eps;/* *6.9414 */
+            mat_free(tmp2);
         }
         res = mat_abs(res_, res);
         if(mat_sum(res)<norm_th) flag =1;
@@ -104,17 +104,22 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc)
             switch(lossfunc)
             {
             case MAT_LOSS_HUBER:
-                W = mat_huber_wt(res, 1.345, madn_, W);
+                W = mat_huber_wt(res, 1.0, madn_*1.345, W);
                 break;
             case MAT_LOSS_BISQUARE:
-                W = mat_bisquare_wt(res, 4.685, madn_, W);
+                W = mat_bisquare_wt(res, 1.0, madn_*4.685, W);
                 break;
             default:
-                W = mat_bisquare_wt(res, 4.685, madn_, W);
+                W = mat_bisquare_wt(res, 1.0, madn_*4.685, W);
             }
         }
     }
-    if(k!=MAX_ITERS_RB)mat_free(W);
+
+    mat_free(W);
+    mat_free(res);
+    mat_free(res_);
+    mat_free(tmp1);
+
     return X;
 }
 
