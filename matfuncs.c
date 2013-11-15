@@ -68,60 +68,58 @@ __inline mtype logplusone(mtype x)
     }
 }
 
-MATRIX mat_huber_wt( MATRIX A, mtype k, mtype sigma)
+MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 {
     int	i, j, m, n;
-    MATRIX	B;
     m = MatCol(A);
     n = MatRow(A);
 
-    if ((B = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL)if((result = mat_creat(n, m, UNDEFINED))==NULL)
         return mat_error(MAT_MALLOC);;
 
-    for (i=0; i<n; ++i)
-        for (j=0; j<m; ++j)
+    #pragma omp parallel for private(j)
+    for(i=0; i<n; ++i)
+        for(j=0; j<m; ++j)
         {
-            B[i][j] = huber_wt(A[i][j]/sigma, k);
+            result[i][j] = huber_wt(A[i][j]/sigma, k);
         }
-    return (B);
+    return(result);
 }
 
-MATRIX mat_bisquare_wt( MATRIX A, mtype k, mtype sigma)
+MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 {
     int	i, j, m, n;
-    MATRIX	B;
     m = MatCol(A);
     n = MatRow(A);
 
-    if ((B = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL)if((result = mat_creat(n, m, UNDEFINED))==NULL)
         return mat_error(MAT_MALLOC);
 
     #pragma omp parallel for private(j)
-    for (i=0; i<n; ++i)
-        for (j=0; j<m; ++j)
+    for(i=0; i<n; ++i)
+        for(j=0; j<m; ++j)
         {
-            B[i][j] = bisquare_wt(A[i][j]/sigma, k);
+            result[i][j] = bisquare_wt(A[i][j]/sigma, k);
         }
-    return (B);
+    return(result);
 }
 
-MATRIX mat_gfunc( MATRIX A, mtype (*pt2func)(mtype), MATRIX result)
+MATRIX mat_gfunc(MATRIX A, mtype (*pt2func)(mtype), MATRIX result)
 {
     int	i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
 
-    if(result== NULL|| result ==A)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result== NULL|| result==A)if ((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
 
-
     #pragma omp parallel for private(j)
-    for (i=0; i<n; ++i)
-        for (j=0; j<m; ++j)
+    for(i=0; i<n; ++i)
+        for(j=0; j<m; ++j)
         {
             result[i][j] = (*pt2func)(A[i][j]);
         }
-    return (result);
+    return(result);
 }
 
 

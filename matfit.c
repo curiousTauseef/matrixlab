@@ -75,48 +75,44 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc)
     int n, k;
     int flag = 0;
     mtype med = 0, madn_ = 0, norm_th= 0;
-    MATRIX X = 0, res = 0, res_ = 0, W = 0, tmp1 = 0, tmp2 = 0;
+    MATRIX X = NULL, res = NULL, res_ = NULL, W = NULL, tmp1 = NULL, tmp2 = NULL;
     n = MatRow(A);
     W = mat_creat(n, 1, ONES_MATRIX);
-    tmp1 = mat_abs(Y);
+    tmp1 = mat_abs(Y, NULL);
     norm_th = 0.0001f*mat_sum(tmp1);
     mat_free(tmp1);
 
     for(k=0; k<MAX_ITERS_RB && flag == 0; ++k)
     {
         X = mat_w_least_squares(A, Y, W, X);
-        mat_free(W);
 
         tmp1 = mat_mul(A, X, NULL);
-        res_ = mat_sub(tmp1, Y, NULL);
+        res_ = mat_sub(tmp1, Y, res_);
         mat_free(tmp1);
         if(k==0)
         {
             med = mat_median(res_);
             tmp1 = mat_subs(res_, med,NULL);
-            tmp2 = mat_abs(tmp1);
+            tmp2 = mat_abs(tmp1, tmp2);
             mat_free(tmp1);
-            madn_ = mat_median(tmp2)+(float)eps;/* *6.9414 */
-            mat_free(tmp2);
+            madn_ = mat_median(tmp2)+(mtype)eps;/* *6.9414 */
         }
-        res = mat_abs(res_);
+        res = mat_abs(res_, res);
         if(mat_sum(res)<norm_th) flag =1;
         if(k!=(MAX_ITERS_RB -1))
         {
             switch(lossfunc)
             {
             case MAT_LOSS_HUBER:
-                W = mat_huber_wt(res, madn_, madn_);
+                W = mat_huber_wt(res, 1.345, madn_, W);
                 break;
             case MAT_LOSS_BISQUARE:
-                W = mat_bisquare_wt(res, madn_, madn_);
+                W = mat_bisquare_wt(res, 4.685, madn_, W);
                 break;
             default:
-                W = mat_bisquare_wt(res, madn_, madn_);
+                W = mat_bisquare_wt(res, 4.685, madn_, W);
             }
         }
-        mat_free(res);
-        mat_free(res_);
     }
     if(k!=MAX_ITERS_RB)mat_free(W);
     return X;
@@ -125,7 +121,7 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc)
 MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc)
 {
     int i, j, n;
-    MATRIX A = 0, X = 0;
+    MATRIX A = NULL, X = NULL;
     n = MatRow(data);
     A = mat_creat(n, degree+1, ONES_MATRIX);
     for(i=0; i<n; ++i)

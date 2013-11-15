@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="matrixlab" prefix_auto="1" extension_auto="1" />
+				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Debug/" />
+				<Option object_output="obj\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -25,9 +25,9 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="matrixlab" prefix_auto="1" extension_auto="1" />
+				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
