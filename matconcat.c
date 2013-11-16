@@ -6,7 +6,7 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
 {
     int i, j, m, n, o, p;
     MATRIX C;
-    if(A == NULL)
+    if(A==NULL)
     {
         return mat_copy(B, NULL);
     }
@@ -30,8 +30,8 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
         #pragma omp parallel for private(j)
         for(i=0; i<m; i++)
         {
-            for (j = 0; j<n; j++) C[j][i] = A[j][i];
-            for (j = 0; j<p; j++) C[j+n][i] = B[j][i];
+            for(j=0; j<n; j++) C[j][i] = A[j][i];
+            for(j=0; j<p; j++) C[j+n][i] = B[j][i];
         }
         return C;
     }
@@ -41,8 +41,8 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
         #pragma omp parallel for private(j)
         for(i=0; i<n; i++)
         {
-            for (j = 0; j<m; j++) C[i][j] = A[i][j];
-            for (j = 0; j<o; j++) C[i][j+m] = B[i][j];
+            for(j=0; j<m; j++) C[i][j] = A[i][j];
+            for(j=0; j<o; j++) C[i][j+m] = B[i][j];
         }
         return C;
     }
