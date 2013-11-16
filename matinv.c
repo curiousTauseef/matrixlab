@@ -6,19 +6,14 @@
 MATRIX mat_inv(MATRIX a, MATRIX result)
 {
     MATRIX A, B, P;
-    int	i, n;
-
+    int i, n;
     n = MatCol(a);
-    if(MatRow(a)!=n)
-    {
-        return mat_error(MAT_INVERSE_NOT_SQUARE);
-    }
+    if(MatRow(a)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
     A = mat_copy(a, NULL);
     B = mat_creat(n, 1, UNDEFINED);
     if(result == NULL)result = mat_creat(n, n, UNDEFINED);
-    P = mat_creat( n, 1, UNDEFINED );
-
-    if (mat_lu(A, P) == -1)
+    P = mat_creat(n, 1, UNDEFINED);
+    if(mat_lu(A, P) == -1)
     {
         mat_free(A);
         mat_free(B);
@@ -26,7 +21,7 @@ MATRIX mat_inv(MATRIX a, MATRIX result)
         mat_free(P);
         return mat_error(MAT_INVERSE_ILL_COND);
     }
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         mat_fill(B, ZERO_MATRIX);
         B[i][0] = 1.0;
@@ -47,13 +42,10 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
     A = mat_copy(a, NULL);
     if(m!=n) return mat_error(MAT_SIZEMISMATCH);
     for(i=0; i<m; ++i) A[i][i]+= r_constant;
-
-
     B = mat_creat(n, 1, UNDEFINED);
     if(result == NULL)result = mat_creat(n, n, UNDEFINED);
     P = mat_creat( n, 1, UNDEFINED );
-
-    if (mat_lu(A, P) == -1)
+    if(mat_lu(A, P)==-1)
     {
         mat_free(A);
         mat_free(B);
@@ -61,7 +53,7 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
         mat_free(P);
         return mat_error(MAT_INVERSE_ILL_COND);
     }
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         mat_fill(B, ZERO_MATRIX);
         B[i][0] = 1.0;
@@ -76,21 +68,16 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
 
 MATRIX mat_chol(MATRIX a, MATRIX result)
 {
-    int	i, j, k, n;
+    int i, j, k, n;
     mtype sum = 0.0, p = 0.0;
-
     n = MatCol(a);
-    if(MatRow(a)!=n)
-    {
-        return mat_error(MAT_INVERSE_NOT_SQUARE);
-    }
+    if(MatRow(a)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
     result = mat_copy(a, result);
-
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
-        for (j=0; j<n; ++i)
+        for(j=0; j<n; ++i)
         {
-            for (sum=result[i][j], k=i-1; k>=0; k--) sum -= result[i][k]*result[j][k];
+            for(sum=result[i][j], k=i-1; k>=0; k--) sum -= result[i][k]*result[j][k];
             {
                 if(i==j)
                 {
@@ -103,10 +90,5 @@ MATRIX mat_chol(MATRIX a, MATRIX result)
     }
     return (result);
 }
-
-
-
-
-
 
 
