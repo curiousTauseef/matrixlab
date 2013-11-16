@@ -28,7 +28,7 @@ __inline void __kd_swap(MAT_KDNODE x, MAT_KDNODE y)
 MAT_KDNODE __kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx)
 {
     MAT_KDNODE p, store, md = kd_start+(kd_end-kd_start)/2;
-    double pivot;
+    mtype pivot;
     if(kd_end<=kd_start) return NULL;
     if(kd_end==(kd_start+1)) return kd_start;
     while(1)
@@ -127,8 +127,7 @@ MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX a, MATRIX result)
 
 void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist)
 {
-    double d, dx, dx2;
-
+    mtype d, dx, dx2;
     if(!root) return;
     d = __kd_dist(root, nd, dim);
     dx = root->x[i]-nd->x[i];
