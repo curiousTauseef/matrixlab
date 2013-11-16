@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "matrix.h"
 
 
@@ -21,12 +20,12 @@ INT_VECTOR mat_2int_vec(MATRIX a)
     return v;
 }
 
-MATRIX int_vec2_mat(INT_VECTOR a, int direction)
+MATRIX int_vec2_mat(INT_VECTOR a, int dir)
 {
     int n, i;
     MATRIX M;
     n = Int_VecLen(a);
-    if(direction ==1)
+    if(dir==0)
     {
         if((M = mat_creat(n, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         #pragma omp parallel for

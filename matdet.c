@@ -1,23 +1,23 @@
-#include <stdio.h>
 #include "matrix.h"
+
 
 static mtype signa[2] = {1.0, -1.0};
 
 mtype mat_minor(MATRIX A, int i, int j)
 {
-    MATRIX S;
+    MATRIX S = NULL;
     mtype result;
-    S = mat_submat(A, i, j);
+    S = mat_submat(A, i, j, S);
     result = mat_det(S);
     mat_free(S);
-    return (result);
+    return result;
 }
 
 mtype mat_cofact(MATRIX A, int i, int j)
 {
     mtype result;
     result = signa[(i+j)%2]*A[i][j]*mat_minor(A, i, j);
-    return (result);
+    return result;
 }
 
 mtype mat_det(MATRIX a)
@@ -28,7 +28,6 @@ mtype mat_det(MATRIX a)
     n = MatRow(a);
     A = mat_copy(a, NULL);
     P = mat_creat(n, 1, UNDEFINED);
-
     i = mat_lu(A, P);
     switch (i)
     {

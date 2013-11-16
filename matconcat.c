@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "matrix.h"
 
 
@@ -49,7 +48,6 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
     return mat_error(MAT_SIZEMISMATCH);
 }
 
-
 INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
 {
     int i, m, n;
@@ -68,5 +66,4 @@ INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
     for(i=0; i<n; ++i) result[i+m] = B[i];
     return result;
 }
-
 

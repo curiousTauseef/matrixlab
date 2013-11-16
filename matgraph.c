@@ -4,6 +4,7 @@
 #define maxV 20
 #define unseen 0
 
+
 MAT_GRAPH mat_graph_creat(void)
 {
     MAT_GRAPH g = NULL;
@@ -135,7 +136,6 @@ void mat_graph_adjm_to_adjl(MAT_GRAPH g, MATRIX a)
     g->E = e;
 
 }
-
 
 INT_QUEUE mat_graph_search(MAT_GRAPH g, int connected, int mst)
 {

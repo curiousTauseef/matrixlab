@@ -1,11 +1,10 @@
-#include <stdio.h>
 #include "matrix.h"
 
 
-MATRIX mat_durbin(MATRIX R)
+MATRIX mat_durbin(MATRIX R, MATRIX result)
 {
     int i, i1, j, ji, p;
-    MATRIX W, E, K, A, X;
+    MATRIX W, E, K, A;
     p = MatRow(R) - 1;
     W = mat_creat(p+2, 1, UNDEFINED);
     E = mat_creat(p+2, 1, UNDEFINED);
@@ -34,19 +33,19 @@ MATRIX mat_durbin(MATRIX R)
                 W[i][0] += A[j][i] * R[i-j+1][0];
         }
     }
-    X = mat_creat(p, 1, UNDEFINED);
-    for(i=0; i<p; ++i) X[i][0] = -A[i+1][p];
+    if(result==NULL) if((result = mat_creat(p, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    for(i=0; i<p; ++i) result[i][0] = -A[i+1][p];
 
     mat_free(A);
     mat_free(W);
     mat_free(K);
     mat_free(E);
-    return (X);
+    return result;
 }
 
-MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B)
+MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B, MATRIX result)
 {
-    MATRIX R, X;
+    MATRIX R;
     int i, n;
     n = MatRow(A);
     R = mat_creat(n+1, 1, UNDEFINED);
@@ -55,9 +54,9 @@ MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B)
         R[i][0] = A[i][0];
     }
     R[n][0] = B[n-1][0];
-    X = mat_durbin(R);
+    result = mat_durbin(R, result);
     mat_free(R);
-    return (X);
+    return result;
 }
 
 MATSTACK mat_qr(MATRIX A, MATSTACK qr)
@@ -93,7 +92,7 @@ MATSTACK mat_qr(MATRIX A, MATSTACK qr)
             u[j][0] = tmp3[j][i];
             mag += u[j][0] * u[j][0];
         }
-        mag = _mat_sqrt(mag);
+        mag = sqrt(mag);
         alpha = u[i][0]<0?mag:-mag;
         mag = 0.0;
         for(j=i; j<m; ++j)
@@ -101,8 +100,8 @@ MATSTACK mat_qr(MATRIX A, MATSTACK qr)
             v[j][0] = ((j==i)?(u[j][0]+alpha):u[j][0]);
             mag += v[j][0] * v[j][0];
         }
-        mag = _mat_sqrt(mag);
-        if (mag < eps) continue;
+        mag = __mat_sqrt(mag);
+        if(mag < eps) continue;
         for(j=i; j<m; ++j) v[j][0] /= mag;
         tmp = mat_tran(v, tmp);
         P = mat_mul(v, tmp, P);

@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "matrix.h"
+
 
 MATRIX mat_fliplr(MATRIX A, MATRIX result)
 {
@@ -7,9 +7,8 @@ MATRIX mat_fliplr(MATRIX A, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
 
-    if(result == NULL) if((result = mat_creat( MatRow(A), MatCol(A), UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
@@ -25,9 +24,8 @@ MATRIX mat_flipud(MATRIX A, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
 
-    if(result == NULL) if((result = mat_creat( MatRow(A), MatCol(A), UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)

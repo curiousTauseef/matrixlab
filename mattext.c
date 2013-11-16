@@ -1,8 +1,7 @@
-#define _CRT_SECURE_NO_DEPRECATE
-#include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include "matrix.h"
+
 
 int mat_isnumeric(FILEPOINTER fp)
 {
@@ -25,12 +24,12 @@ int mat_isnumeric(FILEPOINTER fp)
             }
             else
             {
-                if(ch=='.' )
+                if(ch=='.')
                 {
                     if(flag ==2) flag = 3;
                     else flag = 1;
                 }
-                else if(ch=='-' )flag = 2;
+                else if(ch=='-') flag = 2;
 
                 else
                 {
@@ -48,7 +47,7 @@ int mat_isnumeric(FILEPOINTER fp)
             }
         }
     }
-    if(ch ==EOF)
+    if(ch==EOF)
     {
         ungetc(ch, fp); /*edited just now */
 

@@ -1,9 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "matrix.h"
 #define SIGN(a, b) ( (b) < 0 ? -fabs(a) : fabs(a) )
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
+
 
 static mtype PYTHAG(mtype a, mtype b)
 {
@@ -26,8 +25,7 @@ MATSTACK mat_svd(mtype **a, int m, int n, mtype *w, mtype **v)
     ms[1] = mat_creat(1, MatCol(a), UNDEFINED);
     ms[2] = mat_creat(MatRow(a),MatCol(a), UNDEFINED);
 
-
-    if (m < n)
+    if(m<n)
     {
         fprintf(stderr, "#rows must be > #cols \n");
         return(0);

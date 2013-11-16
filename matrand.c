@@ -1,19 +1,17 @@
-#include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
-#include <time.h>
 #include "matrix.h"
+
 
 unsigned int MAT_SEED = 0;
 int MAT_SET_SEED = 0;
 
-MATRIX mat_rand( int n, int m, MATRIX result)
+MATRIX mat_rand(int n, int m, MATRIX result)
 {
     int i, j;
-    if(result== NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
@@ -23,15 +21,15 @@ MATRIX mat_rand( int n, int m, MATRIX result)
     return result;
 }
 
-MATRIX mat_randn( int n, int m, MATRIX result)
+MATRIX mat_randn(int n, int m, MATRIX result)
 {
     int	i, j;
     mtype tmp0;
-    if(result== NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
 
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
@@ -39,46 +37,45 @@ MATRIX mat_randn( int n, int m, MATRIX result)
         }
     }
     if(MatNumel(result)>0) srand((unsigned int)(result[0][0]*7923+1));
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
             tmp0 =((mtype)rand())/((mtype)RAND_MAX+1.0f);
-            if (result[i][j]!=0 ) result[i][j] = (mtype)(sqrt(-2.0f*log(result[i][j]))*cos(2.0f*3.141592f*tmp0));
+            if(result[i][j]!=0) result[i][j] = (mtype)(sqrt(-2.0f*log(result[i][j]))*cos(2.0f*3.141592f*tmp0));
         }
     }
     return result;
 }
 
-MATRIX mat_randexp( int n, int m, mtype mu, MATRIX result)
+MATRIX mat_randexp(int n, int m, mtype mu, MATRIX result)
 {
     int	i, j;
-    if(result== NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
 
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
-            result[i][j] =(mtype)( -mu * log (1.0f-((mtype)rand())/((mtype)RAND_MAX+1.0f)));
+            result[i][j] = (mtype)(-mu*log(1.0f-((mtype)rand())/((mtype)RAND_MAX+1.0f)));
         }
     }
     return result;
 }
 
-MATRIX mat_randfun( int n, int m, mtype (*fun)(mtype), mtype xmin, mtype xmax, MATRIX result)
+MATRIX mat_randfun(int n, int m, mtype (*fun)(mtype), mtype xmin, mtype xmax, MATRIX result)
 {
     int i, j;
-    if(result== NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
-
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
-            result[i][j] = mat_randfun_(fun, xmin, xmax);
+            result[i][j] = __mat_randfun(fun, xmin, xmax);
         }
     }
     return result;
@@ -99,36 +96,36 @@ void mat_set_seed(int seed)
     MAT_SET_SEED = 1;
 }
 
-mtype mat_randfun_(mtype (*fun)(mtype), mtype xmin, mtype xmax)
+mtype __mat_randfun(mtype(*fun)(mtype), mtype xmin, mtype xmax)
 {
     static mtype (*Fun)(mtype) = NULL, YMin, YMax;
     mtype X, Y;
     int iX;
     if(!MAT_SET_SEED)mat_set_seed(0);
-    if (fun != Fun)
+    if(fun!=Fun)
     {
         Fun = fun;
         YMin = 0;
         YMax = Fun(xmin);
-        for (iX = 1; iX < RAND_MAX; ++iX)
+        for(iX=1; iX<RAND_MAX; ++iX)
         {
-            X = xmin + (xmax - xmin) * iX /((mtype)RAND_MAX+1.0);
+            X = xmin+(xmax-xmin)*iX/((mtype)RAND_MAX+1.0);
             Y = Fun(X);
-            YMax = Y > YMax ? Y : YMax;
+            YMax = Y>YMax?Y:YMax;
         }
     }
-    X = xmin + (xmax - xmin) *  ((mtype)rand())/((mtype)RAND_MAX+1.0);
-    Y = YMin + (YMax - YMin) *  ((mtype)rand())/((mtype)RAND_MAX+1.0);;
-    return Y <= fun(X) ? X : mat_randfun_(Fun, xmin, xmax);
+    X = xmin+(xmax-xmin)*((mtype)rand())/((mtype)RAND_MAX+1.0);
+    Y = YMin+(YMax-YMin)*((mtype)rand())/((mtype)RAND_MAX+1.0);;
+    return Y <= fun(X) ? X : __mat_randfun(Fun, xmin, xmax);
 }
 
-mtype mat_rand_(void)
+mtype __mat_rand(void)
 {
     if(!MAT_SET_SEED)mat_set_seed(0);
     return ((mtype)rand())/((mtype)RAND_MAX+1.0);
 }
 
-mtype mat_randn_(void)
+mtype __mat_randn(void)
 {
     mtype tmp0, tmp1;
     if(!MAT_SET_SEED)mat_set_seed(0);
@@ -138,34 +135,34 @@ mtype mat_randn_(void)
     return tmp0;
 }
 
-mtype mat_randexp_(mtype mu)
+mtype __mat_randexp(mtype mu)
 {
     if(!MAT_SET_SEED)mat_set_seed(0);
-    return (mtype)( -mu * log (1.0f-((mtype)rand())/((mtype)RAND_MAX+1.0f)));
+    return (mtype)(-mu*log(1.0f-((mtype)rand())/((mtype)RAND_MAX+1.0f)));
 }
 
 MATRIX mat_randperm(int m, int n, MATRIX result)
 {
     int i, j;
     MATRIX tmp = NULL;
-    if(result==NULL)if((result = mat_creat( m, n, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     for(i=0; i<m; ++i)
     {
-        tmp = mat_randperm_(n, tmp);
+        tmp = mat_randperm_n(n, tmp);
         for(j=0; j<n; ++j) result[i][j] = tmp[0][j];
     }
     mat_free(tmp);
     return result;
 }
 
-MATRIX mat_randperm_(int n, MATRIX result)
+MATRIX mat_randperm_n(int n, MATRIX result)
 {
     int i, j;
     mtype t = 0.0;
-    if(result==NULL)if ((result = mat_creat( 1, n, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(1, n, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    if(!MAT_SET_SEED)mat_set_seed(0);
+    if(!MAT_SET_SEED) mat_set_seed(0);
     for(i=0; i<n; ++i)
         result[0][i] = i;
     for(i=0; i<n; ++i)
@@ -196,5 +193,4 @@ INT_VECTOR int_vec_randperm(int n, INT_VECTOR result)
     }
     return result;
 }
-
 

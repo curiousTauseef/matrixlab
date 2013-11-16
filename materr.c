@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
 
@@ -190,3 +189,4 @@ int graph_error(int err_)
     }
     exit(1);
 }
+

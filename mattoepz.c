@@ -1,7 +1,6 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "matrix.h"
+
 
 MATRIX mat_symtoeplz(MATRIX R, MATRIX result)
 {

@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <math.h>
 #include "matrix.h"
+
 
 MATRIX mat_conv2(MATRIX a, MATRIX mask, MATRIX scratch, MATRIX result)
 {

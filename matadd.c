@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include "matrix.h"
-
 
 
 MATRIX mat_add(MATRIX A, MATRIX B, MATRIX C)

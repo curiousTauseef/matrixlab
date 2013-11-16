@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include "matrix.h"
 
-clock_t MAT_CLOCK_TIME;
 
+clock_t MAT_CLOCK_TIME;
 
 void mat_tic(void)
 {

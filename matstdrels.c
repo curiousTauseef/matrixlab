@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <malloc.h>
-#include <math.h>
 #include "matrix.h"
+
 
 int gen_gt(mtype a)
 {

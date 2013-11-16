@@ -1,16 +1,15 @@
-#include <stdio.h>
-#include <math.h>
 #include "matrix.h"
+
 
 MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result)
 {
     switch(type)
     {
     case MAT_MDS_METRIC:
-        result = _mat_mds_metric(d, dims, result);
+        result = __mat_mds_metric(d, dims, result);
         break;
     case MAT_MDS_NONMETRIC:
-        result = _mat_mds_nonmetric(d, dims, result);
+        result = __mat_mds_nonmetric(d, dims, result);
         break;
     default:
         gen_error(GEN_BAD_TYPE);
@@ -18,15 +17,15 @@ MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result)
     return result;
 }
 
-MATRIX _mat_mds_metric(MATRIX d, int dims, MATRIX result)
+MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
 {
     MATRIX P = NULL, B = NULL, J = NULL, tmp = NULL;
     INT_VECTOR tmp2 = NULL;
     MATSTACK E = NULL;
     if(MatRow(d)!=MatCol(d)) mat_error(MAT_SIZEMISMATCH);
-    if(result== NULL)if ((result = mat_creat( MatRow(d), dims, UNDEFINED )) == NULL)
+    if(result== NULL) if((result = mat_creat(MatRow(d), dims, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    P = mat_gfunc(d, _mat_sqr, P);
+    P = mat_gfunc(d, __mat_sqr, P);
     J = mat_creat(MatRow(d), MatCol(d), UNIT_MATRIX);
     J = mat_subs(J, 1/((mtype)MatCol(d)), J);
     tmp = mat_mul(J, P, tmp);
@@ -42,10 +41,10 @@ MATRIX _mat_mds_metric(MATRIX d, int dims, MATRIX result)
 
     J = mat_get_sub_matrix_from_cols(E[1], tmp2, NULL);
     tmp = mat_get_sub_matrix_from_rows(E[0], tmp2, NULL);
-    tmp = mat_gfunc(tmp, _mat_sqrt, tmp);
+    tmp = mat_gfunc(tmp, __mat_sqrt, tmp);
 
     mat_free(B);
-    B = mat_creat_diag(tmp);
+    B = mat_creat_diag(tmp, NULL); /* change to bsxfun */
     result = mat_mul(J, B, result);
     mat_free(J);
     mat_free(tmp);
@@ -55,22 +54,20 @@ MATRIX _mat_mds_metric(MATRIX d, int dims, MATRIX result)
     return result;
 }
 
-
-MATRIX _mat_mds_nonmetric(MATRIX d, int dims, MATRIX result)
+MATRIX __mat_mds_nonmetric(MATRIX d, int dims, MATRIX result)
 {
     if(MatRow(d)!=MatCol(d)) mat_error(MAT_SIZEMISMATCH);
-    if(result== NULL)if ((result = mat_creat( MatRow(d), dims, UNDEFINED )) == NULL)
+    if(result== NULL) if((result = mat_creat(MatRow(d), dims, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-
     return result;
 }
 
-mtype _mat_sqr(mtype x)
+mtype __mat_sqr(mtype x)
 {
     return (x*x);
 }
 
-mtype _mat_sqrt(mtype x)
+mtype __mat_sqrt(mtype x)
 {
     return sqrt(x);
 }

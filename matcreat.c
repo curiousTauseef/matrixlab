@@ -1,18 +1,16 @@
-#define _CRT_SECURE_NO_DEPRECATE
-#include <stdio.h>
 #include <malloc.h>
 #include "matrix.h"
 
 
-MATRIX _mat_creat(int row, int col)
+MATRIX __mat_creat(int row, int col)
 {
     MATRIX mat = NULL;
     int i;
-    if((mat = (MATRIX)malloc(sizeof(mtype *)*(row+2))) == NULL)
+    if((mat = (MATRIX)malloc(sizeof(mtype *)*(row+2)))==NULL)
         return (mat_error( MAT_MALLOC ));
     for(i=2; i<row+2; ++i)
     {
-        if((*((mtype **)(mat + i)) = (mtype *)malloc(sizeof(mtype)*col)) == NULL)
+        if((*((mtype **)(mat + i)) = (mtype *)malloc(sizeof(mtype)*col))==NULL)
             return (mat_error(MAT_MALLOC));
     }
     *((int*)(mat)) = row;
@@ -23,20 +21,20 @@ MATRIX _mat_creat(int row, int col)
 MATRIX mat_creat(int row, int col, int type)
 {
     MATRIX A;
-    if((A =_mat_creat(row, col)) != NULL)
+    if((A =__mat_creat(row, col))!=NULL)
     {
         return (mat_fill(A, type));
     }
     else
-        return (NULL);
+        return NULL;
 }
 
-MATSTACK _matstack_creat(int length)
+MATSTACK __matstack_creat(int length)
 {
     MATSTACK matrixstack;
     int i;
-    if((matrixstack = (MATRIX *)malloc(sizeof(MATRIX)*(1+length))) == NULL)
-        return (matstack_error( MATSTACK_MALLOC ));
+    if((matrixstack = (MATRIX *)malloc(sizeof(MATRIX)*(1+length)))==NULL)
+        return (matstack_error( MATSTACK_MALLOC));
 
     for(i=0; i<=length; ++i)
     {
@@ -50,19 +48,19 @@ MATSTACK _matstack_creat(int length)
 MATSTACK matstack_creat(int length)
 {
     MATSTACK A;
-    if((A =_matstack_creat(length)) != NULL)
+    if((A =__matstack_creat(length))!=NULL)
     {
         return A;
     }
     else
-        return (NULL);
+        return NULL;
 }
 
 MATSTACK matstack_append(MATSTACK s, MATRIX a)
 {
     MATSTACK m;
     int i, n;
-    if(a==NULL) return (s);
+    if(a==NULL) return s;
     n = MatStacklength(s);
     m = matstack_creat(n+1);
     for(i=0; i<n; ++i) m[i] = s[i];
@@ -73,13 +71,13 @@ MATSTACK matstack_append(MATSTACK s, MATRIX a)
 int matstack_free(MATSTACK A)
 {
     int i, n;
-    if(A == NULL) return (0);
+    if(A==NULL) return 0;
     n = MatStacklength(A);
     A = A-1;
     for(i=0; i<n; ++i)
         mat_free(A[i]);
     A = NULL;
-    return (1);
+    return 1;
 }
 
 MATRIX mat_fill(MATRIX A, int type)
@@ -97,7 +95,7 @@ MATRIX mat_fill(MATRIX A, int type)
         for(i=0; i<n; ++i)
             for(j=0; j<m; ++j)
             {
-                if(type == UNIT_MATRIX)
+                if(type==UNIT_MATRIX)
                 {
                     if(i==j)
                     {
@@ -114,7 +112,7 @@ MATRIX mat_fill(MATRIX A, int type)
             for(j=0; j<m; ++j) A[i][j] = 1.0;
         break;
     }
-    return (A);
+    return A;
 }
 
 int mat_free(MATRIX A)
@@ -132,31 +130,31 @@ int mat_free(MATRIX A)
     return 1;
 }
 
-INT_VECTOR _int_vec_creat(int length)
+INT_VECTOR __int_vec_creat(int length)
 {
     INT_VECTOR int_vector;
-    if((int_vector = (int*)malloc(sizeof(int)*(length+1))) == NULL)
+    if((int_vector = (int*)malloc(sizeof(int)*(length+1)))==NULL)
         return (int_vec_error(INT_VEC_MALLOC));
     int_vector[0] = length;
-    return(int_vector+1);
+    return (int_vector+1);
 }
 
 INT_VECTOR int_vec_creat(int length, int type)
 {
     INT_VECTOR A;
-    if((A =_int_vec_creat(length))!=NULL)
+    if((A =__int_vec_creat(length))!=NULL)
     {
         return (int_vec_fill(A, type));
     }
     else
-        return(NULL);
+        return NULL;
 }
 
 INT_VECTOR int_vec_fill(INT_VECTOR A, int type)
 {
     int	i, n;
     n = Int_VecLen(A);
-    switch (type)
+    switch(type)
     {
     case UNDEFINED:
         break;
@@ -175,19 +173,19 @@ INT_VECTOR int_vec_fill(INT_VECTOR A, int type)
 
 int int_vec_free(INT_VECTOR A)
 {
-    if(A == NULL) return(0);
+    if(A==NULL) return(0);
     Int_VecLen(A) = 0;
     free( A-1);
     A = NULL;
     return 1;
 }
 
-INT_VECSTACK _int_vecstack_creat(int length)
+INT_VECSTACK __int_vecstack_creat(int length)
 {
     INT_VECSTACK int_vecstack;
     int i;
-    if((int_vecstack = (INT_VECTOR *)malloc( sizeof(INT_VECTOR)*(1+length))) == NULL)
-        return (int_vecstack_error( INT_VECSTACK_MALLOC ));
+    if((int_vecstack = (INT_VECTOR *)malloc( sizeof(INT_VECTOR)*(1+length)))==NULL)
+        return (int_vecstack_error(INT_VECSTACK_MALLOC));
 
     for(i=0; i<=length; ++i)
     {
@@ -201,25 +199,25 @@ INT_VECSTACK _int_vecstack_creat(int length)
 INT_VECSTACK int_vecstack_creat(int length)
 {
     INT_VECSTACK A;
-    if((A =_int_vecstack_creat( length )) != NULL)
+    if((A =__int_vecstack_creat(length))!=NULL)
     {
         return A;
     }
     else
-        return (NULL);
+        return NULL;
 }
 
 int int_vecstack_free(INT_VECSTACK A)
 {
     int i, n;
-    if(A == NULL)
+    if(A==NULL)
         return (0);
     n = Int_VecStackLength(A);
     A = A-1;
     for(i=0; i<=n; ++i)
         int_vec_free(A[i]);
     A = NULL;
-    return (1);
+    return 1;
 }
 
 BAYES_MODEL pat_bayes_model_creat(void)
@@ -304,7 +302,7 @@ INT_VECTOR int_vec_copy(INT_VECTOR a)
     if((b = int_vec_creat(m, UNDEFINED )) == NULL)
         return (NULL);
     for(i=0; i<m; ++i) b[i] = a[i];
-    return (b);
+    return b;
 }
 
 MATRIX mat_copy(MATRIX A, MATRIX result)
@@ -312,7 +310,7 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
     int	i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
-    if(result==NULL)if ((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
@@ -320,7 +318,7 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
         {
             result[i][j] = A[i][j];
         }
-    return (result);
+    return result;
 }
 
 MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
@@ -329,7 +327,7 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
     if(si<0 || sj<0 || ei>n || ei>m) mat_error(MAT_SIZEMISMATCH);
-    if(result== NULL)if ((result = mat_creat( ei-si, ej-sj, UNDEFINED )) == NULL)
+    if(result== NULL) if((result = mat_creat(ei-si, ej-sj, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=si; i<ei; ++i)
@@ -337,16 +335,15 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
         {
             result[i-si][j-sj] = A[i][j];
         }
-    return (result);
+    return result;
 }
-
 
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
 {
     int	i, j, m, n;
     m = MatCol(A11)+MatCol(A12);
     n = MatRow(A11)+MatRow(A21);
-    if(result== NULL)if ((result = mat_creat( m, n, UNDEFINED )) == NULL)
+    if(result== NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<MatRow(A11); ++i)
@@ -372,24 +369,33 @@ MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
         {
             result[i+MatRow(A11)][j+MatCol(A22)] = A22[i][j];
         }
-    return (result);
+    return result;
 
 }
 
-
-
-MATRIX mat_colcopy1(MATRIX A, MATRIX B, int cola, int colb)
+MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result)
 {
     int	i, n;
-    n = MatRow(A);
+    n = MatCol(result);
     for(i=0; i<n; ++i)
     {
-        A[i][cola] = B[i][colb];
+        result[rowb][i] = A[rowa][i];
     }
-    return (A);
+    return result;
 }
 
-int fgetmat(MATRIX A, FILEPOINTER fp)
+MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result)
+{
+    int	i, n;
+    n = MatRow(result);
+    for(i=0; i<n; ++i)
+    {
+        result[i][colb] = A[i][cola];
+    }
+    return result;
+}
+
+int mat_fgetmat(MATRIX A, FILEPOINTER fp)
 {
     int i, j, k=0, m, n;
     m = MatCol(A);
@@ -397,28 +403,25 @@ int fgetmat(MATRIX A, FILEPOINTER fp)
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
 #if mtype_n == 0
-        for (j=0; j<m; ++j) k += fscanf( fp, "%f", &A[i][j] );
+        for(j=0; j<m; ++j) k += fscanf(fp, "%f", &A[i][j]);
 #elif mtype_n == 1
-        for (j=0; j<m; j++) k += fscanf( fp, "%lf", &A[i][j] );
+        for(j=0; j<m; j++) k += fscanf(fp, "%lf", &A[i][j]);
 #endif
-    return (k);
+    return k;
 }
 
-MATRIX mat_creat_diag(MATRIX diag_vals)
+MATRIX mat_creat_diag(MATRIX diag_vals, MATRIX result)
 {
     int i, sz;
-    MATRIX	A;
     if(MatCol(diag_vals)==1) sz = MatRow(diag_vals);
     else sz = MatCol(diag_vals);
-    if((A = mat_creat( sz, sz , ZERO_MATRIX)) != NULL)
+    if(result==NULL) if((result = mat_creat(sz, sz, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
     {
         if(MatCol(diag_vals)==1)
-            for(i=0; i< sz; ++i) A[i][i] = diag_vals[i][0];
+            for(i=0; i<sz; ++i) result[i][i] = diag_vals[i][0];
         else
-            for(i=0; i< sz; ++i) A[i][i] = diag_vals[0][i];
-        return (A);
+            for(i=0; i<sz; ++i) result[i][i] = diag_vals[0][i];
+        return result;
     }
-    else
-        return (NULL);
 }
 

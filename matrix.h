@@ -21,6 +21,7 @@ extern "C"
 #endif
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 #include <omp.h>
 
 #define STACK_MAX 100
@@ -307,8 +308,8 @@ extern int MAT_SET_SEED;
 #define GEN_LESS_THAN_EQUAL_TO 4
 #define GEN_GREATER_THAN_EQUAL_TO 5
 
+#define ROWS 0
 #define COLS 1
-#define ROWS 2
 
 #define PQ_NORMAL 0
 #define PQ_INCREASE 1
@@ -338,25 +339,25 @@ extern int MAT_SET_SEED;
 int mats_isnan(mtype x);
 int mats_isinf(mtype x);
 
-INT_VECTOR _int_vec_creat(int length);
+INT_VECTOR __int_vec_creat(int length);
 INT_VECTOR int_vec_creat(int length, int type);
 INT_VECTOR int_vec_fill(INT_VECTOR A, int type);
 int int_vec_free(INT_VECTOR A);
 
 /******************************************/
-INT_VECSTACK _int_vecstack_creat(int length);
+INT_VECSTACK __int_vecstack_creat(int length);
 INT_VECSTACK int_vecstack_creat(int length);
 int int_vecstack_free(INT_VECSTACK A);
 
-MATRIX _mat_creat(int r, int c);
+MATRIX __mat_creat(int r, int c);
 MATRIX mat_creat(int r, int c, int type);
-MATRIX mat_creat_diag(MATRIX diag_vals);
+MATRIX mat_creat_diag(MATRIX diag_vals, MATRIX result);
 MATRIX mat_fill(MATRIX A, int v);
 int mat_free(MATRIX A);
 
 /******************************************/
 MATSTACK matstack_creat(int length);
-MATSTACK _matstack_creat(int length);
+MATSTACK __matstack_creat(int length);
 int matstack_free(MATSTACK A);
 MATSTACK matstack_append(MATSTACK s, MATRIX a);
 
@@ -367,20 +368,21 @@ int matvec_free(MATVEC_DPOINTER a);
 MATRIX mat_copy(MATRIX A, MATRIX result);
 MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result);
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result);
-MATRIX mat_colcopy1(MATRIX A, MATRIX B, int colA, int colB);
-int fgetmat(MATRIX A, FILEPOINTER fp);
+MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result);
+MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result);
+int mat_fgetmat(MATRIX A, FILEPOINTER fp);
 
 /******************************************/
 /* matrix dump */
 MATRIX mat_dump(MATRIX A);
-MATRIX mat_dumpf(MATRIX A, char *s);
+MATRIX mat_dumpf(MATRIX A, const char *s);
 MATRIX mat_fdump(MATRIX A, FILEPOINTER fp);
-MATRIX mat_fdumpf(MATRIX A, char *s, FILEPOINTER fp);
+MATRIX mat_fdumpf(MATRIX A, const char *s, FILEPOINTER fp);
 
 INT_VECTOR int_vec_dump(INT_VECTOR a);
-INT_VECTOR int_vec_dumpf(INT_VECTOR a, char *s);
+INT_VECTOR int_vec_dumpf(INT_VECTOR a, const char *s);
 INT_VECTOR int_vec_fdump(INT_VECTOR a, FILEPOINTER fp);
-INT_VECTOR int_vec_fdumpf(INT_VECTOR a, char *s, FILEPOINTER fp);
+INT_VECTOR int_vec_fdumpf(INT_VECTOR a, const char *s, FILEPOINTER fp);
 
 /******************************************/
 /* vector manipulations */
@@ -398,37 +400,34 @@ INT_VECTOR int_vec_error(int err_);
 INT_VECSTACK int_vecstack_error (int err_);
 MATRIX mat_error(int err_);
 MATSTACK matstack_error(int err_);
-int stack_error( int err_);
-int queue_error( int err_);
-int pq_error( int err_);
+int stack_error(int err_);
+int queue_error(int err_);
+int pq_error(int err_);
 int graph_error(int err_);
 
 /******************************************/
 /* basic matrix operations */
 mtype mat_mean(MATRIX A);
-MATRIX mat_mean_row(MATRIX A);
-MATRIX mat_mean_col(MATRIX A);
+MATRIX mat_mean_row(MATRIX A, MATRIX result);
+MATRIX mat_mean_col(MATRIX A, MATRIX result);
 
 mtype mat_sum(MATRIX A);
-MATRIX mat_sum_row(MATRIX A);
-MATRIX mat_sum_col(MATRIX A);
+MATRIX mat_sum_row(MATRIX A, MATRIX result);
+MATRIX mat_sum_col(MATRIX A, MATRIX result);
 
 MATRIX mat_abs(MATRIX A, MATRIX result);
-MATRIX mat_add(MATRIX A, MATRIX B, MATRIX result);
-MATRIX mat_adds(MATRIX A, mtype s, MATRIX result);
 
 INT_VECTOR int_vec_add(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_adds(INT_VECTOR A, int s, INT_VECTOR result);
-
 INT_VECTOR int_vec_sub(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_subs(INT_VECTOR A, int s, INT_VECTOR result);
-
 INT_VECTOR int_vec_mul(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_muls(INT_VECTOR A, int s, INT_VECTOR result);
-
 INT_VECTOR int_vec_div(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_divs(INT_VECTOR A, int s, INT_VECTOR result);
 
+MATRIX mat_add(MATRIX A, MATRIX B, MATRIX result);
+MATRIX mat_adds(MATRIX A, mtype s, MATRIX result);
 
 MATRIX mat_sub(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_subs(MATRIX A, mtype s, MATRIX result);
@@ -461,23 +460,23 @@ MATRIX mat_symtoeplz(MATRIX R, MATRIX result);
 /* linear system equation solver */
 int mat_lu(MATRIX A, MATRIX P);
 void mat_backsubs1(MATRIX A, MATRIX B, MATRIX C, MATRIX P, int xcol);
-MATRIX mat_lsolve(MATRIX a, MATRIX b);
+MATRIX mat_lsolve(MATRIX a, MATRIX b, MATRIX result);
 MATRIX mat_cholesky(MATRIX a, MATRIX result);
 
-MATRIX mat_submat(MATRIX A, int i, int j);
+MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result);
 mtype mat_cofact(MATRIX A, int i, int j);
 mtype mat_det(MATRIX a);
 mtype mat_minor(MATRIX A, int i, int j);
 
 MATSTACK mat_qr(MATRIX A, MATSTACK qr);
-MATRIX mat_durbin(MATRIX R);
-MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B);
+MATRIX mat_durbin(MATRIX R, MATRIX result);
+MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B, MATRIX result);
 
 /******************************************/
 /* sorting algorithms */
 mtype mat_median(MATRIX A);
 mtype mat_order_statistic(MATRIX A, int k);
-void __quicksort(MATRIX a, int l, int r, int offset, MATRIX ind);
+void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind);
 MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result);
 MATVEC_DPOINTER mat_max(MATRIX A, int dim);
 MATVEC_DPOINTER mat_min(MATRIX A, int dim);
@@ -490,30 +489,30 @@ MATRIX mat_randexp(int r, int c, mtype mu, MATRIX result);
 INT_VECTOR int_vec_permute_vect(int n, int k, INT_VECTOR result);
 MATRIX mat_randfun(int r, int c, mtype (*fun)(mtype), mtype xmin, mtype xmax, MATRIX result);
 void mat_set_seed(int seed);
-mtype mat_randfun_(mtype (*fun)(mtype), mtype xmin, mtype xmax);
-mtype mat_rand_(void);
-mtype mat_randn_(void);
-mtype mat_randexp_(mtype mu);
+mtype __mat_randfun(mtype (*fun)(mtype), mtype xmin, mtype xmax);
+mtype __mat_rand(void);
+mtype __mat_randn(void);
+mtype __mat_randexp(mtype mu);
 MATRIX mat_randperm(int m, int n, MATRIX result);
-MATRIX mat_randperm_(int n, MATRIX result);
+MATRIX mat_randperm_n(int n, MATRIX result);
 INT_VECTOR int_vec_randperm(int n, INT_VECTOR result);
 
 /******************************************/
 /* linear regressions */
 MATRIX mat_least_squares(MATRIX A, MATRIX Y, MATRIX result);
 MATRIX mat_w_least_squares(MATRIX A, MATRIX Y, MATRIX w, MATRIX result);
-MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc);
+MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc, MATRIX result);
 
-MATRIX mat_linear_ls_fit(MATRIX data, MATRIX Y, int degree);
-MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc);
+MATRIX mat_linear_ls_fit(MATRIX data, MATRIX Y, int degree, MATRIX result);
+MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc, MATRIX result);
 
 /******************************************/
 /* matrix manipulations */
 MATRIX mat_concat(MATRIX A, MATRIX B , int dim);
-MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX submat);
-MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX submat);
-MATRIX mat_pick_row(MATRIX data, int r);
-MATRIX mat_pick_col(MATRIX data, int c);
+MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX result);
+MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX result);
+MATRIX mat_pick_row(MATRIX data, int r, MATRIX result);
+MATRIX mat_pick_col(MATRIX data, int c, MATRIX result);
 INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x);
 
 MATRIX mat_fliplr(MATRIX A, MATRIX result);
@@ -521,22 +520,22 @@ MATRIX mat_flipud(MATRIX A, MATRIX result);
 
 /******************************************/
 /* distance tools */
-MATRIX mat_calc_dist3_sq(MATRIX data, MATRIX curr_data);
+MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result);
 INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range);
 
-void _cart2pol(mtype x, mtype y, mtype *rho, mtype *th);
-MATRIX mat_cart2pol(MATRIX A, int dim);
-
-mtype _dist3_sq(mtype ux, mtype uy, mtype uz, mtype vx, mtype vy, mtype vz);
+void __mat_cart2pol(mtype x, mtype y, mtype *rho, mtype *th);
+void __mat_pol2cart(mtype rho, mtype th, mtype *x, mtype *y);
+MATRIX mat_cart2pol(MATRIX A, int dim, MATRIX result);
+MATRIX mat_pol2cart(MATRIX A, int dim, MATRIX result);
 
 /******************************************/
 /* function tools */
-__inline mtype huber_wt(mtype x, mtype k);
-__inline mtype bisquare_wt(mtype x, mtype k);
-__inline mtype logplusone(mtype x);
-mtype arcsinh(mtype x);
-mtype arccosh(mtype x);
-mtype arctanh(mtype x);
+mtype __mat_huber_wt(mtype x, mtype k);
+mtype __mat_bisquare_wt(mtype x, mtype k);
+mtype __mat_logplusone(mtype x);
+mtype __mat_arcsinh(mtype x);
+mtype __mat_arccosh(mtype x);
+mtype __mat_arctanh(mtype x);
 
 MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
@@ -548,8 +547,8 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
 MATSTACK mat_corcol(MATRIX data);
 MATSTACK mat_covcol(MATRIX data);
 MATRIX mat_scpcol(MATRIX data);
-void tred2(MATRIX a, MATRIX d, MATRIX e);
-void tqli(MATRIX d, MATRIX e, MATRIX z);
+void mat_tred2(MATRIX a, MATRIX d, MATRIX e);
+void mat_tqli(MATRIX d, MATRIX e, MATRIX z);
 MATSTACK mat_pca(MATRIX data, int pca_type);
 MATSTACK mat_eig_sym(MATRIX symmat, MATSTACK result);
 
@@ -560,10 +559,10 @@ void mat_fnextline(FILEPOINTER fp);
 
 /******************************************/
 /* signal domain transforms */
-int __powerof2(int width, int *m, int *twopm);
+int __mat_powerof2(int width, int *m, int *twopm);
 
-MATSTACK mat_fft2(MATSTACK c, int dir);
-int __fft(int dir, int m, mtype *x, mtype *y);
+MATSTACK mat_fft2(MATSTACK c, int dir, MATSTACK result);
+int __mat_fft(int dir, int m, mtype *x, mtype *y);
 
 /* filtering functions */
 MATRIX mat_conv2(MATRIX a, MATRIX mask, MATRIX scratch, MATRIX result);
@@ -571,21 +570,21 @@ MATRIX mat_conv2(MATRIX a, MATRIX mask, MATRIX scratch, MATRIX result);
 /******************************************/
 /* matrix vector conversions */
 INT_VECTOR mat_2int_vec(MATRIX a);
-MATRIX int_vec2_mat(INT_VECTOR a, int direction);
+MATRIX int_vec2_mat(INT_VECTOR a, int dir);
 MATRIX mat_vectorize(MATRIX a, MATRIX result);
 MATRIX mat_vectorize_tr(MATRIX a, MATRIX result);
 
 /******************************************/
 /* integration functions */
 mtype mat_int_simpson(mtype (*func)(mtype), int n, mtype lower, mtype upper);
-mtype _lint(mtype *x, mtype (*fx) (mtype), mtype x0, mtype xn, mtype f0, mtype f2, mtype f3, mtype f5, mtype f6, mtype f7, mtype f9, mtype fl4, mtype hmin, mtype hmax, mtype re, mtype ae);
+mtype __mat_lint(mtype *x, mtype (*fx) (mtype), mtype x0, mtype xn, mtype f0, mtype f2, mtype f3, mtype f5, mtype f6, mtype f7, mtype f9, mtype fl4, mtype hmin, mtype hmax, mtype re, mtype ae);
 mtype mat_int_qadrat(mtype(*fx)(mtype), mtype lower, mtype upper);
 
 /******************************************/
 /* polynomials */
-MATRIX mat_evalpoly(MATRIX a, mtype x, int direction);
-MATRIX mat_dpoly(MATRIX a, int direction);
-MATRIX mat_devalpoly(MATRIX a, mtype x, int direction);
+MATRIX mat_evalpoly(MATRIX a, mtype x, int dir, MATRIX result);
+MATRIX mat_dpoly(MATRIX a, int dir, MATRIX result);
+MATRIX mat_devalpoly(MATRIX a, mtype x, int dir, MATRIX result);
 
 /******************************************/
 /* pattern recognition */
@@ -671,10 +670,10 @@ int int_priorityqueue_is_empty(INT_PRIORITYQUEUE H);
 /******************************************/
 /* mds */
 MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result);
-MATRIX _mat_mds_metric(MATRIX d, int dims, MATRIX result);
-MATRIX _mat_mds_nonmetric(MATRIX d, int dims, MATRIX result);
-mtype _mat_sqr(mtype x);
-mtype _mat_sqrt(mtype x);
+MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result);
+MATRIX __mat_mds_nonmetric(MATRIX d, int dims, MATRIX result);
+mtype __mat_sqr(mtype x);
+mtype __mat_sqrt(mtype x);
 
 /******************************************/
 /* graph */
@@ -693,7 +692,7 @@ MAT_KDTREE mat_kdtree_make_tree(MATRIX a, MAT_KDTREE result);
 int mat_kdtree_free(MAT_KDTREE t);
 MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX a, MATRIX result);
 MAT_KDNODE __mat_kdtree_make_tree(MAT_KDNODE t, int len, int i, int dim);
-MAT_KDNODE __kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
+MAT_KDNODE __mat_kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
 void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist);
 
 

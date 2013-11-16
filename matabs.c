@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <math.h>
 #include "matrix.h"
+
 
 MATRIX mat_abs(MATRIX A, MATRIX result)
 {
@@ -19,5 +18,4 @@ MATRIX mat_abs(MATRIX A, MATRIX result)
         }
     return (result);
 }
-
 

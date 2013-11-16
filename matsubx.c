@@ -1,25 +1,23 @@
-#include <stdio.h>
 #include "matrix.h"
 
 
-MATRIX mat_submat(MATRIX A, int i, int j )
+MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result)
 {
-    int	m0, m1, p, p1, m, n;
-    MATRIX	S;
+    int m0, m1, p, p1, m, n;
     m = MatCol(A);
     n = MatRow(A);
-    S = mat_creat(n-1, m-1, UNDEFINED);
-    for (m0=m1=0; m<n; ++m)
+    if(result==NULL) if((result= mat_creat(n-1, m-1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    for(m0=m1=0; m<n; ++m)
     {
-        if (m0==i) continue;
-        for (p=p1=0; p<m; ++p)
+        if(m0==i) continue;
+        for(p=p1=0; p<m; ++p)
         {
-            if (p==j) continue;
-            S[m1][p1] = A[m0][p];
+            if(p==j) continue;
+            result[m1][p1] = A[m0][p];
             ++p1;
         }
         ++m1;
     }
-    return (S);
+    return result;
 }
 

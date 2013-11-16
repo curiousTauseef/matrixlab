@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <math.h>
 #include <malloc.h>
 #include "matrix.h"
+
 
 MATRIX mat_inv(MATRIX a, MATRIX result)
 {
@@ -11,9 +10,9 @@ MATRIX mat_inv(MATRIX a, MATRIX result)
     if(MatRow(a)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
     A = mat_copy(a, NULL);
     B = mat_creat(n, 1, UNDEFINED);
-    if(result == NULL)result = mat_creat(n, n, UNDEFINED);
+    if(result==NULL) if((result = mat_creat(n, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
     P = mat_creat(n, 1, UNDEFINED);
-    if(mat_lu(A, P) == -1)
+    if(mat_lu(A, P)==-1)
     {
         mat_free(A);
         mat_free(B);
@@ -43,7 +42,7 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
     if(m!=n) return mat_error(MAT_SIZEMISMATCH);
     for(i=0; i<m; ++i) A[i][i]+= r_constant;
     B = mat_creat(n, 1, UNDEFINED);
-    if(result == NULL)result = mat_creat(n, n, UNDEFINED);
+    if(result==NULL) if((result = mat_creat(n, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
     P = mat_creat( n, 1, UNDEFINED );
     if(mat_lu(A, P)==-1)
     {
@@ -62,9 +61,8 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
     mat_free(A);
     mat_free(B);
     mat_free(P);
-    return (result);
+    return result;
 }
-
 
 MATRIX mat_chol(MATRIX a, MATRIX result)
 {
@@ -88,7 +86,6 @@ MATRIX mat_chol(MATRIX a, MATRIX result)
             }
         }
     }
-    return (result);
+    return result;
 }
-
 

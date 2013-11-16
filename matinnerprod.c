@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <math.h>
 #include "matrix.h"
+
 
 mtype mat_innerprod(MATRIX A, MATRIX B)
 {

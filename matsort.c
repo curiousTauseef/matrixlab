@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "matrix.h"
+
 
 mtype mat_median(MATRIX A)
 {
@@ -84,27 +84,27 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
             return matstack_error(MATSTACK_MALLOC);
     }
 
-    if(dim==1)
-    {
-        result[0] = mat_copy(A, NULL);
-        ind = mat_creat(n, m, UNDEFINED);
-        for(i=0; i<n; ++i)
-        {
-            for(j=0; j<m; ++j) ind[i][j] = j;
-            __quicksort(result[0], 0, m-1, i, ind);
-        }
-    }
-    else  if(dim==2)
+    if(dim==0)
     {
         B = mat_tran(A, NULL);
         ind = mat_creat(m, n, UNDEFINED);
         for(i=0; i<m; ++i)
         {
             for(j=0; j<n; ++j) ind[i][j] = j;
-            __quicksort(B, 0, n-1, i, ind);
+            __mat_quicksort(B, 0, n-1, i, ind);
         }
         result[0] = mat_tran(B, result[0]);
         mat_free(B);
+    }
+    else if(dim==1)
+    {
+        result[0] = mat_copy(A, NULL);
+        ind = mat_creat(n, m, UNDEFINED);
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j) ind[i][j] = j;
+            __mat_quicksort(result[0], 0, m-1, i, ind);
+        }
     }
     else gen_error(GEN_BAD_TYPE);
     result[1] = ind;
@@ -112,7 +112,7 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
     return result;
 }
 
-void __quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
+void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
 {
     mtype t;
     int i=l, m;
@@ -124,11 +124,11 @@ void __quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
     m = MatCol(a);
     if(l>=r) return;
 
-    while ( j > i )
+    while(j>i)
     {
-        while ( a[offset][i] <= pivot && i<m) i++ ;
-        while ( a[offset][j] > pivot && j>=0) j-- ;
-        if ( j > i )
+        while(a[offset][i]<=pivot && i<m) i++ ;
+        while(a[offset][j]>pivot && j>=0) j-- ;
+        if(j>i)
         {
             t = a[offset][i] ;
             a[offset][i] = a[offset][j] ;
@@ -149,8 +149,7 @@ void __quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
         ind[offset][l] = ind[offset][j];
         ind[offset][j] = pivot_ind;
     }
-    __quicksort(a,l,j-1, offset, ind);
-    __quicksort(a,j+1,r, offset, ind);
+    __mat_quicksort(a,l,j-1, offset, ind);
+    __mat_quicksort(a,j+1,r, offset, ind);
 }
-
 

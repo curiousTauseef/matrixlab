@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "matrix.h"
+
 
 MATRIX mat_tran( MATRIX A, MATRIX result)
 {
@@ -16,5 +16,4 @@ MATRIX mat_tran( MATRIX A, MATRIX result)
         }
     return (result);
 }
-
 

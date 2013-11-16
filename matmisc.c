@@ -1,9 +1,7 @@
-#include <stdio.h>
 #include <string.h>
-#include <math.h>
-#include <time.h>
 #include <stdlib.h>
 #include "matrix.h"
+
 
 int mats_isnan(mtype x)
 {
@@ -24,7 +22,7 @@ void mat_nextline(void)
     mat_fnextline(stdout);
 }
 
-void mat_fnextline( FILE *fp)
+void mat_fnextline(FILE *fp)
 {
     fprintf(fp, "\n");
 }
@@ -39,7 +37,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     p = MatCol(b);
     if(m<o && n==p && m==1)
     {
-        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<o; ++i)
         {
             for(j=0; j<n; ++j)
@@ -50,7 +48,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     }
     else if(m>o && n==p && o==1)
     {
-        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<m; ++i)
         {
             for(j=0; j<n; ++j)
@@ -61,7 +59,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     }
     else if(m==o && n<p && n==1)
     {
-        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<m; ++i)
         {
             for(j=0; j<p; ++j)
@@ -72,7 +70,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     }
     else if(m==o && n>p && p==1)
     {
-        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<m; ++i)
         {
             for(j=0; j<n; ++j)
@@ -83,7 +81,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     }
     else if(m==1 && p==1)
     {
-        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(o, n, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<o; ++i)
         {
             for(j=0; j<n; ++j)
@@ -94,7 +92,7 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
     }
     else if(n==1 && o==1)
     {
-        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED)) == NULL) return mat_error(MAT_MALLOC);
+        if(result== NULL) if((result = mat_creat(m, p, UNDEFINED))==NULL) return mat_error(MAT_MALLOC);
         for(i=0; i<m; ++i)
         {
             for(j=0; j<p; ++j)
@@ -110,9 +108,9 @@ MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mty
 INT_VECTOR int_vec_permute_vect(int n, int k, INT_VECTOR result)
 {
     int i, j, d;
-    if(result== NULL) if((result = int_vec_creat(k, SERIES_INT_VECTOR)) == NULL)
+    if(result== NULL) if((result = int_vec_creat(k, SERIES_INT_VECTOR))==NULL)
             return int_vec_error(INT_VEC_MALLOC);
-    for (i=0; i<n-1; i++)
+    for(i=0; i<n-1; i++)
     {
         j = result[i];
         d = i + (rand()%(n-i));
@@ -128,37 +126,36 @@ INT_VECTOR mat_get_sub_vector(INT_VECTOR data, INT_VECTOR indices)
     INT_VECTOR subvec;
     n = Int_VecLen(indices);
     subvec = int_vec_creat(n, UNDEFINED);
-    for (i=0; i<n; ++i)subvec[i] = data[indices[i]];
+    for(i=0; i<n; ++i)subvec[i] = data[indices[i]];
     return subvec;
 }
 
-
-MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX submat)
+MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX result)
 {
     int i, j, k, n;
     k = MatCol(data);
     n = Int_VecLen(indices);
-    if(submat== NULL)if ((submat = mat_creat(n, k, UNDEFINED)) == NULL)
+    if(result==NULL) if((result = mat_creat(n, k, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
-        for(j=0; j<k; ++j) submat[i][j] = data[indices[i]][j];
+        for(j=0; j<k; ++j) result[i][j] = data[indices[i]][j];
     }
-    return submat;
+    return result;
 }
 
-MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX submat)
+MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX result)
 {
     int i, j, k, n;
     k = MatRow(data);
     n = Int_VecLen(indices);
-    if(submat== NULL)if ((submat = mat_creat(k, n, UNDEFINED)) == NULL)
+    if(result==NULL) if((result = mat_creat(k, n, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
-        for(j=0; j<k; ++j) submat[j][i] = data[j][indices[i]];
+        for(j=0; j<k; ++j) result[j][i] = data[j][indices[i]];
     }
-    return submat;
+    return result;
 }
 
 MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result)
@@ -168,8 +165,6 @@ MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result)
     n = MatRow(data);
     m = MatCol(data);
     if(result==NULL) if((result = mat_creat(n, 1, ZERO_MATRIX))==NULL) return mat_error(MAT_MALLOC);;
-
-
     for(i=0; i<n; ++i)
     {
         dist = 0.0;
@@ -182,11 +177,6 @@ MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result)
     return result;
 }
 
-mtype _dist3_sq(mtype ux, mtype uy, mtype uz, mtype vx, mtype vy, mtype vz)
-{
-    return ((vx - ux)*(vx - ux) + (vy - uy)*(vy - uy) + (vz - uz)*(vz - uz));
-}
-
 INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range)
 {
     int i, count = 0, n;
@@ -196,12 +186,12 @@ INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range)
     n = MatRow(data);
     tmp0 = range*range;
     dist = mat_calc_dist_sq(data, curr_data, dist);
-    for (i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         if(dist[i][0]<tmp0)
         {
             ++count;
-            indices = (int*) realloc(indices, (count+1) * sizeof(int));
+            indices = (int*) realloc(indices, (count+1)*sizeof(int));
             indices[count] = i;
         }
     }
@@ -211,56 +201,93 @@ INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range)
     return indices;
 }
 
-MATRIX mat_pick_row(MATRIX data, int r)
+MATRIX mat_pick_row(MATRIX data, int r, MATRIX result)
 {
     int m, i;
-    MATRIX row;
     m = MatCol(data);
-    row = mat_creat(1, m, UNDEFINED);
-    for (i=0; i<m; ++i) row[0][i] = data[r][i];
-    return row;
+    if(result==NULL) if((result = mat_creat(1, m, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    for(i=0; i<m; ++i) result[0][i] = data[r][i];
+    return result;
 }
 
-MATRIX mat_pick_col(MATRIX data, int r)
+MATRIX mat_pick_col(MATRIX data, int c, MATRIX result)
 {
     int n, i;
-    MATRIX col;
     n = MatRow(data);
-    col = mat_creat(n, 1, UNDEFINED);
-    for (i=0; i<n; ++i) col[i][0] = data[i][r];
-    return col;
+    if(result==NULL) if((result = mat_creat(n, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    for(i=0; i<n; ++i) result[i][0] = data[i][c];
+    return result;
 }
 
-void _cart2pol(mtype x, mtype y, mtype *rho, mtype *th)
+void __mat_cart2pol(mtype x, mtype y, mtype *rho, mtype *th)
 {
     *rho = (mtype)sqrt(x*x + y*y);
     *th = (mtype)atan2(y, x);
 }
 
-MATRIX mat_cart2pol(MATRIX A, int dim)
+#define __cart2pol(x, y, rho, th)\
+{\
+    rho = (mtype)sqrt(x*x + y*y);\
+    th = (mtype)atan2(y, x);\
+}
+
+void __mat_pol2cart(mtype rho, mtype th, mtype *x, mtype *y)
+{
+    *x = (mtype)(rho*cos(th));
+    *y = (mtype)(rho*sin(th));
+}
+
+#define __pol2cart(rho, th, x, y)\
+{\
+    x = (mtype)(rho*cos(th));\
+    y = (mtype)(rho*sin(th));\
+}
+
+MATRIX mat_cart2pol(MATRIX A, int dim, MATRIX result)
 {
     int m, n, i;
-    MATRIX B;
     m = MatCol(A);
     n = MatRow(A);
-    if (dim==1 && n>1)
+    if(dim==0 && n>1)
     {
-        if((B = mat_creat(2, m, ZERO_MATRIX))==NULL) return NULL;
-        for (i = 0; i<m; ++i)
-            _cart2pol(A[0][i], A[1][i], &B[0][i], &B[1][i]);
-        return B;
+        if(result==NULL)if((result = mat_creat(2, m, ZERO_MATRIX))==NULL) return NULL;
+        for(i=0; i<m; ++i)
+            __cart2pol(A[0][i], A[1][i], result[0][i], result[1][i]);
+        return result;
     }
-    if (dim==2 && m>1)
+    if(dim==1 && m>1)
     {
-        if((B = mat_creat(n, 2, ZERO_MATRIX))==NULL) return NULL;
-        for (i = 0; i<n; ++i)
-            _cart2pol(A[i][0], A[i][1], &B[i][0], &B[i][1]);
-        return B;
+        if(result==NULL)if((result = mat_creat(n, 2, ZERO_MATRIX))==NULL) return NULL;
+        for(i=0; i<n; ++i)
+            __cart2pol(A[i][0], A[i][1], result[i][0], result[i][1]);
+        return result;
     }
     return mat_error (MAT_SIZEMISMATCH);
 }
 
-int __powerof2(int width, int *m, int *twopm)
+MATRIX mat_pol2cart(MATRIX A, int dim, MATRIX result)
+{
+    int m, n, i;
+    m = MatCol(A);
+    n = MatRow(A);
+    if(dim==0 && n>1)
+    {
+        if(result==NULL)if((result = mat_creat(2, m, ZERO_MATRIX))==NULL) return NULL;
+        for(i=0; i<m; ++i)
+            __pol2cart(A[0][i], A[1][i], result[0][i], result[1][i]);
+        return result;
+    }
+    if(dim==1 && m>1)
+    {
+        if(result==NULL)if((result = mat_creat(n, 2, ZERO_MATRIX))==NULL) return NULL;
+        for(i=0; i<n; ++i)
+            __pol2cart(A[i][0], A[i][1], result[i][0], result[i][1]);
+        return result;
+    }
+    return mat_error (MAT_SIZEMISMATCH);
+}
+
+int __mat_powerof2(int width, int *m, int *twopm)
 {
     *m = (int)ceil(log((mtype)width)/log((mtype)2.0));
     *twopm = (int)pow((mtype)2.0, (mtype)*m);

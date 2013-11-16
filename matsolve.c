@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <math.h>
 #include <malloc.h>
 #include "matrix.h"
-
 
 
 int mat_lu(MATRIX A, MATRIX P)
@@ -29,7 +26,7 @@ int mat_lu(MATRIX A, MATRIX P)
                 maxi = i;
             }
         }
-        if(k != maxi)
+        if(k!=maxi)
         {
             ++p;
             tmp = P[k][0];
@@ -77,24 +74,23 @@ void mat_backsubs1(MATRIX A, MATRIX B, MATRIX X, MATRIX P, int xcol)
     }
 }
 
-MATRIX mat_lsolve(MATRIX a, MATRIX b)
+MATRIX mat_lsolve(MATRIX a, MATRIX b, MATRIX result)
 {
-    MATRIX A, B, X, P;
+    MATRIX A, B, P;
     int n;
-
     n = MatCol(a);
     A = mat_copy(a, NULL);
     B = mat_copy(b, NULL);
-    X = mat_creat(n, 1, ZERO_MATRIX);
+    if(result==NULL) if((result = mat_creat(n, 1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
     P = mat_creat(n, 1, UNDEFINED);
 
     mat_lu(A, P);
-    mat_backsubs1(A, B, X, P, 0);
+    mat_backsubs1(A, B, result, P, 0);
 
     mat_free(A);
     mat_free(B);
     mat_free(P);
-    return (X);
+    return result;
 }
 
 MATRIX mat_cholesky(MATRIX a, MATRIX result)
@@ -133,5 +129,4 @@ MATRIX mat_cholesky(MATRIX a, MATRIX result)
     }
     return result;
 }
-
 
