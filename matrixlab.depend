@@ -726,7 +726,7 @@
 1384608523 source:c:\cwork\matrix\matconv.c
 	"matrix.h"
 
-1384609793 source:c:\cwork\matrix\matcreat.c
+1384612060 source:c:\cwork\matrix\matcreat.c
 	<malloc.h>
 	"matrix.h"
 
@@ -742,7 +742,7 @@
 	<stdio.h>
 	"matrix.h"
 
-1384608042 source:c:\cwork\matrix\matdump.c
+1384611096 source:c:\cwork\matrix\matdump.c
 	"matrix.h"
 
 1384608058 source:c:\cwork\matrix\matdurbn.c
@@ -752,7 +752,7 @@
 	<stdlib.h>
 	"matrix.h"
 
-1384603516 source:c:\cwork\matrix\matfft.c
+1384611682 source:c:\cwork\matrix\matfft.c
 	"matrix.h"
 
 1384606834 source:c:\cwork\matrix\matfilter.c
@@ -785,7 +785,7 @@
 1384607563 source:c:\cwork\matrix\matmean.c
 	"matrix.h"
 
-1384607711 source:c:\cwork\matrix\matmisc.c
+1384611543 source:c:\cwork\matrix\matmisc.c
 	<string.h>
 	<stdlib.h>
 	"matrix.h"
@@ -811,23 +811,21 @@
 	<stdlib.h>
 	"matrix.h"
 
-1382645389 source:c:\cwork\matrix\matsearch.c
-	<stdio.h>
+1384608870 source:c:\cwork\matrix\matsearch.c
 	"matrix.h"
 	<malloc.h>
 
-1384605322 source:c:\cwork\matrix\matsolve.c
+1384608898 source:c:\cwork\matrix\matsolve.c
 	<malloc.h>
 	"matrix.h"
 
 1384606818 source:c:\cwork\matrix\matsort.c
 	"matrix.h"
 
-1384605383 source:c:\cwork\matrix\matstdrels.c
-	<malloc.h>
+1384608926 source:c:\cwork\matrix\matstdrels.c
 	"matrix.h"
 
-1384605396 source:c:\cwork\matrix\matsub.c
+1384609991 source:c:\cwork\matrix\matsub.c
 	"matrix.h"
 
 1384604960 source:c:\cwork\matrix\matsubx.c
@@ -836,7 +834,7 @@
 1384604700 source:c:\cwork\matrix\matsum.c
 	"matrix.h"
 
-1384604218 source:c:\cwork\matrix\mattext.c
+1384609928 source:c:\cwork\matrix\mattext.c
 	<ctype.h>
 	<stdlib.h>
 	"matrix.h"
@@ -867,7 +865,7 @@
 	<stdio.h>
 	"matrix.h"
 
-1384604479 source:c:\cwork\matrix\matsvd.c
+1384609882 source:c:\cwork\matrix\matsvd.c
 	<stdlib.h>
 	"matrix.h"
 

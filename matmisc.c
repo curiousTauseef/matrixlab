@@ -27,7 +27,7 @@ void mat_fnextline(FILE *fp)
     fprintf(fp, "\n");
 }
 
-MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mtype))
+MATRIX mat_bsxfun(MATRIX a, MATRIX b, mtype (*pt2func)(mtype, mtype), MATRIX result)
 {
     int m, n, o, p, i, j;
     m = MatRow(a);

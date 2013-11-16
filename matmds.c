@@ -17,6 +17,11 @@ MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result)
     return result;
 }
 
+mtype __mat_mulfunc(mtype x, mtype y)
+{
+    return (x*y);
+}
+
 MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
 {
     MATRIX P = NULL, B = NULL, J = NULL, tmp = NULL;
@@ -43,9 +48,8 @@ MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
     tmp = mat_get_sub_matrix_from_rows(E[0], tmp2, NULL);
     tmp = mat_gfunc(tmp, __mat_sqrt, tmp);
 
-    mat_free(B);
-    B = mat_creat_diag(tmp, NULL); /* change to bsxfun */
-    result = mat_mul(J, B, result);
+    B = mat_tran(tmp, NULL);
+    result = mat_bsxfun(J, B, __mat_mulfunc, result);
     mat_free(J);
     mat_free(tmp);
     mat_free(B);

@@ -540,7 +540,7 @@ mtype __mat_arctanh(mtype x);
 MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_gfunc(MATRIX A, mtype (*pt2func)(mtype), MATRIX result);
-MATRIX mat_bsxfun(MATRIX a, MATRIX b, MATRIX result, mtype (*pt2func)(mtype, mtype));
+MATRIX mat_bsxfun(MATRIX a, MATRIX b, mtype (*pt2func)(mtype, mtype), MATRIX result);
 
 /******************************************/
 /* statistical analysis tools */
