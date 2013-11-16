@@ -455,7 +455,7 @@ MATRIX mat_inv(MATRIX a, MATRIX result);
 MATRIX mat_pinv(MATRIX a, MATRIX result);
 MATRIX mat_wpinv(MATRIX a, MATRIX w, MATRIX result);
 MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result);
-MATRIX mat_symtoeplz(MATRIX R);
+MATRIX mat_symtoeplz(MATRIX R, MATRIX result);
 
 /******************************************/
 /* linear system equation solver */
