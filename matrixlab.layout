@@ -14,7 +14,7 @@
 		<Cursor position="422" topLine="0" />
 	</File>
 	<File name="matcreat.c" open="0" top="0" tabpos="3">
-		<Cursor position="4423" topLine="192" />
+		<Cursor position="8472" topLine="387" />
 	</File>
 	<File name="matdatastruct.c" open="0" top="0" tabpos="2">
 		<Cursor position="0" topLine="0" />
@@ -49,8 +49,8 @@
 	<File name="matfuncs.c" open="0" top="0" tabpos="4">
 		<Cursor position="41" topLine="0" />
 	</File>
-	<File name="matgraph.c" open="0" top="0" tabpos="4">
-		<Cursor position="94" topLine="0" />
+	<File name="matgraph.c" open="0" top="0" tabpos="3">
+		<Cursor position="72" topLine="10" />
 	</File>
 	<File name="matinnerprod.c" open="0" top="0" tabpos="2">
 		<Cursor position="21" topLine="0" />
@@ -91,8 +91,8 @@
 	<File name="matrand.c" open="0" top="0" tabpos="2">
 		<Cursor position="18" topLine="0" />
 	</File>
-	<File name="matrix.h" open="1" top="0" tabpos="1">
-		<Cursor position="15039" topLine="523" />
+	<File name="matrix.h" open="1" top="1" tabpos="2">
+		<Cursor position="8120" topLine="361" />
 	</File>
 	<File name="matsearch.c" open="0" top="0" tabpos="5">
 		<Cursor position="6171" topLine="0" />

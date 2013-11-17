@@ -22,7 +22,7 @@ MATRIX mat_inv(MATRIX a, MATRIX result)
     }
     for(i=0; i<n; ++i)
     {
-        mat_fill(B, ZERO_MATRIX);
+        mat_fill_type(B, ZERO_MATRIX);
         B[i][0] = 1.0;
         mat_backsubs1(A, B, result, P, i);
     }
@@ -54,7 +54,7 @@ MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
     }
     for(i=0; i<n; ++i)
     {
-        mat_fill(B, ZERO_MATRIX);
+        mat_fill_type(B, ZERO_MATRIX);
         B[i][0] = 1.0;
         mat_backsubs1(A, B, result, P, i);
     }

@@ -23,7 +23,7 @@ MATRIX mat_creat(int row, int col, int type)
     MATRIX A;
     if((A =__mat_creat(row, col))!=NULL)
     {
-        return (mat_fill(A, type));
+        return (mat_fill_type(A, type));
     }
     else
         return NULL;
@@ -80,7 +80,20 @@ int matstack_free(MATSTACK A)
     return 1;
 }
 
-MATRIX mat_fill(MATRIX A, int type)
+MATRIX mat_fill(MATRIX A, mtype val)
+{
+    int i, j, m, n;
+    m = MatCol(A);
+    n = MatRow(A);
+    #pragma omp parallel for private(j)
+    for(i=0; i<n; ++i)
+        for(j=0; j<m; ++j)
+            A[i][j] = val;
+    return A;
+}
+
+
+MATRIX mat_fill_type(MATRIX A, int type)
 {
     int i, j, m, n;
     m = MatCol(A);
@@ -144,13 +157,21 @@ INT_VECTOR int_vec_creat(int length, int type)
     INT_VECTOR A;
     if((A =__int_vec_creat(length))!=NULL)
     {
-        return (int_vec_fill(A, type));
+        return (int_vec_fill_type(A, type));
     }
     else
         return NULL;
 }
 
-INT_VECTOR int_vec_fill(INT_VECTOR A, int type)
+INT_VECTOR int_vec_fill(INT_VECTOR A, int val)
+{
+    int	i, n;
+    n = Int_VecLen(A);
+    for(i=0; i<n; ++i) A[i] = val;
+    return A;
+}
+
+INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type)
 {
     int	i, n;
     n = Int_VecLen(A);
@@ -168,7 +189,7 @@ INT_VECTOR int_vec_fill(INT_VECTOR A, int type)
         for(i=0; i<n; ++i) A[i] = i;
         break;
     }
-    return(A);
+    return A;
 }
 
 int int_vec_free(INT_VECTOR A)
@@ -400,7 +421,6 @@ int mat_fgetmat(MATRIX A, FILEPOINTER fp)
     int i, j, k=0, m, n;
     m = MatCol(A);
     n = MatRow(A);
-    #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
 #if mtype_n == 0
         for(j=0; j<m; ++j) k += fscanf(fp, "%f", &A[i][j]);

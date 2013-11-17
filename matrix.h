@@ -341,7 +341,8 @@ int mats_isinf(mtype x);
 
 INT_VECTOR __int_vec_creat(int length);
 INT_VECTOR int_vec_creat(int length, int type);
-INT_VECTOR int_vec_fill(INT_VECTOR A, int type);
+INT_VECTOR int_vec_fill(INT_VECTOR A, int val);
+INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type);
 int int_vec_free(INT_VECTOR A);
 
 /******************************************/
@@ -352,7 +353,8 @@ int int_vecstack_free(INT_VECSTACK A);
 MATRIX __mat_creat(int r, int c);
 MATRIX mat_creat(int r, int c, int type);
 MATRIX mat_creat_diag(MATRIX diag_vals, MATRIX result);
-MATRIX mat_fill(MATRIX A, int v);
+MATRIX mat_fill(MATRIX A, mtype val);
+MATRIX mat_fill_type(MATRIX A, int type);
 int mat_free(MATRIX A);
 
 /******************************************/
