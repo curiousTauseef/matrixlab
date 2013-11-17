@@ -142,12 +142,12 @@ typedef struct __mathead
 {
     int row;
     int col;
-}	MATHEAD;
+} MATHEAD;
 typedef struct __matbody
 {
     MATHEAD head;
     mtype *matrix;
-}	MATBODY;
+} MATBODY;
 typedef mtype **MATRIX;
 
 /******************************************/
