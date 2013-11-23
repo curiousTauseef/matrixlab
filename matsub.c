@@ -8,7 +8,6 @@ MATRIX mat_sub(MATRIX A, MATRIX B, MATRIX result)
     n = MatRow(A);
     o = MatCol(B);
     p = MatRow(B);
-
     if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
