@@ -46,7 +46,7 @@ MATRIX mat_vectorize(MATRIX A, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
     if(result==A) flag =1;
-    if(result== NULL|| result ==A)if((result = mat_creat( MatNumel(A), 1, UNDEFINED )) == NULL)
+    if(result==NULL || result==A)if((result = mat_creat( MatNumel(A), 1, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
 
     #pragma omp parallel for private(j)
@@ -66,7 +66,7 @@ MATRIX mat_vectorize_tr(MATRIX A, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
     if(result==A) flag =1;
-    if(result== NULL|| result ==A)if((result = mat_creat(1, MatNumel(A), UNDEFINED )) == NULL)
+    if(result==NULL || result==A)if((result = mat_creat(1, MatNumel(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
 
     #pragma omp parallel for private(j)
