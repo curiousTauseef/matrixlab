@@ -9,7 +9,7 @@ SEARCH_TREE mat_bs_make_null(void)
 
 SEARCH_TREE mat_bs_free(SEARCH_TREE T)
 {
-    if(T != NULL)
+    if(T!=NULL)
     {
         mat_bs_free(T->left);
         mat_bs_free(T->right);
@@ -26,7 +26,7 @@ SEARCH_TREE mat_bs_find( mtype x, SEARCH_TREE T)
     else return T;
 }
 
-SEARCH_TREE mat_bs_find_min( SEARCH_TREE T )
+SEARCH_TREE mat_bs_find_min(SEARCH_TREE T)
 {
     if(T!=NULL)
         while(T->left!= NULL) T = T->left;
@@ -57,7 +57,7 @@ SEARCH_TREE mat_bs_insert(mtype x, SEARCH_TREE T)
     return T;
 }
 
-SEARCH_TREE mat_bs_delete( mtype x, SEARCH_TREE T )
+SEARCH_TREE mat_bs_delete(mtype x, SEARCH_TREE T)
 {
     SEARCH_TREE tmp_cell, child = 0;
     if(T==NULL) gen_error(GEN_NOT_FOUND);
@@ -72,8 +72,8 @@ SEARCH_TREE mat_bs_delete( mtype x, SEARCH_TREE T )
     else
     {
         tmp_cell = T;
-        if(T->left == NULL) child = T->right;
-        if(T->right == NULL) child = T->left;
+        if(T->left==NULL) child = T->right;
+        if(T->right==NULL) child = T->left;
         free(tmp_cell);
         return child;
     }
@@ -82,10 +82,10 @@ SEARCH_TREE mat_bs_delete( mtype x, SEARCH_TREE T )
 
 int mat_bs_inorder(SEARCH_TREE T, int index, mtype **p_ordered)
 {
-    if(T != NULL)
+    if(T!=NULL)
     {
         index = mat_bs_inorder(T->left, index, p_ordered);
-        if((*p_ordered = (mtype *) realloc(*p_ordered, sizeof(mtype)*(index+ 1))) == NULL) gen_error(GEN_MALLOC);
+        if((*p_ordered = (mtype *)realloc(*p_ordered, sizeof(mtype)*(index+ 1)))==NULL) gen_error(GEN_MALLOC);
         (*p_ordered)[index++] = T->element;
         index = mat_bs_inorder(T->right, index, p_ordered);
     }
@@ -111,7 +111,7 @@ int int_stack_free(INT_STACK s)
 
 void int_stack_push(INT_STACK s, int value)
 {
-    if(s->p >=s->length)
+    if(s->p>=s->length)
     {
         if((s->stack = (int *)realloc(s->stack, sizeof(int)*(s->length+STACK_MAX)))==NULL) stack_error(STACK_MALLOC);
         s->length += STACK_MAX;
@@ -147,14 +147,14 @@ int mat_mtype_stack_free(MAT_MTYPE_STACK s)
 {
     if(s==NULL) return 0;
     free(s->stack);
-    return (1);
+    return 1;
 }
 
 void mat_mtype_stack_push(MAT_MTYPE_STACK s, mtype value)
 {
-    if(s->p >=s->length)
+    if(s->p>=s->length)
     {
-        if((s->stack = (mtype *)realloc(s->stack, sizeof(mtype) * (s->length + STACK_MAX)))==NULL) stack_error(STACK_MALLOC);
+        if((s->stack = (mtype *)realloc(s->stack, sizeof(mtype)*(s->length+STACK_MAX)))==NULL) stack_error(STACK_MALLOC);
         s->length += STACK_MAX;
     }
     s->stack[s->p++] =  value;
@@ -162,12 +162,12 @@ void mat_mtype_stack_push(MAT_MTYPE_STACK s, mtype value)
 
 mtype mat_mtype_stack_pop(MAT_MTYPE_STACK s)
 {
-    if(s->p > 0 )
+    if(s->p>0)
     {
         return s->stack[(--s->p)];
     }
     else stack_error(STACK_EMPTY);
-    return  0;
+    return 0;
 }
 
 int mat_mtype_stack_is_empty(MAT_MTYPE_STACK s)
@@ -178,17 +178,17 @@ int mat_mtype_stack_is_empty(MAT_MTYPE_STACK s)
 INT_QUEUE int_queue_creat(void)
 {
     INT_QUEUE s;
-    if((s= (INT_QUEUE)malloc( sizeof(struct int_queue) )  ) == NULL) queue_error(QUEUE_MALLOC);
+    if((s = (INT_QUEUE)malloc(sizeof(struct int_queue)))==NULL) queue_error(QUEUE_MALLOC);
     s->p = 0;
-    s->head =NULL;
+    s->head = NULL;
     s->tail = NULL;
     return s;
 }
 
 int int_queue_free(INT_QUEUE s)
 {
-    if (s == NULL)  return (0);
-    if(s->head!= NULL)
+    if(s==NULL) return 0;
+    if(s->head!=NULL)
     {
         QINTDATA t;
         while(s->head!=NULL)
@@ -197,7 +197,7 @@ int int_queue_free(INT_QUEUE s)
             s->head = s->head->next;
             free(t);
         }
-        s->tail =NULL;
+        s->tail = NULL;
     }
     return 1;
 }
@@ -205,12 +205,12 @@ int int_queue_free(INT_QUEUE s)
 void int_queue_enqueue(INT_QUEUE s, int value)
 {
     QINTDATA t;
-    if ((t =  (QINTDATA)malloc( sizeof(qintdata))  ) == NULL) queue_error(QUEUE_MALLOC);
+    if((t = (QINTDATA)malloc(sizeof(qintdata)))==NULL) queue_error(QUEUE_MALLOC);
     t->next=NULL;
     t->data = value;
     if(s->head==NULL)
     {
-        s->tail=t;
+        s->tail = t;
         s->head = s->tail;
     }
     else
@@ -218,25 +218,25 @@ void int_queue_enqueue(INT_QUEUE s, int value)
         s->tail->next = t;
         s->tail =t;
     }
-    s->p++;
+    ++(s->p);
 }
 
 int int_queue_dequeue(INT_QUEUE s)
 {
-    int  value;
+    int value;
     QINTDATA t;
     if(s->head==NULL) queue_error(QUEUE_EMPTY);
     t = s->head->next;
     value = s->head->data;
     free(s->head);
-    s->p--;
+    --(s->p);
 
     if(t==NULL)
     {
         s->head = NULL;
-        s->tail= NULL;
+        s->tail = NULL;
     }
-    else s->head=t;
+    else s->head = t;
     return value;
 }
 
@@ -248,7 +248,7 @@ int int_queue_is_empty(INT_QUEUE s)
 MAT_MTYPE_QUEUE mat_mtype_queue_creat(void)
 {
     MAT_MTYPE_QUEUE s;
-    if((s = (MAT_MTYPE_QUEUE)malloc( sizeof(struct mat_mtype_queue))) == NULL) queue_error(QUEUE_MALLOC);
+    if((s = (MAT_MTYPE_QUEUE)malloc(sizeof(struct mat_mtype_queue)))==NULL) queue_error(QUEUE_MALLOC);
     s->p = 0;
     s->head = NULL;
     s->tail = NULL;
@@ -276,19 +276,19 @@ void mat_mtype_queue_enqueue(MAT_MTYPE_QUEUE s, mtype value)
 {
     QMDATA t;
     if((t = (QMDATA)malloc(sizeof(qmdata)))==NULL) queue_error(QUEUE_MALLOC);
-    t->next=NULL;
+    t->next = NULL;
     t->data = value;
     if(s->head==NULL)
     {
-        s->tail=t;
+        s->tail = t;
         s->head = s->tail;
     }
     else
     {
         s->tail->next = t;
-        s->tail =t;
+        s->tail = t;
     }
-    s->p++;
+    ++(s->p);
 }
 
 mtype mat_mtype_queue_dequeue(MAT_MTYPE_QUEUE s)
@@ -299,14 +299,13 @@ mtype mat_mtype_queue_dequeue(MAT_MTYPE_QUEUE s)
     t = s->head->next;
     value = s->head->data;
     free(s->head);
-    s->p--;
-
+    --(s->p);
     if(t==NULL)
     {
         s->head = NULL;
         s->tail = NULL;
     }
-    else s->head=t;
+    else s->head = t;
     return value;
 }
 
@@ -316,15 +315,15 @@ int mat_mtype_queue_is_empty(MAT_MTYPE_QUEUE s)
 }
 
 #ifndef INT_MAX
-#define INT_MAX		2147483647
-#define INT_MIN		(-INT_MAX-1)
+#define INT_MAX 2147483647
+#define INT_MIN (-INT_MAX-1)
 #endif
 
 INT_PRIORITYQUEUE int_priorityqueue_creat()
 {
     INT_PRIORITYQUEUE H;
     if((H = (INT_PRIORITYQUEUE) malloc(sizeof(int_priorityqueue)))==NULL) pq_error(PQ_MALLOC);
-    if((H->element = (PQINTDATA) malloc((STACK_MAX+1)*sizeof(pqintdata)))==NULL ) pq_error(PQ_MALLOC);
+    if((H->element = (PQINTDATA) malloc((STACK_MAX+1)*sizeof(pqintdata)))==NULL) pq_error(PQ_MALLOC);
     H->length = STACK_MAX;
     H->p = 0;
     H->element[0].priority = INT_MAX;
@@ -340,7 +339,7 @@ void int_priorityqueue_enqueue(INT_PRIORITYQUEUE H, int data, int priority)
         if((H->element = (PQINTDATA)realloc(H->element, sizeof(pqintdata)*(H->length+STACK_MAX+1)))==NULL) pq_error(PQ_MALLOC);
         H->length += STACK_MAX;
     }
-    i = ++H->p;
+    i = ++(H->p);
     while(H->element[i/2].priority<priority)
     {
         H->element[i] = H->element[i/2];
@@ -361,11 +360,11 @@ int int_priorityqueue_dequeue(INT_PRIORITYQUEUE H)
     }
     min_element = H->element[1];
     last_element = H->element[H->p--];
-    for( i=1; i*2 <= H->p; i=child )
+    for(i=1; i*2<=H->p; i=child)
     {
         child = i*2;
-        if((child != H->p) && ( H->element[child+1].priority > H->element[child].priority ) ) child++;
-        if( last_element.priority < H->element[child].priority)  H->element[i] = H->element[child];
+        if((child!=H->p) && (H->element[child+1].priority>H->element[child].priority)) ++child;
+        if(last_element.priority<H->element[child].priority) H->element[i] = H->element[child];
         else break;
     }
     H->element[i] = last_element;
@@ -384,17 +383,16 @@ int int_priorityqueue_free(INT_PRIORITYQUEUE H)
 int int_priorityqueue_update(INT_PRIORITYQUEUE H, int data, int priority, int type)
 {
     int i, child, p = 0;
-    /* linear search */
-    for(i=1; i<=H->p; ++i) if(H->element[i].data==data) p =i;
+    for(i=1; i<=H->p; ++i) if(H->element[i].data==data) p = i;
     if(p!=0)
     {
         if((type==0 || type==2) && H->element[p].priority>priority)
         {
-            for(i=p; (i*2)<= H->p; i=child)
+            for(i=p; (i*2)<=H->p; i=child)
             {
                 child = i*2;
-                if((child!=H->p)&&( H->element[child+1].priority<H->element[child].priority)) child++;
-                if(priority>H->element[child].priority)  H->element[i] = H->element[child];
+                if((child!=H->p)&&(H->element[child+1].priority<H->element[child].priority)) ++child;
+                if(priority>H->element[child].priority) H->element[i] = H->element[child];
                 else break;
             }
             H->element[i].data = data;
