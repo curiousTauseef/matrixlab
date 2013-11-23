@@ -4,7 +4,7 @@
 
 MATRIX mat_pinv(MATRIX a, MATRIX result)
 {
-    MATRIX	D, T;
+    MATRIX D, T;
     T = mat_tran(a, NULL);
     D = mat_mul(T, a, NULL);
     D = mat_inv(D, D);
@@ -17,7 +17,7 @@ MATRIX mat_pinv(MATRIX a, MATRIX result)
 
 MATRIX mat_wpinv(MATRIX a, MATRIX w, MATRIX result)
 {
-    MATRIX	D, B, T;
+    MATRIX D, B, T;
     T = mat_tran(a, NULL);
     D = mat_mul(T, w, NULL);
     B = mat_mul(D, a, NULL);
