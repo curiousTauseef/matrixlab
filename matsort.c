@@ -24,7 +24,7 @@ mtype mat_median(MATRIX A)
             if(B[0][i]<pivot)
             {
                 __swap(i, pos);
-            ++pos;
+                ++pos;
             }
         }
         __swap(right, pos);
