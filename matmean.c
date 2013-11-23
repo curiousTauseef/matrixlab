@@ -13,7 +13,7 @@ mtype mat_mean(MATRIX A)
 
 MATRIX mat_mean_row(MATRIX A, MATRIX result)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     if(result==NULL) if((result = mat_creat(n, 1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
@@ -28,7 +28,7 @@ MATRIX mat_mean_row(MATRIX A, MATRIX result)
 
 MATRIX mat_mean_col(MATRIX A, MATRIX result)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     if(result==NULL) if((result = mat_creat(1, m, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
