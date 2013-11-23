@@ -78,12 +78,11 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
     MATRIX B = NULL, ind = NULL;
     m = MatCol(A);
     n = MatRow(A);
-    if(result== NULL)
+    if(result==NULL)
     {
         if((result = matstack_creat(2))==NULL)
             return matstack_error(MATSTACK_MALLOC);
     }
-
     if(dim==0)
     {
         B = mat_tran(A, NULL);
@@ -120,10 +119,8 @@ void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
     mtype pivot=a[offset][l];
     mtype pivot_ind=0;
     if(ind!=NULL) pivot_ind = ind[offset][l];
-
     m = MatCol(a);
     if(l>=r) return;
-
     while(j>i)
     {
         while(a[offset][i]<=pivot && i<m) ++i;
@@ -141,7 +138,6 @@ void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
             }
         }
     }
-
     a[offset][l] = a[offset][j];
     a[offset][j] = pivot;
     if(ind!=NULL)
