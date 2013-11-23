@@ -8,7 +8,7 @@ mtype mat_mean(MATRIX A)
     m = MatCol(A);
     n = MatRow(A);
     mn = mat_sum(A)/(m*n);
-    return (mn);
+    return mn;
 }
 
 MATRIX mat_mean_row(MATRIX A, MATRIX result)
