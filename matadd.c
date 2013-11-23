@@ -10,7 +10,6 @@ MATRIX mat_add(MATRIX A, MATRIX B, MATRIX C)
     p = MatRow(B);
     if(C==NULL) if((C = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
