@@ -15,23 +15,23 @@ mtype mat_median(MATRIX A)
 		B[0][(a)] = B[0][(b)];\
         B[0][(b)] = t;\
 	}
-	while(left<right)
+    while(left<right)
     {
-		pivot = B[0][k];
-		__swap(k, right);
-		for(i=pos=left; i<right; ++i)
-		{
-		    if(B[0][i]<pivot)
-			{
-			    __swap(i, pos);
-				++pos;
-			}
-		}
-		__swap(right, pos);
-		if(pos==k) break;
-		if(pos<k) left = pos+1;
-		else right = pos-1;
-	}
+        pivot = B[0][k];
+        __swap(k, right);
+        for(i=pos=left; i<right; ++i)
+        {
+    	    if(B[0][i]<pivot)
+    		{
+    		    __swap(i, pos);
+    			++pos;
+    		}
+    	}
+    	__swap(right, pos);
+    	if(pos==k) break;
+    	if(pos<k) left = pos+1;
+    	else right = pos-1;
+    }
 	med = B[0][k];
     mat_free(B);
     return med;
