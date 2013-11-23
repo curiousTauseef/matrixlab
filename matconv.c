@@ -57,7 +57,7 @@ MATRIX mat_vectorize(MATRIX A, MATRIX result)
             ++k;
         }
     if(flag) mat_free(A);
-    return (result);
+    return result;
 }
 
 MATRIX mat_vectorize_tr(MATRIX A, MATRIX result)
@@ -77,6 +77,6 @@ MATRIX mat_vectorize_tr(MATRIX A, MATRIX result)
             ++k;
         }
     if(flag) mat_free(A);
-    return (result);
+    return result;
 }
 
