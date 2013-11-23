@@ -50,23 +50,23 @@ mtype mat_order_statistic(MATRIX A, int k)
 		B[0][(a)] = B[0][(b)];\
         B[0][(b)] = t;\
 	}
-	while(left<right)
+    while(left<right)
     {
-		pivot = B[0][k];
-		__swap(k, right);
-		for(i=pos=left; i<right; ++i)
-		{
-			if(B[0][i]<pivot)
-			{
-				__swap(i, pos);
-				++pos;
-			}
-		}
-		__swap(right, pos);
-		if(pos==k) break;
-		if(pos<k) left = pos+1;
-		else right = pos-1;
-	}
+        pivot = B[0][k];
+        __swap(k, right);
+        for(i=pos=left; i<right; ++i)
+        {
+            if(B[0][i]<pivot)
+            {
+                __swap(i, pos);
+                ++pos;
+            }
+        }
+        __swap(right, pos);
+        if(pos==k) break;
+        if(pos<k) left = pos+1;
+        else right = pos-1;
+    }
     korder = B[0][k];
     mat_free(B);
     return korder;
@@ -80,7 +80,7 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
     n = MatRow(A);
     if(result== NULL)
     {
-        if ((result = matstack_creat(2)) == NULL)
+        if((result = matstack_creat(2))==NULL)
             return matstack_error(MATSTACK_MALLOC);
     }
 
@@ -126,8 +126,8 @@ void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
 
     while(j>i)
     {
-        while(a[offset][i]<=pivot && i<m) i++ ;
-        while(a[offset][j]>pivot && j>=0) j-- ;
+        while(a[offset][i]<=pivot && i<m) ++i;
+        while(a[offset][j]>pivot && j>=0) --j;
         if(j>i)
         {
             t = a[offset][i] ;
