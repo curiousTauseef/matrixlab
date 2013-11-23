@@ -14,8 +14,8 @@ MATRIX mat_durbin(MATRIX R, MATRIX result)
     E[0][0] = R[0][0];
     for(i=1; i<=p; ++i)
     {
-        K[i][0] = W[i-1][0] / E[i-1][0];
-        E[i][0] = E[i-1][0] * (1.0f - K[i][0] * K[i][0]);
+        K[i][0] = W[i-1][0]/E[i-1][0];
+        E[i][0] = E[i-1][0]*(1.0f - K[i][0]*K[i][0]);
         A[i][i] = -K[i][0];
         i1 = i-1;
         if(i1>=1)
@@ -23,14 +23,14 @@ MATRIX mat_durbin(MATRIX R, MATRIX result)
             for(j=1; j<=i1; ++j)
             {
                 ji = i-j;
-                A[j][i] = A[j][i1] - K[i][0] * A[ji][i1];
+                A[j][i] = A[j][i1]-K[i][0]*A[ji][i1];
             }
         }
         if(i!=p)
         {
             W[i][0] = R[i+1][0];
             for(j=1; j<=i; ++j)
-                W[i][0] += A[j][i] * R[i-j+1][0];
+                W[i][0] += A[j][i]*R[i-j+1][0];
         }
     }
     if(result==NULL) if((result = mat_creat(p, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
@@ -90,7 +90,7 @@ MATSTACK mat_qr(MATRIX A, MATSTACK qr)
         for(j=i; j<m; ++j)
         {
             u[j][0] = tmp3[j][i];
-            mag += u[j][0] * u[j][0];
+            mag += u[j][0]*u[j][0];
         }
         mag = sqrt(mag);
         alpha = u[i][0]<0?mag:-mag;
@@ -98,11 +98,11 @@ MATSTACK mat_qr(MATRIX A, MATSTACK qr)
         for(j=i; j<m; ++j)
         {
             v[j][0] = ((j==i)?(u[j][0]+alpha):u[j][0]);
-            mag += v[j][0] * v[j][0];
+            mag += v[j][0]*v[j][0];
         }
         mag = __mat_sqrt(mag);
-        if(mag < eps) continue;
-        for(j=i; j<m; ++j) v[j][0] /= mag;
+        if(mag<eps) continue;
+        for(j=i; j<m; ++j) v[j][0]/= mag;
         tmp = mat_tran(v, tmp);
         P = mat_mul(v, tmp, P);
         P = mat_muls(P, -2.0, P);
