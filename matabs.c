@@ -7,7 +7,7 @@ MATRIX mat_abs(MATRIX A, MATRIX result)
     m = MatCol(A);
     n = MatRow(A);
 
-    if(result==NULL)if((result = mat_creat( n, m, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
         return (NULL);
 
     #pragma omp parallel for private(j)
