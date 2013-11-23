@@ -3,7 +3,7 @@
 
 MATRIX mat_sub(MATRIX A, MATRIX B, MATRIX result)
 {
-    int	i, j, m, n, o, p;
+    int i, j, m, n, o, p;
     m = MatCol(A);
     n = MatRow(A);
     o = MatCol(B);
@@ -25,7 +25,7 @@ MATRIX mat_sub(MATRIX A, MATRIX B, MATRIX result)
 
 MATRIX mat_subs(MATRIX A, mtype s, MATRIX result)
 {
-	int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
@@ -58,7 +58,7 @@ INT_VECTOR int_vec_subs(INT_VECTOR A, int x, INT_VECTOR result)
     if(result==NULL) if((result = int_vec_creat(m, UNDEFINED))==NULL)
         int_vec_error(INT_VEC_MALLOC);
     #pragma omp parallel for
-    for(i=0; i<m; ++i) result[i] = A[i] - x;
+    for(i=0; i<m; ++i) result[i] = A[i]-x;
     return result;
 }
 
