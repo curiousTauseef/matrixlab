@@ -4,18 +4,18 @@
 MATRIX mat_dump(MATRIX A)
 {
     char s[] = "%g ";
-    return(mat_fdumpf(A, s, stdout));
+    return mat_fdumpf(A, s, stdout);
 }
 
 MATRIX mat_dumpf(MATRIX A, const char *s)
 {
-    return (mat_fdumpf(A, s, stdout));
+    return mat_fdumpf(A, s, stdout);
 }
 
 MATRIX mat_fdump(MATRIX A, FILE *fp)
 {
     char s[] = "%f ";
-    return (mat_fdumpf(A, s, fp));
+    return mat_fdumpf(A, s, fp);
 }
 
 MATRIX mat_fdumpf(MATRIX A, const char *s, FILE *fp)
@@ -33,24 +33,24 @@ MATRIX mat_fdumpf(MATRIX A, const char *s, FILE *fp)
         fprintf(fp, "\n");
     }
     fflush(fp);
-    return (A);
+    return A;
 }
 
 INT_VECTOR int_vec_dump(INT_VECTOR A)
 {
     char s[] = "%d ";
-    return(int_vec_fdumpf(A, s, stdout));
+    return int_vec_fdumpf(A, s, stdout);
 }
 
 INT_VECTOR int_vec_dumpf(INT_VECTOR A, const char *s)
 {
-    return (int_vec_fdumpf(A, s, stdout));
+    return int_vec_fdumpf(A, s, stdout);
 }
 
 INT_VECTOR int_vec_fdump(INT_VECTOR A, FILE *fp)
 {
     char s[] = "%d ";
-    return (int_vec_fdumpf(A, s, fp));
+    return int_vec_fdumpf(A, s, fp);
 }
 
 INT_VECTOR int_vec_fdumpf(INT_VECTOR A, const char *s, FILE *fp)
