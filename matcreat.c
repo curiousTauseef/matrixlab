@@ -165,7 +165,7 @@ INT_VECTOR int_vec_creat(int length, int type)
 
 INT_VECTOR int_vec_fill(INT_VECTOR A, int val)
 {
-    int	i, n;
+    int i, n;
     n = Int_VecLen(A);
     for(i=0; i<n; ++i) A[i] = val;
     return A;
@@ -173,7 +173,7 @@ INT_VECTOR int_vec_fill(INT_VECTOR A, int val)
 
 INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type)
 {
-    int	i, n;
+    int i, n;
     n = Int_VecLen(A);
     switch(type)
     {
@@ -194,9 +194,9 @@ INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type)
 
 int int_vec_free(INT_VECTOR A)
 {
-    if(A==NULL) return(0);
+    if(A==NULL) return 0;
     Int_VecLen(A) = 0;
-    free( A-1);
+    free(A-1);
     A = NULL;
     return 1;
 }
@@ -232,7 +232,7 @@ int int_vecstack_free(INT_VECSTACK A)
 {
     int i, n;
     if(A==NULL)
-        return (0);
+        return 0;
     n = Int_VecStackLength(A);
     A = A-1;
     for(i=0; i<=n; ++i)
@@ -279,7 +279,7 @@ PERCEPTRON pat_perceptron_creat(void)
 
 int pat_perceptron_free(PERCEPTRON a)
 {
-    if(a->istrained!=0)mat_free(a->class_weights);
+    if(a->istrained!=0) mat_free(a->class_weights);
     int_vec_free(a->class_labels);
     free(a);
     a = NULL;
@@ -317,18 +317,18 @@ INT_VECTOR int_vec_append(INT_VECTOR A, int i)
 
 INT_VECTOR int_vec_copy(INT_VECTOR a)
 {
-    int	i, m;
+    int i, m;
     INT_VECTOR b;
     m = Int_VecLen(a);
-    if((b = int_vec_creat(m, UNDEFINED )) == NULL)
-        return (NULL);
+    if((b = int_vec_creat(m, UNDEFINED))==NULL)
+        return NULL;
     for(i=0; i<m; ++i) b[i] = a[i];
     return b;
 }
 
 MATRIX mat_copy(MATRIX A, MATRIX result)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
@@ -344,7 +344,7 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
 
 MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
     if(si<0 || sj<0 || ei>n || ei>m) mat_error(MAT_SIZEMISMATCH);
@@ -361,7 +361,7 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
 
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
 {
-    int	i, j, m, n;
+    int i, j, m, n;
     m = MatCol(A11)+MatCol(A12);
     n = MatRow(A11)+MatRow(A21);
     if(result== NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL)
@@ -396,7 +396,7 @@ MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
 
 MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result)
 {
-    int	i, n;
+    int i, n;
     n = MatCol(result);
     for(i=0; i<n; ++i)
     {
@@ -407,7 +407,7 @@ MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result)
 
 MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result)
 {
-    int	i, n;
+    int i, n;
     n = MatRow(result);
     for(i=0; i<n; ++i)
     {
