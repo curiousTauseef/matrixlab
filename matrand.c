@@ -23,7 +23,7 @@ MATRIX mat_rand(int n, int m, MATRIX result)
 
 MATRIX mat_randn(int n, int m, MATRIX result)
 {
-    int	i, j;
+    int i, j;
     mtype tmp0;
     if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
