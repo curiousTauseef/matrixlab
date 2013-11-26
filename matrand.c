@@ -50,7 +50,7 @@ MATRIX mat_randn(int n, int m, MATRIX result)
 
 MATRIX mat_randexp(int n, int m, mtype mu, MATRIX result)
 {
-    int	i, j;
+    int i, j;
     if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
@@ -179,7 +179,7 @@ INT_VECTOR int_vec_randperm(int n, INT_VECTOR result)
 {
     int i, j;
     int t = 0;
-    if(result==NULL)if ((result = int_vec_creat( n, UNDEFINED )) == NULL)
+    if(result==NULL) if((result = int_vec_creat(n, UNDEFINED))==NULL)
             return int_vec_error(INT_VEC_MALLOC);
     if(!MAT_SET_SEED)mat_set_seed(0);
     for(i=0; i<n; ++i)
