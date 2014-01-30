@@ -444,7 +444,7 @@ MATRIX mat_extractcols(MATRIX A, INT_VECTOR cols, MATRIX result)
     {
         for(j=0; j<n; ++j)
         {
-            result[i][jj] = A[i][cols[j]];
+            result[i][j] = A[i][cols[j]];
         }
     }
     return result;
