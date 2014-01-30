@@ -372,6 +372,8 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result);
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result);
 MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result);
 MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result);
+MATRIX mat_extractrows(MATRIX A, INT_VECTOR rows, MATRIX result);
+MATRIX mat_extractcols(MATRIX A, INT_VECTOR cols, MATRIX result);
 int mat_fgetmat(MATRIX A, FILEPOINTER fp);
 
 /******************************************/
