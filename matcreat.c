@@ -416,40 +416,6 @@ MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result)
     return result;
 }
 
-MATRIX mat_extractrows(MATRIX A, INT_VECTOR rows, MATRIX result)
-{
-    int i, j, m, n;
-    n = MatCol(A);
-    m = Int_VecLen(rows);
-    if(result==NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL)
-            return mat_error(MAT_MALLOC);
-    for(i=0; i<m; ++i)
-    {
-        for(j=0; j<n; ++j)
-        {
-            result[i][j] = A[rows[i]][j];
-        }
-    }
-    return result;
-}
-
-MATRIX mat_extractcols(MATRIX A, INT_VECTOR cols, MATRIX result)
-{
-    int i, j, m, n;
-    m = MatRow(A);
-    n = Int_VecLen(cols);
-    if(result==NULL) if((result = mat_creat(m, n, UNDEFINED))==NULL)
-            return mat_error(MAT_MALLOC);
-    for(i=0; i<m; ++i)
-    {
-        for(j=0; j<n; ++j)
-        {
-            result[i][j] = A[i][cols[j]];
-        }
-    }
-    return result;
-}
-
 int mat_fgetmat(MATRIX A, FILEPOINTER fp)
 {
     int i, j, k=0, m, n;
