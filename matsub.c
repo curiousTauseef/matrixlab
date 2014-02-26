@@ -31,10 +31,12 @@ MATRIX mat_subs(MATRIX A, mtype s, MATRIX result)
             return mat_error(MAT_MALLOC);
 	#pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
         	result[i][j] = A[i][j]-s;
     	}
+    }
 	return result;
 }
 
