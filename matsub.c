@@ -60,4 +60,3 @@ INT_VECTOR int_vec_subs(INT_VECTOR A, int x, INT_VECTOR result)
     for(i=0; i<m; ++i) result[i] = A[i]-x;
     return result;
 }
-
