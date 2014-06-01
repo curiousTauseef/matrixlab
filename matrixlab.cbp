@@ -141,6 +141,9 @@
 		<Unit filename="matprec.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="matpursuit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="matrand.c">
 			<Option compilerVar="CC" />
 		</Unit>
