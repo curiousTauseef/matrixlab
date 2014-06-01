@@ -532,6 +532,11 @@ MATRIX mat_pol2cart(MATRIX A, int dim, MATRIX result);
 
 /******************************************/
 /* function tools */
+mtype __mat_addfunc(mtype x, mtype y);
+mtype __mat_subfunc(mtype x, mtype y);
+mtype __mat_mulfunc(mtype x, mtype y);
+mtype __mat_divfunc(mtype x, mtype y);
+
 mtype __mat_huber_wt(mtype x, mtype k);
 mtype __mat_bisquare_wt(mtype x, mtype k);
 mtype __mat_logplusone(mtype x);
@@ -697,6 +702,8 @@ MAT_KDNODE __mat_kdtree_make_tree(MAT_KDNODE t, int len, int i, int dim);
 MAT_KDNODE __mat_kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
 void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist);
 
+/* sparse */
+MATSTACK mat_omp(MATRIX A, MATRIX b, int k, mtype tol, MATSTACK result);
 
 #ifdef __cplusplus
 }
