@@ -601,7 +601,7 @@ void mat_binom_init();
 MATRIX mat_cheby(int n);
 mtype mat_binom(int n, int k);
 MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result);
-MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype r, int n, MATRIX result);
+MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX result);
 
 /******************************************/
 /* pattern recognition */

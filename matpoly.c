@@ -183,11 +183,13 @@ MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result)
     return result;
 }
 
-MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype r, int n, MATRIX result)
+MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX result)
 {
     int i, j;
-    mtype xs, sum, m;
-    MATRIX ys = NULL, coeffs = NULL;
+    mtype r, c, xs, sum, m;
+    MATRIX ys = NULL, coeffs = NULL, tmp = NULL, ctmp = NULL;
+    r = (a-b)/2.0;
+    c = -(a+b)/2.0;
     ys = mat_creat(1, n+1, UNDEFINED);
     coeffs = mat_creat(1, n+1, UNDEFINED);
     for(i=0; i<=n; ++i)
@@ -212,6 +214,25 @@ MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype r, int n, MATRIX result)
     {
         result[0][i] /= m;
         m *= r;
+    }
+    if(fabs(c)>eps)
+    {
+        tmp = result;
+        result = mat_creat(1, n+1, ZERO_MATRIX);
+        ctmp = mat_creat(1, n+1, UNDEFINED);
+        ctmp[0][0] = 1;
+        for(i=1; i<=n; ++i) ctmp[0][i] = ctmp[0][i-1]*c;
+        mat_binom_init();
+        for(j=0; j<=n; ++j)
+        {
+            for(i=j; i<=n; ++i)
+            {
+                result[0][j] += tmp[0][i]*mat_binom(i,j)*ctmp[0][i];
+            }
+            result[0][j] /= ctmp[0][j];
+        }
+        mat_free(tmp);
+        mat_free(ctmp);
     }
     return result;
 }
