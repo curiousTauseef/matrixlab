@@ -26,7 +26,7 @@
 	<math.h>
 	"matrix.h"
 
-1356922749 
+1401512311 
 
 1333433732 /media/sda1/cwork/matrix/matrix.h
 	<stdio.h>
@@ -2052,5 +2052,167 @@
 	"matrix.h"
 
 1393394702 source:c:\users\cvlab\documents\matrixlab-master\matrixlab-master\mattran.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matabs.c
+	"matrix.h"
+
+1403282338 /home/mohammadul/Programs/matrixlab-master/matrix.h
+	<stdio.h>
+	<time.h>
+	<math.h>
+	<omp.h>
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matadd.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matconcat.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matconv.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matcreat.c
+	<malloc.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matdatastruct.c
+	<limits.h>
+	<malloc.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matdet.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matdiv.c
+	<stdio.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matdump.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matdurbn.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/materr.c
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matfft.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matfilter.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matfit.c
+	<string.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matflip.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matfuncs.c
+	"matrix.h"
+	<limits.h>
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matgraph.c
+	<malloc.h>
+	<limits.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matinnerprod.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matintegrate.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matinv.c
+	<malloc.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matkdtree.c
+	"matrix.h"
+	<string.h>
+	<malloc.h>
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matmaxmin.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matmds.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matmean.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matmisc.c
+	<string.h>
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matmul.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matpca.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matpinv.c
+	<malloc.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matprec.c
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matpursuit.c
+	<float.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matrand.c
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsearch.c
+	"matrix.h"
+	<malloc.h>
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsolve.c
+	<malloc.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsort.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matstdrels.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsub.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsubx.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsum.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/matsvd.c
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/mattext.c
+	<ctype.h>
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/mattimers.c
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/mattoepz.c
+	<stdlib.h>
+	"matrix.h"
+
+1403281125 source:/home/mohammadul/Programs/matrixlab-master/mattran.c
+	"matrix.h"
+
+1403282101 source:/home/mohammadul/Programs/matrixlab-master/matpoly.c
 	"matrix.h"
 

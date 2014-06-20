@@ -25,7 +25,7 @@ extern "C"
 #include <omp.h>
 
 #define STACK_MAX 100
-
+#define MAT_PI (3.14159265359)
 #define __6188123NAME2(fun,suffix) fun ## _ ## suffix
 #define __1267861NAME1(fun,suffix) __6188123NAME2(fun,suffix)
 
@@ -232,6 +232,7 @@ typedef struct __mat_kdtree* MAT_KDTREE;
 extern clock_t MAT_CLOCK_TIME;
 extern unsigned int MAT_SEED;
 extern int MAT_SET_SEED;
+extern MATSTACK mat_cheby_series_table, mat_binom_series_table;
 
 /******************************************/
 #define Int_VecLen(a)	(*(a-1))
@@ -589,9 +590,18 @@ mtype mat_int_qadrat(mtype(*fx)(mtype), mtype lower, mtype upper);
 
 /******************************************/
 /* polynomials */
-MATRIX mat_evalpoly(MATRIX a, mtype x, int dir, MATRIX result);
-MATRIX mat_dpoly(MATRIX a, int dir, MATRIX result);
-MATRIX mat_devalpoly(MATRIX a, mtype x, int dir, MATRIX result);
+MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result);
+MATRIX mat_poly_diff(MATRIX a, int dir, MATRIX result);
+MATRIX mat_poly_diff_eval(MATRIX a, mtype x, int dir, MATRIX result);
+MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result);
+MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result);
+MATRIX mat_poly_shift(MATRIX a, int s, MATRIX result);
+void mat_cheby_init();
+void mat_binom_init();
+MATRIX mat_cheby(int n);
+mtype mat_binom(int n, int k);
+MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result);
+MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype r, int n, MATRIX result);
 
 /******************************************/
 /* pattern recognition */

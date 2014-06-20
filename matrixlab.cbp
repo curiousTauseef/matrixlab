@@ -9,7 +9,7 @@
 			<Target title="Debug">
 				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj\Debug\" />
+				<Option object_output="obj/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -27,7 +27,7 @@
 			<Target title="Release">
 				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj\Release\" />
+				<Option object_output="obj/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -112,6 +112,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="matinv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="matkdtree.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="matmaxmin.c">
