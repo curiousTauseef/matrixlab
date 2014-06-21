@@ -188,13 +188,13 @@ MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX resul
     int i, j;
     mtype r, c, xs, sum, m;
     MATRIX ys = NULL, coeffs = NULL, tmp = NULL, ctmp = NULL;
-    r = (a-b)/2.0;
+    r = (b-a)/2.0;
     c = -(a+b)/2.0;
     ys = mat_creat(1, n+1, UNDEFINED);
     coeffs = mat_creat(1, n+1, UNDEFINED);
     for(i=0; i<=n; ++i)
     {
-        xs = r*cos(MAT_PI*(i+0.5)/(n+1));
+        xs = r*cos(MAT_PI*(i+0.5)/(n+1))-c;
         ys[0][i] = f(xs);
     }
     for(j=0; j<=n; ++j)
