@@ -129,7 +129,7 @@ void mat_cheby_init()
     mat_cheby_series_table[1][0][1] = 1;
 }
 
-void mat_cheby_init()
+void mat_legendre_init()
 {
     mat_legendre_series_table = matstack_creat(512);
     mat_legendre_series_table[0] = mat_creat(1, 1, ONES_MATRIX);
