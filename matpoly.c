@@ -165,9 +165,9 @@ MATRIX mat_legendre(int n)
     {
         MATRIX p = mat_legendre(n-1);
         MATRIX pp = mat_legendre(n-2);
-        MATRIX npp = mat_poly_scale(pp, ((1.0/k)-1.0), NULL);
+        MATRIX npp = mat_poly_scale(pp, ((1.0/n)-1.0), NULL);
         MATRIX px2 = mat_poly_shift(p, 1, NULL);
-        px2 = mat_poly_scale(px2, (2.0-(1.0/k)), px2);
+        px2 = mat_poly_scale(px2, (2.0-(1.0/n)), px2);
         mat_legendre_series_table[n] = mat_poly_add(px2, npp, px2);
         mat_free(npp);
     }
