@@ -14,7 +14,7 @@ MATRIX mat_dumpf(MATRIX A, const char *s)
 
 MATRIX mat_fdump(MATRIX A, FILE *fp)
 {
-    char s[] = "%f ";
+    char s[] = "%g ";
     return mat_fdumpf(A, s, fp);
 }
 
