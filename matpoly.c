@@ -1,7 +1,7 @@
 #include "matrix.h"
 
 
-MATSTACK mat_cheby_series_table, mat_binom_series_table;
+MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_series_table;
 
 MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result)
 {
@@ -129,6 +129,14 @@ void mat_cheby_init()
     mat_cheby_series_table[1][0][1] = 1;
 }
 
+void mat_cheby_init()
+{
+    mat_legendre_series_table = matstack_creat(512);
+    mat_legendre_series_table[0] = mat_creat(1, 1, ONES_MATRIX);
+    mat_legendre_series_table[1] = mat_creat(1, 2, ZERO_MATRIX);
+    mat_legendre_series_table[1][0][1] = 1;
+}
+
 void mat_binom_init()
 {
     mat_binom_series_table = matstack_creat(512);
@@ -149,6 +157,21 @@ MATRIX mat_cheby(int n)
         mat_free(npp);
     }
     return mat_cheby_series_table[n];
+}
+
+MATRIX mat_legendre(int n)
+{
+    if(mat_legendre_series_table[n]==NULL)
+    {
+        MATRIX p = mat_legendre(n-1);
+        MATRIX pp = mat_legendre(n-2);
+        MATRIX npp = mat_poly_scale(pp, ((1.0/k)-1.0), NULL);
+        MATRIX px2 = mat_poly_shift(p, 1, NULL);
+        px2 = mat_poly_scale(px2, (2.0-(1.0/k)), px2);
+        mat_legendre_series_table[n] = mat_poly_add(px2, npp, px2);
+        mat_free(npp);
+    }
+    return mat_legendre_series_table[n];
 }
 
 mtype mat_binom(int n, int k)
