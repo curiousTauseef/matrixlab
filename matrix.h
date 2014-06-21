@@ -232,7 +232,7 @@ typedef struct __mat_kdtree* MAT_KDTREE;
 extern clock_t MAT_CLOCK_TIME;
 extern unsigned int MAT_SEED;
 extern int MAT_SET_SEED;
-extern MATSTACK mat_cheby_series_table, mat_binom_series_table;
+extern MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_series_table;
 
 /******************************************/
 #define Int_VecLen(a)	(*(a-1))
@@ -597,8 +597,10 @@ MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result);
 MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result);
 MATRIX mat_poly_shift(MATRIX a, int s, MATRIX result);
 void mat_cheby_init();
+void mat_legendre_init();
 void mat_binom_init();
 MATRIX mat_cheby(int n);
+MATRIX mat_legendre(int n);
 mtype mat_binom(int n, int k);
 MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result);
 MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX result);
