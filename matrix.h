@@ -594,6 +594,8 @@ MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result);
 MATRIX mat_poly_diff(MATRIX a, int dir, MATRIX result);
 MATRIX mat_poly_diff_eval(MATRIX a, mtype x, int dir, MATRIX result);
 MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result);
+MATRIX mat_poly_mul(MATRIX a, MATRIX b, MATRIX result);
+MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result);
 MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result);
 MATRIX mat_poly_shift(MATRIX a, int s, MATRIX result);
 void mat_cheby_init();
