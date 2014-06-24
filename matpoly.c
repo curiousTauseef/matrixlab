@@ -106,6 +106,65 @@ MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result)
     return result;
 }
 
+MATRIX mat_poly_mul(MATRIX a, MATRIX b, MATRIX result)
+{
+    int m, n, i, j, s;
+    m = MatCol(a);
+    n = MatCol(b);
+    s = m+n-1;
+    if(result==NULL) if((result = mat_creat(1, s, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    result = mat_fill(result, 0.0);
+    for(i=0; i<m; ++i)
+    {
+        for(j=0; j<n; ++j)
+        {
+            result[0][i+j] += a[0][i]*b[0][j];
+        }
+    }
+    return result;
+}
+
+MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result)
+{
+    MATRIX tmp = NULL;
+    int m, n, i, j;
+    mtype s;
+    m = MatCol(a);
+    n = MatCol(b);
+    if(m>=n)
+    {
+        if(result==NULL)
+        {
+            if((result = matstack_creat(2))==NULL) matstack_error(MATSTACK_MALLOC);
+            if((result[0] = mat_creat(1, m-n+1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+            if((result[1] = mat_creat(1, n-1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+        }
+        tmp = mat_copy(a, NULL);
+        i = m;
+        s = b[0][n-1];
+        while((i)>=n)
+        {
+            result[0][0][i-n] = tmp[0][i-1]/s;
+            for(j=i-1; j>=(i-n); --j) tmp[0][j] -= b[0][j-i+n]*result[0][0][i-n];
+            --i;
+        }
+        for(i=0; i<(n-1); ++i) result[1][0][i] = tmp[0][i];
+        mat_free(tmp);
+    }
+    else
+    {
+        if(result==NULL)
+        {
+            if((result = matstack_creat(2))==NULL) matstack_error(MATSTACK_MALLOC);
+            if((result[0] = mat_creat(1, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+            if((result[1] = mat_creat(1, n-1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
+        }
+        result[0] = mat_fill(result[0], 0.0);
+        for(i=0; i<m; ++i) result[1][0][i] = a[0][i];
+    }
+    return result;
+}
+
 MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result)
 {
     return mat_muls(a, s, result);
