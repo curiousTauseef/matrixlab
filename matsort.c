@@ -1,6 +1,11 @@
 #include "matrix.h"
 
 
+#define __swap(a, b) {\
+		t = B[0][(a)];\
+		B[0][(a)] = B[0][(b)];\
+        B[0][(b)] = t;\
+}
 mtype mat_median(MATRIX A)
 {
     MATRIX B;
@@ -10,11 +15,6 @@ mtype mat_median(MATRIX A)
     B = mat_vectorize_tr(A, NULL);
     right = MatRow(B)*MatCol(B)-1;
     k = (right+1)/2;
- #define __swap(a, b) {\
-		t = B[0][(a)];\
-		B[0][(a)] = B[0][(b)];\
-        B[0][(b)] = t;\
-	}
     while(left<right)
     {
         pivot = B[0][k];
@@ -45,11 +45,6 @@ mtype mat_order_statistic(MATRIX A, int k)
     mtype t, pivot;
     B = mat_vectorize_tr(A, NULL);
     right = MatRow(B)*MatCol(B)-1;
- #define __swap(a, b) {\
-		t = B[0][(a)];\
-		B[0][(a)] = B[0][(b)];\
-        B[0][(b)] = t;\
-	}
     while(left<right)
     {
         pivot = B[0][k];
