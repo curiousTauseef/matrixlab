@@ -1,3 +1,18 @@
+/* ---------------------------------------------------------------------------
+** This software is furnished "as is", without technical support,
+** and with no warranty, express or implied, as to its usefulness for
+** any purpose.
+**
+** matrix.h
+** C Matrix Library
+** Originally adapted from Small Matrix Toolbox for C programmers, ver. 0.4
+** by Patrick Ko Shu-pui
+**
+** Author: Sk. Mohammadul Haque
+** Copyright (c) 2013 Sk. Mohammadul Haque
+** For more details and updates, visit http://mohammadulhaque.alotspace.com
+** -------------------------------------------------------------------------*/
+
 #ifndef __MATRIX__
 #define __MATRIX__
 #define _CRT_SECURE_NO_DEPRECATE
