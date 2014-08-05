@@ -18,7 +18,7 @@ SEARCH_TREE mat_bs_free(SEARCH_TREE T)
     return NULL;
 }
 
-SEARCH_TREE mat_bs_find( mtype x, SEARCH_TREE T)
+SEARCH_TREE mat_bs_find(mtype x, SEARCH_TREE T)
 {
     if(T==NULL) return NULL;
     if(x<T->element) return(mat_bs_find(x, T->left));
@@ -106,6 +106,7 @@ int int_stack_free(INT_STACK s)
 {
     if (s==NULL) return 0;
     free(s->stack);
+    free(s);
     return 1;
 }
 
@@ -136,10 +137,10 @@ int int_stack_is_empty(INT_STACK s)
 MAT_MTYPE_STACK mat_mtype_stack_creat(void)
 {
     MAT_MTYPE_STACK s;
-    if((s= (MAT_MTYPE_STACK)malloc(sizeof(struct mat_mtype_stack)))==NULL) stack_error( STACK_MALLOC);
+    if((s= (MAT_MTYPE_STACK)malloc(sizeof(struct mat_mtype_stack)))==NULL) stack_error(STACK_MALLOC);
     s->p = 0;
     s->length = STACK_MAX;
-    if((s->stack=(mtype*)malloc(sizeof(mtype)*(STACK_MAX)))==NULL) stack_error( STACK_MALLOC);
+    if((s->stack=(mtype*)malloc(sizeof(mtype)*(STACK_MAX)))==NULL) stack_error(STACK_MALLOC);
     return s;
 }
 
@@ -147,6 +148,7 @@ int mat_mtype_stack_free(MAT_MTYPE_STACK s)
 {
     if(s==NULL) return 0;
     free(s->stack);
+    free(s);
     return 1;
 }
 
@@ -199,6 +201,7 @@ int int_queue_free(INT_QUEUE s)
         }
         s->tail = NULL;
     }
+    free(s);
     return 1;
 }
 
@@ -269,6 +272,7 @@ int mat_mtype_queue_free(MAT_MTYPE_QUEUE s)
         }
         s->tail = NULL;
     }
+    free(s);
     return 1;
 }
 
