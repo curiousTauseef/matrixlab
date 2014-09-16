@@ -2,10 +2,10 @@
 #include "matrix.h"
 
 
-BAYES_MODEL pat_bayes_classifier_train(MATRIX data, INT_VECTOR labels)
+MAT_BAYES_MODEL mat_bayes_classifier_train(MATRIX data, INT_VECTOR labels)
 {
     int i;
-    BAYES_MODEL b_model = pat_bayes_model_creat();
+    MAT_BAYES_MODEL b_model = mat_bayes_model_creat();
     MATRIX subdata = NULL;
     INT_VECTOR tmp = NULL;
     MATSTACK covstack = NULL;
@@ -30,7 +30,7 @@ BAYES_MODEL pat_bayes_classifier_train(MATRIX data, INT_VECTOR labels)
     return b_model;
 }
 
-INT_VECTOR pat_bayes_classifier_test(MATRIX data, BAYES_MODEL b_model)
+INT_VECTOR mat_bayes_classifier_test(MATRIX data, MAT_BAYES_MODEL b_model)
 {
     int n, i, j;
     mtype *w0 = NULL, tmp0;
@@ -92,11 +92,11 @@ INT_VECTOR pat_bayes_classifier_test(MATRIX data, BAYES_MODEL b_model)
     return results;
 }
 
-PERCEPTRON pat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_iterations)
+MAT_PERCEPTRON mat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_iterations)
 {
     int n, i, tmp;
     MATRIX data_ = NULL;
-    PERCEPTRON p_model = pat_perceptron_creat();
+    MAT_PERCEPTRON p_model = mat_perceptron_creat();
     MATRIX subdata1, subdata2;
     INT_VECTOR tmp1 = NULL, tmp2 = NULL;
     if(num_of_iterations<1) p_model->num_of_iterations = num_of_iterations;
@@ -132,7 +132,7 @@ PERCEPTRON pat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_itera
         subdata1 = mat_get_sub_matrix_from_rows(data_, tmp1, NULL);
         subdata2 = mat_get_sub_matrix_from_rows(data_, tmp2, NULL);
 
-        p_model = pat_perceptron_train_(subdata1, subdata2, p_model, i);
+        p_model = mat_perceptron_train_(subdata1, subdata2, p_model, i);
 
         mat_free(subdata1);
         int_vec_free(tmp1);
@@ -143,7 +143,7 @@ PERCEPTRON pat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_itera
     return p_model;
 }
 
-PERCEPTRON pat_perceptron_train_(MATRIX data1, MATRIX data2, PERCEPTRON p_model, int class_num)
+MAT_PERCEPTRON mat_perceptron_train_(MATRIX data1, MATRIX data2, MAT_PERCEPTRON p_model, int class_num)
 {
     mtype alpha;
     MATRIX weight = NULL, er_data = NULL, tmp1 = NULL, tmp2 = NULL, tmp3 = NULL, tmp21 = NULL, tmp22 = NULL;
@@ -208,7 +208,7 @@ PERCEPTRON pat_perceptron_train_(MATRIX data1, MATRIX data2, PERCEPTRON p_model,
     return p_model;
 }
 
-INT_VECTOR pat_perceptron_test(MATRIX data, PERCEPTRON p_model)
+INT_VECTOR mat_perceptron_test(MATRIX data, MAT_PERCEPTRON p_model)
 {
     int n, i;
     MATRIX tmp0, data00;

@@ -2,19 +2,27 @@
 #include "matrix.h"
 
 
-MATRIX mat_inv(MATRIX a, MATRIX result)
+/** \brief Computes the inverse of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ A^{-1} \f$
+ *
+ */
+
+MATRIX mat_inv(MATRIX A, MATRIX result)
 {
-    MATRIX A, B, P;
+    MATRIX a, B, P;
     int i, n;
-    n = MatCol(a);
-    if(MatRow(a)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
-    A = mat_copy(a, NULL);
+    n = MatCol(A);
+    if(MatRow(A)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
+    a = mat_copy(A, NULL);
     B = mat_creat(n, 1, UNDEFINED);
     if(result==NULL) if((result = mat_creat(n, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
     P = mat_creat(n, 1, UNDEFINED);
-    if(mat_lu(A, P)==-1)
+    if(mat_lu(a, P)==-1)
     {
-        mat_free(A);
+        mat_free(a);
         mat_free(B);
         mat_free(result);
         mat_free(P);
@@ -24,53 +32,70 @@ MATRIX mat_inv(MATRIX a, MATRIX result)
     {
         mat_fill_type(B, ZERO_MATRIX);
         B[i][0] = 1.0;
-        mat_backsubs1(A, B, result, P, i);
+        mat_backsubs1(a, B, result, P, i);
     }
-    mat_free(A);
-    mat_free(B);
-    mat_free(P);
-    return (result);
-}
-
-MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result)
-{
-    int m, n, i;
-    MATRIX A = NULL, B = NULL, P = NULL;
-    m =MatCol(a);
-    n = MatRow(a);
-    A = mat_copy(a, NULL);
-    if(m!=n) return mat_error(MAT_SIZEMISMATCH);
-    for(i=0; i<m; ++i) A[i][i]+= r_constant;
-    B = mat_creat(n, 1, UNDEFINED);
-    if(result==NULL) if((result = mat_creat(n, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-    P = mat_creat( n, 1, UNDEFINED );
-    if(mat_lu(A, P)==-1)
-    {
-        mat_free(A);
-        mat_free(B);
-        mat_free(result);
-        mat_free(P);
-        return mat_error(MAT_INVERSE_ILL_COND);
-    }
-    for(i=0; i<n; ++i)
-    {
-        mat_fill_type(B, ZERO_MATRIX);
-        B[i][0] = 1.0;
-        mat_backsubs1(A, B, result, P, i);
-    }
-    mat_free(A);
+    mat_free(a);
     mat_free(B);
     mat_free(P);
     return result;
 }
 
-MATRIX mat_chol(MATRIX a, MATRIX result)
+/** \brief Computes the regularized inverse of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] r Regularizing constant
+ * \param[in] result Matrix to store the result
+ * \return \f$ \left(A+rI\right)^{-1} \f$
+ *
+ */
+
+MATRIX mat_reg_inv(MATRIX A, mtype r, MATRIX result)
+{
+    int m, n, i;
+    MATRIX a = NULL, B = NULL, P = NULL;
+    m = MatCol(A);
+    n = MatRow(A);
+    a = mat_copy(A, NULL);
+    if(m!=n) return mat_error(MAT_SIZEMISMATCH);
+    for(i=0; i<m; ++i) A[i][i]+= r;
+    B = mat_creat(n, 1, UNDEFINED);
+    if(result==NULL) if((result = mat_creat(n, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
+    P = mat_creat(n, 1, UNDEFINED);
+    if(mat_lu(a, P)==-1)
+    {
+        mat_free(a);
+        mat_free(B);
+        mat_free(result);
+        mat_free(P);
+        return mat_error(MAT_INVERSE_ILL_COND);
+    }
+    for(i=0; i<n; ++i)
+    {
+        mat_fill_type(B, ZERO_MATRIX);
+        B[i][0] = 1.0;
+        mat_backsubs1(a, B, result, P, i);
+    }
+    mat_free(a);
+    mat_free(B);
+    mat_free(P);
+    return result;
+}
+
+/** \brief Computes Cholesky factor of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] result Matrix to store the result
+ * \return Cholesky factor
+ *
+ */
+
+MATRIX mat_chol(MATRIX A, MATRIX result)
 {
     int i, j, k, n;
     mtype sum = 0.0, p = 0.0;
-    n = MatCol(a);
-    if(MatRow(a)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
-    result = mat_copy(a, result);
+    n = MatCol(A);
+    if(MatRow(A)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
+    result = mat_copy(A, result);
     for(i=0; i<n; ++i)
     {
         for(j=0; j<n; ++i)
@@ -82,7 +107,7 @@ MATRIX mat_chol(MATRIX a, MATRIX result)
                     if(sum<=0.0) mat_error(MAT_CHOLESKY_FAILED);
                     p = sqrt(sum);
                 }
-                else result[j][i] =sum/p;
+                else result[j][i] = sum/p;
             }
         }
     }

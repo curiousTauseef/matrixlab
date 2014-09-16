@@ -3,6 +3,15 @@
 
 static mtype signa[2] = {1.0, -1.0};
 
+/** \brief Computes a minor of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] i Row index
+ * \param[in] j Column index
+ * \return Minor \f$ M_{ij} \f$
+ *
+ */
+
 mtype mat_minor(MATRIX A, int i, int j)
 {
     MATRIX S = NULL;
@@ -13,23 +22,39 @@ mtype mat_minor(MATRIX A, int i, int j)
     return result;
 }
 
+/** \brief Computes a cofactor of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] i Row index
+ * \param[in] j Column index
+ * \return Cofactor \f$ C_{ij} \f$
+ *
+ */
+
 mtype mat_cofact(MATRIX A, int i, int j)
 {
     mtype result;
-    result = signa[(i+j)%2]*A[i][j]*mat_minor(A, i, j);
+    result = signa[(i+j)%2]*mat_minor(A, i, j);
     return result;
 }
 
-mtype mat_det(MATRIX a)
+/** \brief Computes the determinant of a matrix
+ *
+ * \param[in] A Input matrix
+ * \return \f$ \textrm{det} \left( A \right) \f$
+ *
+ */
+
+mtype mat_det(MATRIX A)
 {
-    MATRIX A, P;
+    MATRIX b, P;
     int i, j, n;
     mtype result;
-    n = MatRow(a);
-    A = mat_copy(a, NULL);
+    n = MatRow(A);
+    b = mat_copy(A, NULL);
     P = mat_creat(n, 1, UNDEFINED);
-    i = mat_lu(A, P);
-    switch (i)
+    i = mat_lu(b, P);
+    switch(i)
     {
     case -1:
         result = 0.0;
@@ -45,8 +70,8 @@ mtype mat_det(MATRIX a)
         break;
     }
 
-    mat_free(A);
+    mat_free(b);
     mat_free(P);
-    return (result);
+    return result;
 }
 

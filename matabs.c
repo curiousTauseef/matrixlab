@@ -1,6 +1,14 @@
 #include "matrix.h"
 
 
+/** \brief Computes absolute value of matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f abs(A) \f
+ *
+ */
+
 MATRIX mat_abs(MATRIX A, MATRIX result)
 {
     int i, j, m, n;

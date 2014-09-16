@@ -12,6 +12,18 @@
 ** Copyright (c) 2013 Sk. Mohammadul Haque
 ** For more details and updates, visit http://mohammadulhaque.alotspace.com
 ** -------------------------------------------------------------------------*/
+/*! \mainpage Matrixlab
+ *
+ * \section intro_sec Introduction
+ * Matrixlab is a generic C library for matrix routines. It contains over 200 functions for matrix operations. Many of the functions are multi-threaded.
+ *
+ * The functions are categorized as
+ * \section install_sec Installation
+ *
+ * \subsection step1 Step 1: Opening the box
+ *
+ * etc...
+ */
 
 #ifndef __MATRIX__
 #define __MATRIX__
@@ -28,11 +40,11 @@ extern "C"
 #endif
 
 #if mtype_n == 0
-#define MTYPE FLOAT
-#define mtype float
+#define MTYPE FLOAT /**< \def MTYPE is FLOAT. */
+#define mtype float /**< \def mtype is float. */
 #else
-#define MTYPE DOUBLE
-#define mtype double
+#define MTYPE DOUBLE /**< \def MTYPE is DOUBLE. */
+#define mtype double /**< \def mtype is double. */
 #endif
 #include <stdio.h>
 #include <time.h>
@@ -40,7 +52,7 @@ extern "C"
 #include <omp.h>
 
 #define STACK_MAX 100
-#define MAT_PI (3.14159265359)
+#define MAT_PI (3.14159265359) /**< def MAT_PI pi */
 #define __6188123NAME2(fun,suffix) fun ## _ ## suffix
 #define __1267861NAME1(fun,suffix) __6188123NAME2(fun,suffix)
 
@@ -49,172 +61,246 @@ extern "C"
 
 /******************************************/
 #if defined (GCC) || defined (__GNUC__)
-typedef FILE *FILEPOINTER;
+typedef FILE *MAT_FILEPOINTER; /**< \typedef FILEPOINTER is pointer to FILE */
 #else
-typedef struct _iobuf *FILEPOINTER;
+typedef struct _iobuf *MAT_FILEPOINTER; /**< \typedef FILEPOINTER is pointer to _iobuf */
 #endif
-struct int_stack
+
+/** \brief Integer Stack Structure
+ *
+ */
+
+struct mat_int_stack
 {
-    int p;
-    int length;
-    int *stack;
+    int p; /**< Current stack position */
+    int length; /**< Total allocated stack length */
+    int *stack; /**< Pointer to stack data */
 };
-typedef struct int_stack int_stack;
-typedef struct int_stack *INT_STACK;
+typedef struct mat_int_stack mat_int_stack; /**< Integer Stack */
+typedef struct mat_int_stack *MAT_INT_STACK; /**< Integer Stack Pointer */
 
 /******************************************/
+/** \brief Mtype Stack Structure
+ *
+ */
+
 struct mat_mtype_stack
 {
-    int p;
-    int length;
-    mtype *stack;
+    int p; /**< Current stack position */
+    int length; /**< Total allocated stack length */
+    mtype *stack; /**< Pointer to stack data */
 };
-typedef struct mat_mtype_stack mat_mtype_stack;
-typedef struct mat_mtype_stack *MAT_MTYPE_STACK;
+typedef struct mat_mtype_stack mat_mtype_stack; /**< Mtype Stack */
+typedef struct mat_mtype_stack *MAT_MTYPE_STACK; /**< Mtype Stack Pointer */
 
 /******************************************/
-struct __intnode
+
+/** \brief Integer Queue Node Structure
+ *
+ */
+
+struct mat_qintnode
 {
-    int data;
-    struct __intnode *next;
+    int data; /**< Integer node data */
+    struct mat_qintnode *next; /**< Pointer to next node */
 };
-typedef struct __intnode qintdata;
-typedef struct __intnode *QINTDATA;
-struct int_queue
+typedef struct mat_qintnode mat_qintnode; /**< Integer Queue Node */
+typedef struct mat_qintnode *MAT_QINTNODE; /**< Integer Queue Node Pointer */
+
+/** \brief Integer Queue Structure
+ *
+ */
+
+struct mat_int_queue
 {
-    int p;
-    QINTDATA head;
-    QINTDATA tail;
+    int p; /**< Current queue position */
+    MAT_QINTNODE head; /**< Queue head node */
+    MAT_QINTNODE tail; /**< Queue tail node */
 };
-typedef struct int_queue int_queue;
-typedef struct int_queue *INT_QUEUE;
+typedef struct mat_int_queue mat_int_queue; /**< Integer Queue */
+typedef struct mat_int_queue *MAT_INT_QUEUE; /**< Integer Queue Pointer */
 
 /******************************************/
 #define __mtype(x) __mtype ## x
-struct __mtype_node
+/** \brief Mtype Queue Node Structure
+ *
+ */
+
+struct mat_qmtypenode
 {
-    mtype data;
-    struct __mtype_node *next;
+    mtype data; /**< Mtype node data */
+    struct mat_qmtypenode *next; /**< Pointer to next node */
 };
-typedef struct __mtype_node qmdata;
-typedef struct __mtype_node *QMDATA;
+typedef struct mat_qmtypenode mat_qmtypenode; /**< Mtype Queue Node */
+typedef struct mat_qmtypenode *MAT_QMTYPENODE; /**< Mtype Queue Node Pointer */
+/** \brief Mtype Queue Structure
+ *
+ */
+
 struct mat_mtype_queue
 {
-    int p;
-    QMDATA head;
-    QMDATA tail;
+    int p; /**< Current queue position */
+    MAT_QMTYPENODE head; /**< Queue head node */
+    MAT_QMTYPENODE tail; /**< Queue tail node */
 };
-typedef struct mat_mtype_queue mat_mtype_queue;
-typedef struct mat_mtype_queue *MAT_MTYPE_QUEUE;
+typedef struct mat_mtype_queue mat_mtype_queue; /**< Mtype Queue */
+typedef struct mat_mtype_queue *MAT_MTYPE_QUEUE; /**< Mtype Queue Pointer */
 
 /******************************************/
-struct __intpqnode
+/** \brief Integer Priority Queue Node Structure
+ *
+ */
+
+struct mat_intpqnode
 {
-    int data;
-    int priority;
+    int data; /**< Integer node data */
+    int priority; /**< Node priority */
 };
-typedef struct __intpqnode pqintdata;
-typedef struct __intpqnode *PQINTDATA;
-struct int_priorityqueue
+typedef struct mat_intpqnode mat_intpqnode; /**< Integer Priority Queue Node */
+typedef struct mat_intpqnode *MAT_INTPQNODE; /**< Integer Priority Queue Node Pointer */
+/** \brief Integer Priority Queue Structure
+ *
+ */
+
+struct mat_int_priorityqueue
 {
-    int p;
-    int length;
-    PQINTDATA element;
+    int p; /**< Current priority queue position */
+    int length; /**< Total allocated priority queue length*/
+    MAT_INTPQNODE element; /**< Pointer to priority queue data */
 };
-typedef struct int_priorityqueue int_priorityqueue;
-typedef struct int_priorityqueue *INT_PRIORITYQUEUE;
+typedef struct mat_int_priorityqueue mat_int_priorityqueue; /**< Integer Priority Queue */
+typedef struct mat_int_priorityqueue *MAT_INT_PRIORITYQUEUE; /**< Integer Priority Queue Pointer */
 
 /******************************************/
-struct __mtype_pqnode
+/** \brief Mtype Priority Queue Node Structure
+ *
+ */
+
+struct mat_mtypepqnode
 {
-    mtype data;
-    int priority;
+    mtype data; /**< Mtype node data */
+    int priority; /**< Node priority */
 };
-typedef struct __mtype_pqnode pqmdata;
-typedef struct __mtype_pqnode *PQMDATA;
+typedef struct mat_mtypepqnode mat_mtypepqnode; /**< Mtype Priority Queue Node */
+typedef struct mat_mtypepqnode *MAT_MTYPEPQNODE; /**< Mtype Priority Queue Node Pointer */
+/** \brief Mtype Priority Queue Structure
+ *
+ */
+
 struct mat_mtype_priorityqueue
 {
-    int p;
-    int length;
-    PQMDATA element;
+    int p; /**< Current priority queue position */
+    int length; /**< Total allocated priority queue length*/
+    MAT_MTYPEPQNODE element; /**< Pointer to priority queue data */
 };
-typedef struct mat_mtype_priorityqueue mat_mtype_priorityqueue;
-typedef struct mat_mtype_priorityqueue *MAT_MTYPE_PRIORITYQUEUE;
+typedef struct mat_mtype_priorityqueue mat_mtype_priorityqueue; /**< Mtype Priority Queue */
+typedef struct mat_mtype_priorityqueue *MAT_MTYPE_PRIORITYQUEUE; /**< Mtype Priority Queue Pointer */
 
 /******************************************/
-struct tree_node
+/** \brief Search Tree Node Structure
+ *
+ */
+
+struct mat_tree_node
 {
-    mtype element;
-    struct tree_node *left, *right;
+    mtype element; /**< Search tree node data */
+    struct mat_tree_node *left; /**< Pointer to left child node */
+    struct mat_tree_node *right;/**< Pointer to right child node */
 };
-typedef struct tree_node *SEARCH_TREE;
+typedef struct mat_tree_node mat_tree_node; /**< Search Tree Node */
+typedef struct mat_tree_node *MAT_TREE_NODE; /**< Search Tree Node Pointer */
+typedef struct mat_tree_node *MAT_TREE; /**< Search Tree Pointer */
 
 /******************************************/
-typedef int *INT_VECTOR;
+typedef int *INT_VECTOR; /**< Integer Vector */
 
 /******************************************/
+/*\/**< \cond HIDDEN_SYMBOLS */
 typedef struct __mathead
 {
     int row;
     int col;
 } MATHEAD;
+
 typedef struct __matbody
 {
     MATHEAD head;
     mtype *matrix;
 } MATBODY;
-typedef mtype **MATRIX;
+/*\/**< \endcond */
+typedef mtype **MATRIX; /**< Mtype Matrix */
 
 /******************************************/
-typedef INT_VECTOR *INT_VECSTACK;
-typedef MATRIX *MATSTACK;
+typedef INT_VECTOR *INT_VECSTACK; /**< Integer Vector Stack */
+typedef MATRIX *MATSTACK; /**< Mtype Matrix Stack */
 
-typedef void **MATVEC_DPOINTER;
-
-/******************************************/
-struct bayes_model
-{
-    int num_of_classes;
-    int num_of_features;
-    INT_VECTOR class_labels;
-    MATRIX class_priors;
-    MATSTACK class_means;
-    MATSTACK class_covars;
-};
-typedef struct bayes_model bayes_model;
-typedef struct bayes_model *BAYES_MODEL;
+typedef void **MATVEC_DPOINTER; /**< Mtype Matrix - Integer Vector Pair */
 
 /******************************************/
-struct perceptron
-{
-    int num_of_classes;
-    int num_of_features;
-    INT_VECTOR class_labels;
-    MATRIX class_weights;
-    int istrained;
-    int num_of_iterations;
-};
-typedef struct perceptron perceptron;
-typedef struct perceptron *PERCEPTRON;
+/** \brief Bayes Classifier Model Structure
+ *
+ */
 
-struct g_node
+struct mat_bayes_model
 {
-    int v;
-    double weight;
-    struct g_node *next;
+    int num_of_classes; /**< Number of training class */
+    int num_of_features; /**< Number of training features */
+    INT_VECTOR class_labels; /**< Training data class label vector */
+    MATRIX class_priors; /**< Training data prior information */
+    MATSTACK class_means; /**< Training data class means */
+    MATSTACK class_covars; /**< Training data class covariances */
 };
-typedef struct g_node g_node;
-typedef struct g_node *G_NODE;
+typedef struct mat_bayes_model mat_bayes_model; /**< Bayes Classifier Model */
+typedef struct mat_bayes_model *MAT_BAYES_MODEL; /**< Bayes Classifier Model Pointer */
+
+/******************************************/
+/** \brief Perceptron Classifier Model Structure
+ *
+ */
+
+struct mat_perceptron
+{
+    int num_of_classes; /**< Number of training classes */
+    int num_of_features; /**< Number of training features */
+    INT_VECTOR class_labels; /**< Training data class label vector */
+    MATRIX class_weights; /**< Trained Classifier Weights */
+    int istrained; /**< Is trained */
+    int num_of_iterations; /**< Number of training iterations */
+};
+typedef struct mat_perceptron mat_perceptron; /**< Perceptron Classifier Model */
+typedef struct mat_perceptron *MAT_PERCEPTRON; /**< Perceptron Classifier Model Pointer */
+
+/******************************************/
+/** \brief Graph Node Structure
+ *
+ */
+
+struct mat_gnode
+{
+    int v; /**< Value */
+    double weight; /**< Node weight */
+    struct mat_gnode *next; /**< Ponter to next node */
+};
+typedef struct mat_gnode mat_gnode; /**< Graph Node */
+typedef struct mat_gnode *MAT_GNODE; /**< Graph Node Pointer */
+
+/******************************************/
+/** \brief Graph Structure
+ *
+ */
 
 struct mat_graph
 {
-    int V, E;
-    int *val, *vseq;
+    int nvertices; /**< Number of vertices */
+    int nedges; /**< Number of edges */
+    int *val; /**<  */
+    int *vseq;
     int id;
-    G_NODE *adj, z;
+    MAT_GNODE *adj;
+    MAT_GNODE z;
     int *dad;
     int weighted;
-    INT_PRIORITYQUEUE pq;
+    MAT_INT_PRIORITYQUEUE pq;
 };
 typedef struct mat_graph mat_graph;
 typedef struct mat_graph *MAT_GRAPH;
@@ -223,25 +309,25 @@ typedef struct mat_graph *MAT_GRAPH;
 #define MAT_KDTREE_MAX_DIMS 3
 #endif
 
-struct __kdnode
+struct mat_kdnode
 {
     mtype x[MAT_KDTREE_MAX_DIMS];
     int idx;
-    struct __kdnode *left, *right;
+    struct mat_kdnode *left, *right;
 };
-typedef struct __kdnode mat_kdnode;
-typedef struct __kdnode* MAT_KDNODE;
+typedef struct mat_kdnode mat_kdnode;
+typedef struct mat_kdnode* MAT_KDNODE;
 
-struct __mat_kdtree
+struct mat_kdtree
 {
     int ndims;
     int length;
     int _is_allocated;
-    MAT_KDNODE __data;
+    MAT_KDNODE data;
     MAT_KDNODE kdtree;
 };
-typedef struct __mat_kdtree mat_kdtree;
-typedef struct __mat_kdtree* MAT_KDTREE;
+typedef struct mat_kdtree mat_kdtree;
+typedef struct mat_kdtree* MAT_KDTREE;
 
 
 extern clock_t MAT_CLOCK_TIME;
@@ -292,9 +378,8 @@ extern MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_ser
 
 #define INT_VECSTACK_MALLOC 1
 #define INT_VECSTACK_FNOTOPEN 2
-#define INT_VECSTACK_FNOTGETMAT 3
+#define INT_VECSTACK_FNOTGETINT_VEC 3
 #define INT_VECSTACK_SIZEMISMATCH 4
-#define INT_VECSTACK_INVERSE_ERROR 5
 
 #define STACK_MALLOC 0
 #define STACK_EMPTY 1
@@ -355,15 +440,15 @@ extern MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_ser
 int mats_isnan(mtype x);
 int mats_isinf(mtype x);
 
-INT_VECTOR __int_vec_creat(int length);
-INT_VECTOR int_vec_creat(int length, int type);
+INT_VECTOR __int_vec_creat(int len);
+INT_VECTOR int_vec_creat(int len, int type);
 INT_VECTOR int_vec_fill(INT_VECTOR A, int val);
 INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type);
 int int_vec_free(INT_VECTOR A);
 
 /******************************************/
-INT_VECSTACK __int_vecstack_creat(int length);
-INT_VECSTACK int_vecstack_creat(int length);
+INT_VECSTACK __int_vecstack_creat(int len);
+INT_VECSTACK int_vecstack_creat(int len);
 int int_vecstack_free(INT_VECSTACK A);
 
 MATRIX __mat_creat(int r, int c);
@@ -374,8 +459,8 @@ MATRIX mat_fill_type(MATRIX A, int type);
 int mat_free(MATRIX A);
 
 /******************************************/
-MATSTACK matstack_creat(int length);
-MATSTACK __matstack_creat(int length);
+MATSTACK matstack_creat(int len);
+MATSTACK __matstack_creat(int len);
 int matstack_free(MATSTACK A);
 MATSTACK matstack_append(MATSTACK s, MATRIX a);
 
@@ -388,23 +473,23 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result);
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result);
 MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result);
 MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result);
-int mat_fgetmat(MATRIX A, FILEPOINTER fp);
+int mat_fgetmat(MATRIX A, MAT_FILEPOINTER fp);
 
 /******************************************/
 /* matrix dump */
-MATRIX mat_dump(MATRIX A);
-MATRIX mat_dumpf(MATRIX A, const char *s);
-MATRIX mat_fdump(MATRIX A, FILEPOINTER fp);
-MATRIX mat_fdumpf(MATRIX A, const char *s, FILEPOINTER fp);
+void mat_dump(MATRIX A);
+void mat_dumpf(MATRIX A, const char *s);
+void mat_fdump(MATRIX A, MAT_FILEPOINTER fp);
+void mat_fdumpf(MATRIX A, const char *s, MAT_FILEPOINTER fp);
 
-INT_VECTOR int_vec_dump(INT_VECTOR a);
-INT_VECTOR int_vec_dumpf(INT_VECTOR a, const char *s);
-INT_VECTOR int_vec_fdump(INT_VECTOR a, FILEPOINTER fp);
-INT_VECTOR int_vec_fdumpf(INT_VECTOR a, const char *s, FILEPOINTER fp);
+void int_vec_dump(INT_VECTOR a);
+void int_vec_dumpf(INT_VECTOR a, const char *s);
+void int_vec_fdump(INT_VECTOR a, MAT_FILEPOINTER fp);
+void int_vec_fdumpf(INT_VECTOR a, const char *s, MAT_FILEPOINTER fp);
 
 /******************************************/
 /* vector manipulations */
-INT_VECTOR int_vec_copy(INT_VECTOR a);
+INT_VECTOR int_vec_copy(INT_VECTOR a, INT_VECTOR result);
 INT_VECTOR int_vec_unique(INT_VECTOR a);
 INT_VECTOR int_vec_append(INT_VECTOR A, int i);
 INT_VECTOR int_vec_find(INT_VECTOR a, int rel_type, int n);
@@ -468,22 +553,23 @@ mtype mat_norm_p(MATRIX A, mtype p);
 /******************************************/
 mtype mat_diagmul(MATRIX A);
 MATRIX mat_tran(MATRIX A, MATRIX result);
-MATRIX mat_inv(MATRIX a, MATRIX result);
-MATRIX mat_pinv(MATRIX a, MATRIX result);
-MATRIX mat_wpinv(MATRIX a, MATRIX w, MATRIX result);
-MATRIX mat_reg_inv(MATRIX a, mtype r_constant, MATRIX result);
+MATRIX mat_inv(MATRIX A, MATRIX result);
+MATRIX mat_pinv(MATRIX A, MATRIX result);
+MATRIX mat_wpinv(MATRIX A, MATRIX w, MATRIX result);
+MATRIX mat_reg_inv(MATRIX A, mtype r_constant, MATRIX result);
 MATRIX mat_symtoeplz(MATRIX R, MATRIX result);
+MATRIX mat_chol(MATRIX A, MATRIX result);
 
 /******************************************/
 /* linear system equation solver */
 int mat_lu(MATRIX A, MATRIX P);
 void mat_backsubs1(MATRIX A, MATRIX B, MATRIX C, MATRIX P, int xcol);
-MATRIX mat_lsolve(MATRIX a, MATRIX b, MATRIX result);
-MATRIX mat_cholesky(MATRIX a, MATRIX result);
+MATRIX mat_lsolve(MATRIX A, MATRIX b, MATRIX result);
+MATRIX mat_cholesky(MATRIX A, MATRIX result);
 
 MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result);
 mtype mat_cofact(MATRIX A, int i, int j);
-mtype mat_det(MATRIX a);
+mtype mat_det(MATRIX A);
 mtype mat_minor(MATRIX A, int i, int j);
 
 MATSTACK mat_qr(MATRIX A, MATSTACK qr);
@@ -494,7 +580,7 @@ MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B, MATRIX result);
 /* sorting algorithms */
 mtype mat_median(MATRIX A);
 mtype mat_order_statistic(MATRIX A, int k);
-void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind);
+void __mat_quicksort(MATRIX A, int l, int r, int offset, MATRIX ind);
 MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result);
 MATVEC_DPOINTER mat_max(MATRIX A, int dim);
 MATVEC_DPOINTER mat_min(MATRIX A, int dim);
@@ -521,8 +607,8 @@ MATRIX mat_least_squares(MATRIX A, MATRIX Y, MATRIX result);
 MATRIX mat_w_least_squares(MATRIX A, MATRIX Y, MATRIX w, MATRIX result);
 MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc, MATRIX result);
 
-MATRIX mat_linear_ls_fit(MATRIX data, MATRIX Y, int degree, MATRIX result);
-MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc, MATRIX result);
+MATRIX mat_linear_ls_fit(MATRIX A, MATRIX Y, int deg, MATRIX result);
+MATRIX mat_robust_fit(MATRIX A, MATRIX Y, int deg, int lossfunc, MATRIX result);
 
 /******************************************/
 /* matrix manipulations */
@@ -563,7 +649,7 @@ mtype __mat_arctanh(mtype x);
 MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_gfunc(MATRIX A, mtype (*pt2func)(mtype), MATRIX result);
-MATRIX mat_bsxfun(MATRIX a, MATRIX b, mtype (*pt2func)(mtype, mtype), MATRIX result);
+MATRIX mat_bsxfun(MATRIX A, MATRIX B, mtype (*func)(mtype, mtype), MATRIX result);
 
 /******************************************/
 /* statistical analysis tools */
@@ -578,7 +664,7 @@ MATSTACK mat_eig_sym(MATRIX symmat, MATSTACK result);
 /******************************************/
 /* print helpers */
 void mat_nextline(void);
-void mat_fnextline(FILEPOINTER fp);
+void mat_fnextline(MAT_FILEPOINTER fp);
 
 /******************************************/
 /* signal domain transforms */
@@ -588,7 +674,7 @@ MATSTACK mat_fft2(MATSTACK c, int dir, MATSTACK result);
 int __mat_fft(int dir, int m, mtype *x, mtype *y);
 
 /* filtering functions */
-MATRIX mat_conv2(MATRIX a, MATRIX mask, MATRIX scratch, MATRIX result);
+MATRIX mat_conv2(MATRIX A, MATRIX mask, MATRIX scratch, MATRIX result);
 
 /******************************************/
 /* matrix vector conversions */
@@ -599,20 +685,21 @@ MATRIX mat_vectorize_tr(MATRIX a, MATRIX result);
 
 /******************************************/
 /* integration functions */
+mtype mat_int_trapezoid(mtype (*func)(mtype), int n, mtype lower, mtype upper);
 mtype mat_int_simpson(mtype (*func)(mtype), int n, mtype lower, mtype upper);
-mtype __mat_lint(mtype *x, mtype (*fx) (mtype), mtype x0, mtype xn, mtype f0, mtype f2, mtype f3, mtype f5, mtype f6, mtype f7, mtype f9, mtype fl4, mtype hmin, mtype hmax, mtype re, mtype ae);
-mtype mat_int_qadrat(mtype(*fx)(mtype), mtype lower, mtype upper);
+mtype __mat_lint(mtype *x, mtype (*func) (mtype), mtype x0, mtype xn, mtype f0, mtype f2, mtype f3, mtype f5, mtype f6, mtype f7, mtype f9, mtype fl4, mtype hmin, mtype hmax, mtype re, mtype ae);
+mtype mat_int_qadrat(mtype(*func)(mtype), mtype lower, mtype upper);
 
 /******************************************/
 /* polynomials */
-MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result);
-MATRIX mat_poly_diff(MATRIX a, int dir, MATRIX result);
-MATRIX mat_poly_diff_eval(MATRIX a, mtype x, int dir, MATRIX result);
-MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result);
-MATRIX mat_poly_mul(MATRIX a, MATRIX b, MATRIX result);
-MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result);
-MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result);
-MATRIX mat_poly_shift(MATRIX a, int s, MATRIX result);
+MATRIX mat_poly_eval(MATRIX A, mtype x, int dir, MATRIX result);
+MATRIX mat_poly_diff(MATRIX A, int dir, MATRIX result);
+MATRIX mat_poly_diff_eval(MATRIX A, mtype x, int dir, MATRIX result);
+MATRIX mat_poly_add(MATRIX A, MATRIX B, MATRIX result);
+MATRIX mat_poly_mul(MATRIX A, MATRIX B, MATRIX result);
+MATSTACK mat_poly_div(MATRIX A, MATRIX B, MATSTACK result);
+MATRIX mat_poly_scale(MATRIX A, mtype s, MATRIX result);
+MATRIX mat_poly_shift(MATRIX A, int s, MATRIX result);
 void mat_cheby_init();
 void mat_legendre_init();
 void mat_binom_init();
@@ -624,27 +711,27 @@ MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX resul
 
 /******************************************/
 /* pattern recognition */
-BAYES_MODEL pat_bayes_model_creat(void);
-int pat_bayes_model_free(BAYES_MODEL a);
-PERCEPTRON pat_perceptron_creat(void);
-int pat_perceptron_free(PERCEPTRON a);
+MAT_BAYES_MODEL mat_bayes_model_creat(void);
+int mat_bayes_model_free(MAT_BAYES_MODEL a);
+MAT_PERCEPTRON mat_perceptron_creat(void);
+int mat_perceptron_free(MAT_PERCEPTRON a);
 
-BAYES_MODEL pat_bayes_classifier_train(MATRIX data, INT_VECTOR labels);
-INT_VECTOR pat_bayes_classifier_test(MATRIX data, BAYES_MODEL b_model);
-PERCEPTRON pat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_iterations);
-INT_VECTOR pat_perceptron_test(MATRIX data, PERCEPTRON p_model);
-PERCEPTRON pat_perceptron_train_(MATRIX data1, MATRIX data2, PERCEPTRON p_model, int class_num);
+MAT_BAYES_MODEL mat_bayes_classifier_train(MATRIX data, INT_VECTOR labels);
+INT_VECTOR mat_bayes_classifier_test(MATRIX data, MAT_BAYES_MODEL b_model);
+MAT_PERCEPTRON mat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_iterations);
+INT_VECTOR mat_perceptron_test(MATRIX data, MAT_PERCEPTRON p_model);
+MAT_PERCEPTRON mat_perceptron_train_(MATRIX data1, MATRIX data2, MAT_PERCEPTRON p_model, int class_num);
 
 /******************************************/
 /* basic search algorithms */
-SEARCH_TREE mat_bs_make_null(void);
-SEARCH_TREE mat_bs_free(SEARCH_TREE T);
-SEARCH_TREE mat_bs_find(mtype x, SEARCH_TREE T);
-SEARCH_TREE mat_bs_find_min(SEARCH_TREE T);
-SEARCH_TREE mat_bs_find_max(SEARCH_TREE T);
-SEARCH_TREE mat_bs_insert(mtype x, SEARCH_TREE T);
-SEARCH_TREE mat_bs_delete(mtype x, SEARCH_TREE T);
-int mat_bs_inorder(SEARCH_TREE T, int index, mtype **ordered);
+MAT_TREE mat_bs_make_null(void);
+MAT_TREE mat_bs_free(MAT_TREE T);
+MAT_TREE mat_bs_find(mtype x, MAT_TREE T);
+MAT_TREE mat_bs_find_min(MAT_TREE T);
+MAT_TREE mat_bs_find_max(MAT_TREE T);
+MAT_TREE mat_bs_insert(mtype x, MAT_TREE T);
+MAT_TREE mat_bs_delete(mtype x, MAT_TREE T);
+int mat_bs_inorder(MAT_TREE T, int index, mtype **ordered);
 
 
 /******************************************/
@@ -656,12 +743,12 @@ mtype gen_abs_ceil(mtype a);
 
 /******************************************/
 /* textfunctions */
-int mat_isnumeric(FILEPOINTER fp);
-int mat_go_next_word(FILEPOINTER fp);
-int mat_count_words_in_line(FILEPOINTER fp, int *count);
-int mat_read_word(FILEPOINTER fp, char *c_word);
+int mat_isnumeric(MAT_FILEPOINTER fp);
+int mat_go_next_word(MAT_FILEPOINTER fp);
+int mat_count_words_in_line(MAT_FILEPOINTER fp, int *count);
+int mat_read_word(MAT_FILEPOINTER fp, char *c_word);
 MATRIX mat_dlmread(const char *fname);
-void mat_dlmwrite(const char *fname, MATRIX a);
+void mat_dlmwrite(const char *fname, MATRIX A);
 
 /******************************************/
 /* mat_timer_functions */
@@ -672,11 +759,11 @@ void mat_toc_print(void);
 /******************************************/
 
 /* data structures */
-INT_STACK int_stack_creat(void);
-int int_stack_free(INT_STACK s);
-void int_stack_push(INT_STACK s, int value);
-int int_stack_pop(INT_STACK s);
-int int_stack_is_empty(INT_STACK s);
+MAT_INT_STACK mat_int_stack_creat(void);
+int mat_int_stack_free(MAT_INT_STACK s);
+void mat_int_stack_push(MAT_INT_STACK s, int value);
+int mat_int_stack_pop(MAT_INT_STACK s);
+int mat_int_stack_is_empty(MAT_INT_STACK s);
 
 MAT_MTYPE_STACK mat_mtype_stack_creat(void);
 int mat_mtype_stack_free(MAT_MTYPE_STACK s);
@@ -684,11 +771,11 @@ void mat_mtype_stack_push(MAT_MTYPE_STACK s, mtype value);
 mtype mat_mtype_stack_pop(MAT_MTYPE_STACK s);
 int mat_mtype_stack_is_empty(MAT_MTYPE_STACK s);
 
-INT_QUEUE int_queue_creat(void);
-int int_queue_free(INT_QUEUE s);
-void int_queue_enqueue(INT_QUEUE s, int value);
-int int_queue_dequeue(INT_QUEUE s);
-int int_queue_is_empty(INT_QUEUE s);
+MAT_INT_QUEUE mat_int_queue_creat(void);
+int mat_int_queue_free(MAT_INT_QUEUE s);
+void mat_int_queue_enqueue(MAT_INT_QUEUE s, int value);
+int mat_int_queue_dequeue(MAT_INT_QUEUE s);
+int mat_int_queue_is_empty(MAT_INT_QUEUE s);
 
 MAT_MTYPE_QUEUE mat_mtype_queue_creat(void);
 int mat_mtype_queue_free(MAT_MTYPE_QUEUE s);
@@ -696,12 +783,12 @@ void mat_mtype_queue_enqueue(MAT_MTYPE_QUEUE s, mtype value);
 mtype mat_mtype_queue_dequeue(MAT_MTYPE_QUEUE s);
 int mat_mtype_queue_is_empty(MAT_MTYPE_QUEUE s);
 
-INT_PRIORITYQUEUE int_priorityqueue_creat(void);
-void int_priorityqueue_enqueue(INT_PRIORITYQUEUE H, int data, int priority);
-int int_priorityqueue_dequeue(INT_PRIORITYQUEUE H);
-int int_priorityqueue_free(INT_PRIORITYQUEUE H);
-int int_priorityqueue_update(INT_PRIORITYQUEUE H, int data, int priority, int type);
-int int_priorityqueue_is_empty(INT_PRIORITYQUEUE H);
+MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat(void);
+void mat_int_priorityqueue_enqueue(MAT_INT_PRIORITYQUEUE H, int data, int priority);
+int mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H);
+int mat_int_priorityqueue_free(MAT_INT_PRIORITYQUEUE H);
+int mat_int_priorityqueue_update(MAT_INT_PRIORITYQUEUE H, int data, int priority, int type);
+int mat_int_priorityqueue_is_empty(MAT_INT_PRIORITYQUEUE H);
 
 /******************************************/
 /* mds */
@@ -714,23 +801,24 @@ mtype __mat_sqrt(mtype x);
 /******************************************/
 /* graph */
 MAT_GRAPH mat_graph_creat(void);
-void mat_graph_adjlist(MAT_GRAPH g, int directed, int weighted, FILEPOINTER fp);
-INT_QUEUE mat_graph_search(MAT_GRAPH g, int connected, int mst);
-void mat_graph_visit(MAT_GRAPH g, int k, int connected, int mst, INT_PRIORITYQUEUE pq, INT_QUEUE q);
-void mat_graph_dumpf(MAT_GRAPH g, int mst, FILEPOINTER fp);
+void mat_graph_adjlist(MAT_GRAPH g, int directed, int weighted, MAT_FILEPOINTER fp);
+MAT_INT_QUEUE mat_graph_search(MAT_GRAPH g, int connected, int mst);
+void mat_graph_visit(MAT_GRAPH g, int k, int connected, int mst, MAT_INT_PRIORITYQUEUE pq, MAT_INT_QUEUE q);
+void mat_graph_dumpf(MAT_GRAPH g, int mst, MAT_FILEPOINTER fp);
 void mat_graph_dump(MAT_GRAPH g, int mst);
 void mat_graph_adjm_to_adjl(MAT_GRAPH g, MATRIX a);
 MAT_GRAPH mat_graph_reverse(MAT_GRAPH g, MAT_GRAPH r);
 
 /******************************************/
 /* kdtree */
-MAT_KDTREE mat_kdtree_make_tree(MATRIX a, MAT_KDTREE result);
+MAT_KDTREE mat_kdtree_make_tree(MATRIX A, MAT_KDTREE result);
 int mat_kdtree_free(MAT_KDTREE t);
-MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX a, MATRIX result);
+MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX A, MATRIX result);
 MAT_KDNODE __mat_kdtree_make_tree(MAT_KDNODE t, int len, int i, int dim);
 MAT_KDNODE __mat_kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
 void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist);
 
+/******************************************/
 /* sparse */
 MATSTACK mat_omp(MATRIX A, MATRIX b, int k, mtype tol, MATSTACK result);
 

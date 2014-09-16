@@ -1,6 +1,16 @@
 #include "matrix.h"
 
 
+/** \brief Deletes a row and a column of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] i Row index
+ * \param[in] j Column index
+ * \param[in] result Matrix to store the result
+ * \return Extracted matrix
+ *
+ */
+
 MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result)
 {
     int m0, m1, p, p1, m, n;
