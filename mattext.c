@@ -3,17 +3,10 @@
 #include "matrix.h"
 
 
-/** \brief Checks if current word in an opened file is numeric or not
- *
- * \param[in] fp Pointer to an opened file
- * \return Zero/non-zero
- *
- */
-
-int mat_isnumeric(MAT_FILEPOINTER fp)
+int mat_isnumeric(FILEPOINTER fp)
 {
     char ch, flag = 0;
-    while((ch = getc(fp))!=EOF)
+    while((ch = getc(fp))!= EOF)
     {
         if(ch!=' ')
         {
@@ -33,7 +26,7 @@ int mat_isnumeric(MAT_FILEPOINTER fp)
             {
                 if(ch=='.')
                 {
-                    if(flag==2) flag = 3;
+                    if(flag ==2) flag = 3;
                     else flag = 1;
                 }
                 else if(ch=='-') flag = 2;
@@ -63,26 +56,19 @@ int mat_isnumeric(MAT_FILEPOINTER fp)
     return 0;
 }
 
-/** \brief Moves to next word in an opened file
- *
- * \param[in] fp Pointer to an opened file
- * \return EOF reached
- *
- */
-
-int mat_go_next_word(MAT_FILEPOINTER fp)
+int mat_go_next_word(FILEPOINTER fp)
 {
     int flag = 0;
     char ch = 0;
-    while((flag<2)&&((ch = (char)getc(fp))!=EOF))
+    while((flag < 2) && ((ch = (char)getc(fp))!= EOF))
     {
-        if((ch=='\v')||(ch=='\n')||(ch=='\t')||isspace(ch)||(ch==',')||(ch=='!')||(ch=='(')||(ch==')')||(ch=='{')||(ch=='}')||(ch=='[')||(ch==']'))
+        if ((ch =='\v') || (ch =='\n') || (ch =='\t') || isspace(ch) || (ch == ',') || (ch == '!') || (ch == '(') || (ch == ')') || (ch == '{') || (ch == '}') || (ch == '[') || (ch == ']'))
         {
-            if(flag==0) flag = 1;
+            if(flag == 0) flag = 1;
         }
-        else if(flag==1) flag = 2;
+        else if(flag == 1) flag = 2;
     }
-    if(ch!=EOF)
+    if(ch != EOF)
     {
         ungetc(ch, fp);
         return 0;
@@ -90,77 +76,62 @@ int mat_go_next_word(MAT_FILEPOINTER fp)
     else return 1;
 }
 
-/** \brief Count words in current line in an opened file
- *
- * \param[in] fp Pointer to an opened file
- * \param[out] count Pointer to output count
- * \return EOF reached
- *
- */
-
-int mat_count_words_in_line(MAT_FILEPOINTER fp, int *count)
+int mat_count_words_in_line(FILEPOINTER fp, int *count)
 {
     int flag = -1;
     char ch = 0;
     *count = 0;
-    while((flag<3) && ((ch = (char)getc(fp))!=EOF))
+    while((flag < 3) && ((ch = (char)getc(fp))!= EOF))
     {
-        if((ch=='\v')||(ch=='\n'))
+        if((ch =='\v') || (ch =='\n'))
         {
-            if(flag==0)
+            if (flag == 0)
             {
                 (*count)++;
                 flag = 3;
             }
-            if(flag==-1) flag = 4;/*  line included to handle empty line */
+            if(flag == -1) flag = 4;/*  line included to handle empty line */
             else flag = 2;
         }
-        else if(isspace(ch)||(ch=='\t')||(ch==',')||(ch=='!')||(ch=='(')||(ch==')')||(ch=='{')||(ch=='}')||(ch=='[')||(ch==']'))
+        else if (isspace(ch) || (ch =='\t') || (ch == ',') || (ch == '!') || (ch == '(') || (ch == ')') || (ch == '{') || (ch == '}') || (ch == '[') || (ch == ']'))
         {
-            if(flag==0)/* changed from  <=0 to ==0 to skip initial space */
+            if(flag == 0)/* changed from  <=0 to ==0 to skip initial space */
             {
                 flag = 1;
                 (*count)++;
             }
         }
-        else if(flag==1) flag = 0;
-        else if(flag==2) flag = 3;
+        else if(flag == 1) flag = 0;
+        else if(flag == 2) flag = 3;
         else flag = 0;
     }
-    if(flag!=-1&&flag!=4) ungetc(ch, fp);
-    if(ch==EOF)
+    if(flag !=-1 && flag!=4) ungetc(ch, fp);
+    if (ch == EOF)
     {
-        if(flag==0) (*count)++;
+        if (flag == 0) (*count)++;
         return 1;
     }
     else return 0;
 }
-
-/** \brief Reads a matrix from a file
- *
- * \param[in] fname Filename to read from
- * \return Output matrix
- *
- */
 
 MATRIX mat_dlmread(const char *fname)
 {
     int m = 0, n = 0, i, j, flag = 0, tmp = 0, k = 0;
     mtype in_value = 0;
     char c_word[100];
-    MAT_FILEPOINTER fp = NULL;
+    FILEPOINTER fp = NULL;
     MATRIX data = NULL;
 
-    if((fp = fopen(fname,"rb"))==NULL) gen_error(GEN_FNOTOPEN);
+    if ((fp = fopen(fname,"rb")) == NULL) gen_error(GEN_FNOTOPEN);
     while(!flag)
     {
         k = mat_isnumeric(fp);
-        if(k==1)
+        if (k==1)
         {
             flag = mat_count_words_in_line(fp, &tmp);
-            if(tmp!=0) n++; /*improved skip non-data line*/
+            if (tmp != 0) n++; /*improved skip non-data line*/
         }
-        else if(k==0)
+        else  if(k==0)
         {
             flag = mat_count_words_in_line(fp, &tmp);
         }
@@ -168,10 +139,10 @@ MATRIX mat_dlmread(const char *fname)
     }
     m = tmp;
     fclose(fp);
-    if(m==0||n==0) return mat_error(MAT_FNOTGETMAT);
+    if(m==0 || n==0) return mat_error(MAT_FNOTGETMAT);
     fp = fopen(fname,"rb");
     data = mat_creat(n, m, ZERO_MATRIX);
-    for(i=0; i<n; ++i)
+    for (i = 0; i < n; ++i)
     {
         k = mat_isnumeric(fp);
         if(k==0)
@@ -183,7 +154,7 @@ MATRIX mat_dlmread(const char *fname)
             }
             while(k==0);
         }
-        for(j=0; j<m; ++j)
+        for (j = 0; j < m; ++j)
         {
             mat_read_word(fp, c_word);
 #if mtype_n == 0
@@ -200,33 +171,25 @@ MATRIX mat_dlmread(const char *fname)
     return data;
 }
 
-/** \brief Reads current word from an opened file
- *
- * \param[in] fp Pointer to an opened file
- * \param[out] c_word Pointer to word read
- * \return EOF reached
- *
- */
-
-int mat_read_word(MAT_FILEPOINTER fp, char *c_word)
+int mat_read_word(FILEPOINTER fp, char *c_word)
 {
     int flag = 0, t = 0;
     char ch = 0;
-    while((flag<3)&&((ch = (char)getc(fp))!=EOF))/*no need for state 3 to be corrected*/
+    while((flag < 3) && ((ch = (char)getc(fp))!= EOF))/*no need for state 3 to be corrected*/
     {
-        if((ch=='\v')||(ch=='\n')||(ch=='\t')||isspace(ch)||(ch==',')||(ch=='!')||(ch=='(')||(ch==')')||(ch=='{')||(ch=='}')||(ch=='[')||(ch==']'))
+        if ((ch =='\v') || (ch =='\n') || (ch =='\t') || isspace(ch) || (ch == ',') || (ch == '!') || (ch == '(') || (ch == ')') || (ch == '{') || (ch == '}') || (ch == '[') || (ch == ']'))
         {
-            if(flag!=0) flag = 2;
+            if(flag != 0) flag = 2;
         }
         else if(flag<2)
         {
             flag = 1;
             c_word[t++] = ch;
         }
-        else if(flag==2) flag = 3; /* reached next word */ /*to be corrected for deleting state 3*/
+        else if(flag == 2) flag = 3; /* reached next word */ /*to be corrected for deleting state 3*/
     }
     c_word[t] = '\0';
-    if(ch!=EOF)
+    if(ch != EOF)
     {
         ungetc(ch, fp);
         return 1;
@@ -234,18 +197,11 @@ int mat_read_word(MAT_FILEPOINTER fp, char *c_word)
     else return 0;
 }
 
-/** \brief Writes a matrix to a file
- *
- * \param[in] fname Filename to write into
- * \param[in] A Input matrix
- *
- */
-
-void mat_dlmwrite(const char *fname, MATRIX A)
+void mat_dlmwrite(const char *fname, MATRIX a)
 {
-    MAT_FILEPOINTER fp;
+    FILEPOINTER fp;
     fp = fopen(fname, "wb");
     if(fp==NULL) gen_error(GEN_FNOTOPEN);
-    mat_fdump(A, fp);
+    mat_fdump(a, fp);
 }
 

@@ -2,12 +2,12 @@
 #include <malloc.h>
 #include "matrix.h"
 
-MAT_TREE mat_bs_make_null(void)
+SEARCH_TREE mat_bs_make_null(void)
 {
     return NULL;
 }
 
-MAT_TREE mat_bs_free(MAT_TREE T)
+SEARCH_TREE mat_bs_free(SEARCH_TREE T)
 {
     if(T!=NULL)
     {
@@ -18,7 +18,7 @@ MAT_TREE mat_bs_free(MAT_TREE T)
     return NULL;
 }
 
-MAT_TREE mat_bs_find(mtype x, MAT_TREE T)
+SEARCH_TREE mat_bs_find(mtype x, SEARCH_TREE T)
 {
     if(T==NULL) return NULL;
     if(x<T->element) return(mat_bs_find(x, T->left));
@@ -26,25 +26,25 @@ MAT_TREE mat_bs_find(mtype x, MAT_TREE T)
     else return T;
 }
 
-MAT_TREE mat_bs_find_min(MAT_TREE T)
+SEARCH_TREE mat_bs_find_min(SEARCH_TREE T)
 {
     if(T!=NULL)
         while(T->left!= NULL) T = T->left;
     return T;
 }
 
-MAT_TREE mat_bs_find_max(MAT_TREE T)
+SEARCH_TREE mat_bs_find_max(SEARCH_TREE T)
 {
     if(T!=NULL)
         while(T->right!=NULL) T = T->right;
     return T;
 }
 
-MAT_TREE mat_bs_insert(mtype x, MAT_TREE T)
+SEARCH_TREE mat_bs_insert(mtype x, SEARCH_TREE T)
 {
     if(T==NULL)
     {
-        T = (MAT_TREE) malloc (sizeof(mat_tree_node));
+        T = (SEARCH_TREE) malloc (sizeof(struct tree_node));
         if(T==NULL) gen_error(GEN_MALLOC);
         else
         {
@@ -57,9 +57,9 @@ MAT_TREE mat_bs_insert(mtype x, MAT_TREE T)
     return T;
 }
 
-MAT_TREE mat_bs_delete(mtype x, MAT_TREE T)
+SEARCH_TREE mat_bs_delete(mtype x, SEARCH_TREE T)
 {
-    MAT_TREE tmp_cell, child = 0;
+    SEARCH_TREE tmp_cell, child = 0;
     if(T==NULL) gen_error(GEN_NOT_FOUND);
     else if(x<T->element) T->left = mat_bs_delete(x, T->left);
     else if(x>T->element) T->right = mat_bs_delete(x, T->right);
@@ -80,7 +80,7 @@ MAT_TREE mat_bs_delete(mtype x, MAT_TREE T)
     return T;
 }
 
-int mat_bs_inorder(MAT_TREE T, int index, mtype **p_ordered)
+int mat_bs_inorder(SEARCH_TREE T, int index, mtype **p_ordered)
 {
     if(T!=NULL)
     {
@@ -92,17 +92,17 @@ int mat_bs_inorder(MAT_TREE T, int index, mtype **p_ordered)
     return index;
 }
 
-MAT_INT_STACK mat_int_stack_creat(void)
+INT_STACK int_stack_creat(void)
 {
-    MAT_INT_STACK s;
-    if((s = (MAT_INT_STACK)malloc(sizeof(mat_int_stack)))==NULL) stack_error(STACK_MALLOC);
+    INT_STACK s;
+    if((s = (INT_STACK)malloc(sizeof(struct int_stack)))==NULL) stack_error(STACK_MALLOC);
     s->p = 0;
     s->length = STACK_MAX;
     if((s->stack = (int*)malloc(sizeof(int)*(STACK_MAX)))==NULL) stack_error(STACK_MALLOC);
     return s;
 }
 
-int mat_int_stack_free(MAT_INT_STACK s)
+int int_stack_free(INT_STACK s)
 {
     if (s==NULL) return 0;
     free(s->stack);
@@ -110,7 +110,7 @@ int mat_int_stack_free(MAT_INT_STACK s)
     return 1;
 }
 
-void mat_int_stack_push(MAT_INT_STACK s, int value)
+void int_stack_push(INT_STACK s, int value)
 {
     if(s->p>=s->length)
     {
@@ -120,7 +120,7 @@ void mat_int_stack_push(MAT_INT_STACK s, int value)
     s->stack[s->p++] = value;
 }
 
-int mat_int_stack_pop(MAT_INT_STACK s)
+int int_stack_pop(INT_STACK s)
 {
     if(s->p>0)
     {
@@ -129,7 +129,7 @@ int mat_int_stack_pop(MAT_INT_STACK s)
     else return stack_error(STACK_EMPTY);
 }
 
-int mat_int_stack_is_empty(MAT_INT_STACK s)
+int int_stack_is_empty(INT_STACK s)
 {
     return ((int)(s->p==0));
 }
@@ -177,22 +177,22 @@ int mat_mtype_stack_is_empty(MAT_MTYPE_STACK s)
     return ((int)(s->p==0));
 }
 
-MAT_INT_QUEUE mat_int_queue_creat(void)
+INT_QUEUE int_queue_creat(void)
 {
-    MAT_INT_QUEUE s;
-    if((s = (MAT_INT_QUEUE)malloc(sizeof(mat_int_queue)))==NULL) queue_error(QUEUE_MALLOC);
+    INT_QUEUE s;
+    if((s = (INT_QUEUE)malloc(sizeof(struct int_queue)))==NULL) queue_error(QUEUE_MALLOC);
     s->p = 0;
     s->head = NULL;
     s->tail = NULL;
     return s;
 }
 
-int mat_int_queue_free(MAT_INT_QUEUE s)
+int int_queue_free(INT_QUEUE s)
 {
     if(s==NULL) return 0;
     if(s->head!=NULL)
     {
-        MAT_QINTNODE t;
+        QINTDATA t;
         while(s->head!=NULL)
         {
             t = s->head;
@@ -205,10 +205,10 @@ int mat_int_queue_free(MAT_INT_QUEUE s)
     return 1;
 }
 
-void mat_int_queue_enqueue(MAT_INT_QUEUE s, int value)
+void int_queue_enqueue(INT_QUEUE s, int value)
 {
-    MAT_QINTNODE t;
-    if((t = (MAT_QINTNODE)malloc(sizeof(mat_qintnode)))==NULL) queue_error(QUEUE_MALLOC);
+    QINTDATA t;
+    if((t = (QINTDATA)malloc(sizeof(qintdata)))==NULL) queue_error(QUEUE_MALLOC);
     t->next=NULL;
     t->data = value;
     if(s->head==NULL)
@@ -224,10 +224,10 @@ void mat_int_queue_enqueue(MAT_INT_QUEUE s, int value)
     ++(s->p);
 }
 
-int mat_int_queue_dequeue(MAT_INT_QUEUE s)
+int int_queue_dequeue(INT_QUEUE s)
 {
     int value;
-    MAT_QINTNODE t;
+    QINTDATA t;
     if(s->head==NULL) queue_error(QUEUE_EMPTY);
     t = s->head->next;
     value = s->head->data;
@@ -243,7 +243,7 @@ int mat_int_queue_dequeue(MAT_INT_QUEUE s)
     return value;
 }
 
-int mat_int_queue_is_empty(MAT_INT_QUEUE s)
+int int_queue_is_empty(INT_QUEUE s)
 {
     return ((int)(s->head==NULL));
 }
@@ -251,7 +251,7 @@ int mat_int_queue_is_empty(MAT_INT_QUEUE s)
 MAT_MTYPE_QUEUE mat_mtype_queue_creat(void)
 {
     MAT_MTYPE_QUEUE s;
-    if((s = (MAT_MTYPE_QUEUE)malloc(sizeof(mat_mtype_queue)))==NULL) queue_error(QUEUE_MALLOC);
+    if((s = (MAT_MTYPE_QUEUE)malloc(sizeof(struct mat_mtype_queue)))==NULL) queue_error(QUEUE_MALLOC);
     s->p = 0;
     s->head = NULL;
     s->tail = NULL;
@@ -263,7 +263,7 @@ int mat_mtype_queue_free(MAT_MTYPE_QUEUE s)
     if(s == NULL) return 0;
     if(s->head!= NULL)
     {
-        MAT_QMTYPENODE t;
+        QMDATA t;
         while(s->head!=NULL)
         {
             t = s->head;
@@ -278,8 +278,8 @@ int mat_mtype_queue_free(MAT_MTYPE_QUEUE s)
 
 void mat_mtype_queue_enqueue(MAT_MTYPE_QUEUE s, mtype value)
 {
-    MAT_QMTYPENODE t;
-    if((t = (MAT_QMTYPENODE)malloc(sizeof(mat_qmtypenode)))==NULL) queue_error(QUEUE_MALLOC);
+    QMDATA t;
+    if((t = (QMDATA)malloc(sizeof(qmdata)))==NULL) queue_error(QUEUE_MALLOC);
     t->next = NULL;
     t->data = value;
     if(s->head==NULL)
@@ -298,7 +298,7 @@ void mat_mtype_queue_enqueue(MAT_MTYPE_QUEUE s, mtype value)
 mtype mat_mtype_queue_dequeue(MAT_MTYPE_QUEUE s)
 {
     mtype value;
-    MAT_QMTYPENODE t;
+    QMDATA t;
     if(s->head == NULL) queue_error(QUEUE_EMPTY);
     t = s->head->next;
     value = s->head->data;
@@ -323,11 +323,11 @@ int mat_mtype_queue_is_empty(MAT_MTYPE_QUEUE s)
 #define INT_MIN (-INT_MAX-1)
 #endif
 
-MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat()
+INT_PRIORITYQUEUE int_priorityqueue_creat()
 {
-    MAT_INT_PRIORITYQUEUE H;
-    if((H = (MAT_INT_PRIORITYQUEUE) malloc(sizeof(mat_int_priorityqueue)))==NULL) pq_error(PQ_MALLOC);
-    if((H->element = (MAT_INTPQNODE) malloc((STACK_MAX+1)*sizeof(mat_intpqnode)))==NULL) pq_error(PQ_MALLOC);
+    INT_PRIORITYQUEUE H;
+    if((H = (INT_PRIORITYQUEUE) malloc(sizeof(int_priorityqueue)))==NULL) pq_error(PQ_MALLOC);
+    if((H->element = (PQINTDATA) malloc((STACK_MAX+1)*sizeof(pqintdata)))==NULL) pq_error(PQ_MALLOC);
     H->length = STACK_MAX;
     H->p = 0;
     H->element[0].priority = INT_MAX;
@@ -335,12 +335,12 @@ MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat()
     return H;
 }
 
-void mat_int_priorityqueue_enqueue(MAT_INT_PRIORITYQUEUE H, int data, int priority)
+void int_priorityqueue_enqueue(INT_PRIORITYQUEUE H, int data, int priority)
 {
     int i;
     if(H->length==H->p)
     {
-        if((H->element = (MAT_INTPQNODE)realloc(H->element, sizeof(mat_intpqnode)*(H->length+STACK_MAX+1)))==NULL) pq_error(PQ_MALLOC);
+        if((H->element = (PQINTDATA)realloc(H->element, sizeof(pqintdata)*(H->length+STACK_MAX+1)))==NULL) pq_error(PQ_MALLOC);
         H->length += STACK_MAX;
     }
     i = ++(H->p);
@@ -353,10 +353,10 @@ void mat_int_priorityqueue_enqueue(MAT_INT_PRIORITYQUEUE H, int data, int priori
     H->element[i].data = data;
 }
 
-int mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H)
+int int_priorityqueue_dequeue(INT_PRIORITYQUEUE H)
 {
     int i, child;
-    mat_intpqnode min_element, last_element;
+    pqintdata min_element, last_element;
     if(H->p==0)
     {
         pq_error(PQ_EMPTY);
@@ -375,7 +375,7 @@ int mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H)
     return min_element.data;
 }
 
-int mat_int_priorityqueue_free(MAT_INT_PRIORITYQUEUE H)
+int int_priorityqueue_free(INT_PRIORITYQUEUE H)
 {
     if(H==NULL) return 0;
     free(H->element);
@@ -384,7 +384,7 @@ int mat_int_priorityqueue_free(MAT_INT_PRIORITYQUEUE H)
     return 1;
 }
 
-int mat_int_priorityqueue_update(MAT_INT_PRIORITYQUEUE H, int data, int priority, int type)
+int int_priorityqueue_update(INT_PRIORITYQUEUE H, int data, int priority, int type)
 {
     int i, child, p = 0;
     for(i=1; i<=H->p; ++i) if(H->element[i].data==data) p = i;
@@ -418,12 +418,12 @@ int mat_int_priorityqueue_update(MAT_INT_PRIORITYQUEUE H, int data, int priority
     }
     else
     {
-        mat_int_priorityqueue_enqueue(H, data, priority);
+        int_priorityqueue_enqueue(H, data, priority);
         return 2;
     }
 }
 
-int mat_int_priorityqueue_is_empty(MAT_INT_PRIORITYQUEUE H)
+int int_priorityqueue_is_empty(INT_PRIORITYQUEUE H)
 {
     return ((int)(H->p==0));
 }

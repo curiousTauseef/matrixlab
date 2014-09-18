@@ -3,26 +3,18 @@
 #define MAX_ITERS_RB 20
 
 
-/** \brief Polynomial model using least squares
- *
- * \param[in] A Data matrix \f$ N \times 1 \f$
- * \param[in] Y Observation matrix \f$ N \times 1 \f$
- * \return
- *
- */
-
-MATRIX mat_linear_ls_fit(MATRIX A, MATRIX Y, int deg, MATRIX result)
+MATRIX mat_linear_ls_fit(MATRIX data, MATRIX Y, int degree, MATRIX result)
 {
     int i, j, n;
-    MATRIX B;
-    n = MatRow(A);
-    B = mat_creat(n, deg+1, ONES_MATRIX);
+    MATRIX A;
+    n = MatRow(data);
+    A = mat_creat(n, degree+1, ONES_MATRIX);
     for(i=0; i<n; ++i)
     {
-        for(j=deg-1; j>=0; --j) B[i][j] = A[i][0]*B[i][j+1];
+        for(j=degree-1; j>=0; --j) A[i][j] = data[i][0]*A[i][j+1];
     }
-    result = mat_least_squares(B, Y, result);
-    mat_free(B);
+    result = mat_least_squares(A, Y, result);
+    mat_free(A);
     return result;
 }
 
@@ -124,18 +116,18 @@ MATRIX mat_rob_least_squares(MATRIX A, MATRIX Y, int lossfunc, MATRIX result)
     return result;
 }
 
-MATRIX mat_robust_fit(MATRIX A, MATRIX Y, int deg, int lossfunc, MATRIX result)
+MATRIX mat_robust_fit(MATRIX data, MATRIX Y, int degree, int lossfunc, MATRIX result)
 {
     int i, j, n;
-    MATRIX B = NULL;
-    n = MatRow(A);
-    B = mat_creat(n, deg+1, ONES_MATRIX);
+    MATRIX A = NULL;
+    n = MatRow(data);
+    A = mat_creat(n, degree+1, ONES_MATRIX);
     for(i=0; i<n; ++i)
     {
-        for(j=deg-1; j>=0; --j) B[i][j] = A[i][0]*B[i][j+1];
+        for(j=degree-1; j>=0; --j) A[i][j] = data[i][0]*A[i][j+1];
     }
-    result = mat_rob_least_squares(B, Y, lossfunc, result);
-    mat_free(B);
+    result = mat_rob_least_squares(A, Y, lossfunc, result);
+    mat_free(A);
     return result;
 }
 

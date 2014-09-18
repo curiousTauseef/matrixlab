@@ -2,9 +2,6 @@
 #include "matrix.h"
 
 
-
-/*\/**< \cond HIDDEN_SYMBOLS */
-
 MATRIX __mat_creat(int row, int col)
 {
     MATRIX mat = NULL;
@@ -21,17 +18,6 @@ MATRIX __mat_creat(int row, int col)
     return (mat+2);
 }
 
-/*\/**< \endcond */
-
-/** \brief Creates a matrix
- *
- * \param[in] row Number of rows
- * \param[in] col Number of columns
- * \param[in] type Definition type (UNDEFINED/ZERO_MATRIX/UNIT_MATRIX/ONES_MATRIX)
- * \return Output matrix
- *
- */
-
 MATRIX mat_creat(int row, int col, int type)
 {
     MATRIX A;
@@ -43,37 +29,26 @@ MATRIX mat_creat(int row, int col, int type)
         return NULL;
 }
 
-/**< \cond HIDDEN_SYMBOLS */
-
-MATSTACK __matstack_creat(int len)
+MATSTACK __matstack_creat(int length)
 {
     MATSTACK matrixstack;
     int i;
-    if((matrixstack = (MATRIX *)malloc(sizeof(MATRIX)*(1+len)))==NULL)
+    if((matrixstack = (MATRIX *)malloc(sizeof(MATRIX)*(1+length)))==NULL)
         return (matstack_error( MATSTACK_MALLOC));
 
-    for(i=0; i<=len; ++i)
+    for(i=0; i<=length; ++i)
     {
         matrixstack[i]= NULL;
     }
     matrixstack[0] = mat_creat(1,1,0);
-    matrixstack[0][0][0] = len;
+    matrixstack[0][0][0] = length;
     return (matrixstack+1);
 }
 
-/**< \endcond */
-
-/** \brief Creates a matrix stack
- *
- * \param[in] len Length of the stack
- * \return Output matrix stack
- *
- */
-
-MATSTACK matstack_creat(int len)
+MATSTACK matstack_creat(int length)
 {
     MATSTACK A;
-    if((A =__matstack_creat(len))!=NULL)
+    if((A =__matstack_creat(length))!=NULL)
     {
         return A;
     }
@@ -81,32 +56,17 @@ MATSTACK matstack_creat(int len)
         return NULL;
 }
 
-/** \brief Appends a matrix to a matrix stack
- *
- * \param[in] s Input matrix stack
- * \param[in] A Input matrix to append
- * \return Output matrix stack
- *
- */
-
-MATSTACK matstack_append(MATSTACK s, MATRIX A)
+MATSTACK matstack_append(MATSTACK s, MATRIX a)
 {
     MATSTACK m;
     int i, n;
-    if(A==NULL) return s;
+    if(a==NULL) return s;
     n = MatStacklength(s);
     m = matstack_creat(n+1);
     for(i=0; i<n; ++i) m[i] = s[i];
-    m[n] = A;
+    m[n] = a;
     return m;
 }
-
-/** \brief Frees a matrix stack
- *
- * \param[in] A Input matrix stack
- * \return Success
- *
- */
 
 int matstack_free(MATSTACK A)
 {
@@ -114,18 +74,11 @@ int matstack_free(MATSTACK A)
     if(A==NULL) return 0;
     n = MatStacklength(A);
     A = A-1;
-    for(i=0; i<n; ++i) mat_free(A[i]);
+    for(i=0; i<n; ++i)
+        mat_free(A[i]);
     A = NULL;
     return 1;
 }
-
-/** \brief Fills a matrix with a value
- *
- * \param[in] A Input matrix
- * \param[in] val Value to fill with
- * \return Filled matrix
- *
- */
 
 MATRIX mat_fill(MATRIX A, mtype val)
 {
@@ -139,13 +92,6 @@ MATRIX mat_fill(MATRIX A, mtype val)
     return A;
 }
 
-/** \brief Fills a matrix to a type
- *
- * \param[in] A Input matrix
- * \param[in] type Fill type (UNDEFINED/ZERO_MATRIX/UNIT_MATRIX/ONES_MATRIX)
- * \return Filled matrix
- *
- */
 
 MATRIX mat_fill_type(MATRIX A, int type)
 {
@@ -182,13 +128,6 @@ MATRIX mat_fill_type(MATRIX A, int type)
     return A;
 }
 
-/** \brief Frees a matrix
- *
- * \param[in] A Input matrix
- * \return Success
- *
- */
-
 int mat_free(MATRIX A)
 {
     int i, n;
@@ -204,45 +143,25 @@ int mat_free(MATRIX A)
     return 1;
 }
 
-/**< \cond HIDDEN_SYMBOLS */
-
-INT_VECTOR __int_vec_creat(int len)
+INT_VECTOR __int_vec_creat(int length)
 {
     INT_VECTOR int_vector;
-    if((int_vector = (int*)malloc(sizeof(int)*(len+1)))==NULL)
+    if((int_vector = (int*)malloc(sizeof(int)*(length+1)))==NULL)
         return (int_vec_error(INT_VEC_MALLOC));
-    int_vector[0] = len;
+    int_vector[0] = length;
     return (int_vector+1);
 }
 
-/**< \endcond */
-
-/** \brief Creates an integer vector
- *
- * \param[in] len Length of the vector
- * \param[in] type Definition type (UNDEFINED/ZERO_INT_VECTOR/ONES_INT_VECTOR/SERIES_INT_VECTOR)
- * \return Output vector
- *
- */
-
-INT_VECTOR int_vec_creat(int len, int type)
+INT_VECTOR int_vec_creat(int length, int type)
 {
     INT_VECTOR A;
-    if((A =__int_vec_creat(len))!=NULL)
+    if((A =__int_vec_creat(length))!=NULL)
     {
         return (int_vec_fill_type(A, type));
     }
     else
         return NULL;
 }
-
-/** \brief Fills an integer vector with a value
- *
- * \param[in] A Input vector
- * \param[in] val Value to fill with
- * \return Filled vector
- *
- */
 
 INT_VECTOR int_vec_fill(INT_VECTOR A, int val)
 {
@@ -251,14 +170,6 @@ INT_VECTOR int_vec_fill(INT_VECTOR A, int val)
     for(i=0; i<n; ++i) A[i] = val;
     return A;
 }
-
-/** \brief Fills an integer vector to a type
- *
- * \param[in] A Input vector
- * \param[in] type Definition type (UNDEFINED/ZERO_INT_VECTOR/ONES_INT_VECTOR/SERIES_INT_VECTOR)
- * \return Filled vector
- *
- */
 
 INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type)
 {
@@ -281,13 +192,6 @@ INT_VECTOR int_vec_fill_type(INT_VECTOR A, int type)
     return A;
 }
 
-/** \brief Frees an integer vector
- *
- * \param[in] A Input vector
- * \return Success
- *
- */
-
 int int_vec_free(INT_VECTOR A)
 {
     if(A==NULL) return 0;
@@ -297,50 +201,32 @@ int int_vec_free(INT_VECTOR A)
     return 1;
 }
 
-/**< \cond HIDDEN_SYMBOLS */
-
-INT_VECSTACK __int_vecstack_creat(int len)
+INT_VECSTACK __int_vecstack_creat(int length)
 {
     INT_VECSTACK int_vecstack;
     int i;
-    if((int_vecstack = (INT_VECTOR *)malloc( sizeof(INT_VECTOR)*(1+len)))==NULL)
+    if((int_vecstack = (INT_VECTOR *)malloc( sizeof(INT_VECTOR)*(1+length)))==NULL)
         return (int_vecstack_error(INT_VECSTACK_MALLOC));
 
-    for(i=0; i<=len; ++i)
+    for(i=0; i<=length; ++i)
     {
         int_vecstack[i]= NULL;
     }
     int_vecstack[0] = int_vec_creat(1,0);
-    int_vecstack[0][0] = len;
+    int_vecstack[0][0] = length;
     return (int_vecstack+1);
 }
 
-/**< \endcond */
-
-/** \brief Creates an integer vector stack
- *
- * \param[in] len Length of the stack
- * \return Output vector stack
- *
- */
-
-INT_VECSTACK int_vecstack_creat(int len)
+INT_VECSTACK int_vecstack_creat(int length)
 {
     INT_VECSTACK A;
-    if((A =__int_vecstack_creat(len))!=NULL)
+    if((A =__int_vecstack_creat(length))!=NULL)
     {
         return A;
     }
     else
         return NULL;
 }
-
-/** \brief Frees an integer vector stack
- *
- * \param[in] A Input vector stack
- * \return Success
- *
- */
 
 int int_vecstack_free(INT_VECSTACK A)
 {
@@ -355,16 +241,10 @@ int int_vecstack_free(INT_VECSTACK A)
     return 1;
 }
 
-/** \brief Creates a Bayes model
- *
- * \return Output Bayes model
- *
- */
-
-MAT_BAYES_MODEL mat_bayes_model_creat(void)
+BAYES_MODEL pat_bayes_model_creat(void)
 {
-    MAT_BAYES_MODEL a;
-    a = (MAT_BAYES_MODEL)malloc(sizeof(mat_bayes_model));
+    BAYES_MODEL a;
+    a = (BAYES_MODEL)malloc(sizeof(bayes_model));
     a->class_priors = NULL;
     a->class_covars = NULL;
     a->class_labels = NULL;
@@ -374,14 +254,7 @@ MAT_BAYES_MODEL mat_bayes_model_creat(void)
     return a;
 }
 
-/** \brief Frees a Bayes model
- *
- * \param[in] a Input Bayes model
- * \return Success
- *
- */
-
-int mat_bayes_model_free(MAT_BAYES_MODEL a)
+int pat_bayes_model_free(BAYES_MODEL a)
 {
     matstack_free(a->class_means);
     matstack_free(a->class_covars);
@@ -391,16 +264,10 @@ int mat_bayes_model_free(MAT_BAYES_MODEL a)
     return 1;
 }
 
-/** \brief Creates a perceptron
- *
- * \return Output perceptron
- *
- */
-
-MAT_PERCEPTRON mat_perceptron_creat(void)
+PERCEPTRON pat_perceptron_creat(void)
 {
-    MAT_PERCEPTRON a;
-    a = (MAT_PERCEPTRON)malloc(sizeof(mat_perceptron));
+    PERCEPTRON a;
+    a = (PERCEPTRON)malloc(sizeof(perceptron));
     a->class_weights = NULL;
     a->class_labels = NULL;
     a->istrained = 0;
@@ -410,14 +277,7 @@ MAT_PERCEPTRON mat_perceptron_creat(void)
     return a;
 }
 
-/** \brief Frees a perceptron
- *
- * \param[in] a Input perceptron
- * \return Success
- *
- */
-
-int mat_perceptron_free(MAT_PERCEPTRON a)
+int pat_perceptron_free(PERCEPTRON a)
 {
     if(a->istrained!=0) mat_free(a->class_weights);
     int_vec_free(a->class_labels);
@@ -425,12 +285,6 @@ int mat_perceptron_free(MAT_PERCEPTRON a)
     a = NULL;
     return 1;
 }
-
-/** \brief Creates a matrix-vector pair
- *
- * \return Output matrix-vector pair
- *
- */
 
 MATVEC_DPOINTER matvec_creat(void)
 {
@@ -441,14 +295,6 @@ MATVEC_DPOINTER matvec_creat(void)
     return a;
 }
 
-/** \brief Frees a matrix-vector pair
- *
- * \param[in] a Input matrix-vector pair
- * \return Success
- *
- *
- */
-
 int matvec_free(MATVEC_DPOINTER a)
 {
     mat_free((MATRIX)a[0]);
@@ -456,14 +302,6 @@ int matvec_free(MATVEC_DPOINTER a)
     free(a);/* to be edited later */
     return 1;
 }
-
-/** \brief Appends an integer to an integer vector
- *
- * \param[in] A Input vector
- * \param[in] i Integer to append
- * \return Appended vector
- *
- */
 
 INT_VECTOR int_vec_append(INT_VECTOR A, int i)
 {
@@ -477,30 +315,16 @@ INT_VECTOR int_vec_append(INT_VECTOR A, int i)
     return A;
 }
 
-/** \brief Copies an integer vector
- *
- * \param[in] a Input vector
- * \param[in] result Vector to store the result
- * \return Output vector
- *
- */
-
-INT_VECTOR int_vec_copy(INT_VECTOR a, INT_VECTOR result)
+INT_VECTOR int_vec_copy(INT_VECTOR a)
 {
     int i, m;
+    INT_VECTOR b;
     m = Int_VecLen(a);
-    if(result==NULL) if((result = int_vec_creat(m, UNDEFINED))==NULL) int_vec_error(INT_VEC_MALLOC);
-    for(i=0; i<m; ++i) result[i] = a[i];
-    return result;
+    if((b = int_vec_creat(m, UNDEFINED))==NULL)
+        return NULL;
+    for(i=0; i<m; ++i) b[i] = a[i];
+    return b;
 }
-
-/** \brief Copies a matrix
- *
- * \param[in] A Input matrix
- * \param[in] result Matrix to store the result
- * \return Output matrix
- *
- */
 
 MATRIX mat_copy(MATRIX A, MATRIX result)
 {
@@ -518,18 +342,6 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
     return result;
 }
 
-/** \brief Copies a sub-matrix
- *
- * \param[in] A Input matrix
- * \param[in] si Start of first index, \f$ s_i \f$
- * \param[in] ei End of first index, \f$ e_i \f$
- * \param[in] sj Start of second index, \f$ s_j \f$
- * \param[in] ej End of second index, \f$ e_j \f$
- * \param[in] result Matrix to store the result
- * \return Extracted matrix \f$ A_{s_i:e_i,s_j:e_j} \f$
- *
- */
-
 MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
 {
     int i, j, m, n;
@@ -546,17 +358,6 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
         }
     return result;
 }
-
-/** \brief Copies a sub-matrix
- *
- * \param[in] A11 Input matrix, \f$ A_{11} \f$
- * \param[in] A12 Input matrix, \f$ A_{12} \f$
- * \param[in] A21 Input matrix, \f$ A_{21} \f$
- * \param[in] A22 Input matrix, \f$ A_{22} \f$
- * \param[in] result Matrix to store the result
- * \return Block matrix \f$ \left[\begin{array}{cc} A_{11} & A_{12}\\ A_{21} & A_{22} \end{array}\right] \f$
- *
- */
 
 MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
 {
@@ -593,16 +394,6 @@ MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
 
 }
 
-/** \brief Copies a row from a matrix
- *
- * \param[in] A Input matrix
- * \param[in] rowa Source row
- * \param[in] rowb Destination row
- * \param[in] result Matrix to store the result
- * \return Copied matrix
- *
- */
-
 MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result)
 {
     int i, n;
@@ -613,16 +404,6 @@ MATRIX mat_rowcopy(MATRIX A, int rowa, int rowb, MATRIX result)
     }
     return result;
 }
-
-/** \brief Copies a column from a matrix
- *
- * \param[in] A Input matrix
- * \param[in] cola Source column
- * \param[in] colb Destination column
- * \param[in] result Matrix to store the result
- * \return Copied matrix
- *
- */
 
 MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result)
 {
@@ -635,15 +416,7 @@ MATRIX mat_colcopy(MATRIX A, int cola, int colb, MATRIX result)
     return result;
 }
 
-/** \brief Gets matrix data from opened file
- *
- * \param[in] A Matrix to store the data
- * \param[in] fp Pointer to opened file
- * \return Number of elements copied
- *
- */
-
-int mat_fgetmat(MATRIX A, MAT_FILEPOINTER fp)
+int mat_fgetmat(MATRIX A, FILEPOINTER fp)
 {
     int i, j, k=0, m, n;
     m = MatCol(A);
@@ -656,14 +429,6 @@ int mat_fgetmat(MATRIX A, MAT_FILEPOINTER fp)
 #endif
     return k;
 }
-
-/** \brief Creates a diagonal matrix from a 1-d matrix
- *
- * \param[in] diag_vals Input 1-d diagonal value matrix
- * \param[in] result Matrix to store the result
- * \return Diagonal matrix
- *
- */
 
 MATRIX mat_creat_diag(MATRIX diag_vals, MATRIX result)
 {

@@ -1,20 +1,12 @@
 #include "matrix.h"
 
 
-/** \brief Converts a matrix to an integer vector
- *
- * \param[in] A Input matrix
- * \param[out] v Output vector
- * \return Output vector
- *
- */
-
-INT_VECTOR mat_2int_vec(MATRIX A)
+INT_VECTOR mat_2int_vec(MATRIX a)
 {
     int m, n, i, j, l;
     INT_VECTOR v;
-    m = MatCol(A);
-    n = MatRow(A);
+    m = MatCol(a);
+    n = MatRow(a);
     l = m*n;
     if((v = int_vec_creat(l, UNDEFINED))==NULL) int_vec_error(INT_VECSTACK_MALLOC);
     l = 0;
@@ -22,19 +14,11 @@ INT_VECTOR mat_2int_vec(MATRIX A)
     for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            v[l] = (int)A[i][j];
+            v[l] = (int)a[i][j];
             ++l;
         }
     return v;
 }
-
-/** \brief Converts an integer vector to a matrix
- *
- * \param[in] a Input vector
- * \param[in] dir Conversion direction
- * \return Output matrix
- *
- */
 
 MATRIX int_vec2_mat(INT_VECTOR a, int dir)
 {
@@ -56,14 +40,6 @@ MATRIX int_vec2_mat(INT_VECTOR a, int dir)
     return M;
 }
 
-/** \brief Reshapes a matrix to a vector
- *
- * \param[in] A Input matrix
- * \param[in] result Matrix to store the result
- * \return \f$ vec(\mathbf{A}) \f$
- *
- */
-
 MATRIX mat_vectorize(MATRIX A, MATRIX result)
 {
     int i, j, m, n, flag = 0, k=0;
@@ -83,14 +59,6 @@ MATRIX mat_vectorize(MATRIX A, MATRIX result)
     if(flag) mat_free(A);
     return result;
 }
-
-/** \brief Reshapes transpose of a matrix to a vector
- *
- * \param[in] A Input matrix
- * \param[in] result Matrix to store the result
- * \return \f$ vec(\mathbf{A}^T) \f$
- *
- */
 
 MATRIX mat_vectorize_tr(MATRIX A, MATRIX result)
 {

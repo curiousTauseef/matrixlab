@@ -1,21 +1,11 @@
 #include "matrix.h"
 
-/*\/**< \cond HIDDEN_SYMBOLS */
+
 #define __swap(a, b) {\
 		t = B[0][(a)];\
 		B[0][(a)] = B[0][(b)];\
         B[0][(b)] = t;\
 }
-/*\/**< \endcond */
-
-/** \brief
- *
- * \param
- * \param
- * \return
- *
- */
-
 mtype mat_median(MATRIX A)
 {
     MATRIX B;
@@ -116,25 +106,25 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
     return result;
 }
 
-void __mat_quicksort(MATRIX A, int l, int r, int offset, MATRIX ind)
+void __mat_quicksort(MATRIX a, int l, int r, int offset, MATRIX ind)
 {
     mtype t;
     int i=l, m;
     int j=r;
-    mtype pivot=A[offset][l];
+    mtype pivot=a[offset][l];
     mtype pivot_ind=0;
     if(ind!=NULL) pivot_ind = ind[offset][l];
-    m = MatCol(A);
+    m = MatCol(a);
     if(l>=r) return;
     while(j>i)
     {
-        while(A[offset][i]<=pivot && i<m) ++i;
-        while(A[offset][j]>pivot && j>=0) --j;
+        while(a[offset][i]<=pivot && i<m) ++i;
+        while(a[offset][j]>pivot && j>=0) --j;
         if(j>i)
         {
-            t = A[offset][i] ;
-            A[offset][i] = A[offset][j] ;
-            A[offset][j] = t ;
+            t = a[offset][i] ;
+            a[offset][i] = a[offset][j] ;
+            a[offset][j] = t ;
             if(ind!=NULL)
             {
                 t = ind[offset][i] ;
@@ -143,14 +133,14 @@ void __mat_quicksort(MATRIX A, int l, int r, int offset, MATRIX ind)
             }
         }
     }
-    A[offset][l] = A[offset][j];
-    A[offset][j] = pivot;
+    a[offset][l] = a[offset][j];
+    a[offset][j] = pivot;
     if(ind!=NULL)
     {
         ind[offset][l] = ind[offset][j];
         ind[offset][j] = pivot_ind;
     }
-    __mat_quicksort(A,l,j-1, offset, ind);
-    __mat_quicksort(A,j+1,r, offset, ind);
+    __mat_quicksort(a,l,j-1, offset, ind);
+    __mat_quicksort(a,j+1,r, offset, ind);
 }
 
