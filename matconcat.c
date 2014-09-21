@@ -1,10 +1,19 @@
 #include "matrix.h"
 
 
+/** \brief Concatenates two matrices
+ *
+ * \param[in] A Input first matrix
+ * \param[in] B Input second matrix
+ * \param[in] dim Concatenation direction (ROWS/COLS)
+ * \return \f$ \left[\begin{array}{cc} A & B \end{array}\right] \f$ or \f$ \left[\begin{array}{c} A \\ B \end{array}\right] \f$
+ *
+ */
+
 MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
 {
     int i, j, m, n, o, p;
-    MATRIX C;
+    MATRIX result;
     if(A==NULL)
     {
         return mat_copy(B, NULL);
@@ -25,28 +34,37 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
     }
     if((dim==1)&&((m==o) ||!((m==0)&&(o==0))))
     {
-        if((C = mat_creat(n+p, m, UNDEFINED))==NULL) return NULL;
+        if((result = mat_creat(n+p, m, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
         for(i=0; i<m; i++)
         {
-            for(j=0; j<n; j++) C[j][i] = A[j][i];
-            for(j=0; j<p; j++) C[j+n][i] = B[j][i];
+            for(j=0; j<n; j++) result[j][i] = A[j][i];
+            for(j=0; j<p; j++) result[j+n][i] = B[j][i];
         }
-        return C;
+        return result;
     }
     if((dim==2)&&((n==p) ||!((n==0)&&(p==0))))
     {
-        if((C = mat_creat(n, m+o, UNDEFINED))==NULL) return NULL;
+        if((result = mat_creat(n, m+o, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
         for(i=0; i<n; i++)
         {
-            for(j=0; j<m; j++) C[i][j] = A[i][j];
-            for(j=0; j<o; j++) C[i][j+m] = B[i][j];
+            for(j=0; j<m; j++) result[i][j] = A[i][j];
+            for(j=0; j<o; j++) result[i][j+m] = B[i][j];
         }
-        return C;
+        return result;
     }
     return mat_error(MAT_SIZEMISMATCH);
 }
+
+/** \brief Concatenates two integer vectors
+ *
+ * \param[in] A Input first vector
+ * \param[in] B Input second vector
+ * \param[in] dim Concatenation direction (ROWS/COLS)
+ * \return \f$ \left[\begin{array}{cc} A & B \end{array}\right] \f$ or \f$ \left[\begin{array}{c} A \\ B \end{array}\right] \f$
+ *
+ */
 
 INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
 {

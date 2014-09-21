@@ -1,6 +1,14 @@
 #include "matrix.h"
 
 
+/** \brief Runs Levinson-Durbin algorithm
+ *
+ * \param[in] R Input \f$ n^th \f$ correlation matrix \f$ (n+1) \times 1 \f$
+ * \param[in] result Matrix to store the result
+ * \return \f$ X \f$ where \f$ \tilde{R}X = B \f$ , \f$ \tilde{R} = \left[ \begin{array}{cccc} R[0][0] & R[1][0] & \cdots & R[n-1][0]\\  R[1][0] & R[0][0] & \cdots & R[n-2][0]\\  \vdots & \vdots & \ddots & \vdots \\  R[n-1][0] & R[n-2][0] & \cdots & R[0][0] \end{array} \right] \f$ and \f$ B = \left[ \begin{array}{cccc} R[1][0] & R[2][0] & \cdots & R[n][0] \end{array} \right] \f$
+ *
+ */
+
 MATRIX mat_durbin(MATRIX R, MATRIX result)
 {
     int i, i1, j, ji, p;
@@ -43,6 +51,15 @@ MATRIX mat_durbin(MATRIX R, MATRIX result)
     return result;
 }
 
+/** \brief Runs Levinson-Durbin algorithm
+ *
+ * \param[in] A Input correlation matrix \f$ A = \left[ \begin{array}{cccc} r_{0} & r_{1} & \cdots & r_{n-1}\\  r_{1} & r_{0} & \cdots & r_{n-2}\\  \vdots & \vdots & \ddots & \vdots \\  r_{n-1} & r_{n-2} & \cdots & r_{0} \end{array} \right] \f$
+ * \param[in] B Input correlation matrix\f$ B = \left[ \begin{array}{c} r_{1} \\ r_{2} \\ \cdots \\ r_{n} \end{array} \right] \f$
+ * \param[in] result Matrix to store the result
+ * \return \f$ X \f$ where \f$ RX = B \f$
+ *
+ */
+
 MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B, MATRIX result)
 {
     MATRIX R;
@@ -58,6 +75,14 @@ MATRIX mat_lsolve_durbin(MATRIX A, MATRIX B, MATRIX result)
     mat_free(R);
     return result;
 }
+
+/** \brief Computes QR decomposition
+ *
+ * \param[in] A Input matrix
+ * \param[in] qr Matrix stack to store result
+ * \return Output QR Matrix stack
+ *
+ */
 
 MATSTACK mat_qr(MATRIX A, MATSTACK qr)
 {

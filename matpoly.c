@@ -3,19 +3,29 @@
 
 MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_series_table;
 
-MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result)
+/** \brief Evaluates polynomial at a point
+ *
+ * \param[in] A Input polynomial matrix
+ * \param[in] x Value at which to evaluate
+ * \param[in] dir Direction (ROWS/COLS)
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_eval(MATRIX A, mtype x, int dir, MATRIX result)
 {
     int m, n, i, j;
     mtype r;
-    m = MatRow(a);
-    n = MatCol(a);
+    m = MatRow(A);
+    n = MatCol(A);
     if(dir==0)
     {
         if(result==NULL) if((result = mat_creat(1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)
         {
             r = 0.0;
-            for(j=m-1; j>=0; --j) r=r*x+a[j][i];
+            for(j=m-1; j>=0; --j) r=r*x+A[j][i];
             result[0][i] = r;
         }
     }
@@ -25,24 +35,33 @@ MATRIX mat_poly_eval(MATRIX a, mtype x, int dir, MATRIX result)
         for(i=0; i<m; ++i)
         {
             r = 0.0;
-            for(j=n-1; j>=0; --j) r=r*x+a[i][j];
+            for(j=n-1; j>=0; --j) r=r*x+A[i][j];
             result[i][0] = r;
         }
     }
     return result;
 }
 
-MATRIX mat_poly_diff(MATRIX a, int dir, MATRIX result)
+/** \brief Computes derivative polynomial of a polynomial
+ *
+ * \param[in] A Input polynomial matrix
+ * \param[in] dir Direction (ROWS/COLS)
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_diff(MATRIX A, int dir, MATRIX result)
 {
     int m, n, i, j;
-    m = MatRow(a);
-    n = MatCol(a);
+    m = MatRow(A);
+    n = MatCol(A);
     if(dir==0)
     {
         if(result==NULL) if((result = mat_creat(m-1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)
         {
-            for(j=m-2; j>=0; --j) result[j][i] = (j+1)*a[j+1][i];
+            for(j=m-2; j>=0; --j) result[j][i] = (j+1)*A[j+1][i];
         }
     }
     else
@@ -50,25 +69,35 @@ MATRIX mat_poly_diff(MATRIX a, int dir, MATRIX result)
         if(result==NULL) if((result = mat_creat(m, n-1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<m; ++i)
         {
-            for(j=n-2; j>=0; --j) result[i][j]= (j+1)*a[i][j+1];
+            for(j=n-2; j>=0; --j) result[i][j]= (j+1)*A[i][j+1];
         }
     }
     return result;
 }
 
-MATRIX mat_poly_diff_eval(MATRIX a, mtype x, int dir, MATRIX result)
+/** \brief Evaluates derivative polynomial at a point
+ *
+ * \param[in] A Input polynomial matrix
+ * \param[in] x Value at which to evaluate the derivative
+ * \param[in] dir Direction (ROWS/COLS)
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_diff_eval(MATRIX A, mtype x, int dir, MATRIX result)
 {
     int m, n, i, j;
     mtype r;
-    m = MatRow(a);
-    n = MatCol(a);
+    m = MatRow(A);
+    n = MatCol(A);
     if(dir==0)
     {
         if(result==NULL) if((result = mat_creat(1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)
         {
             r = 0.0;
-            for(j=m-2; j>=0; --j) r=r*x+a[j+1][i]*(j+1);
+            for(j=m-2; j>=0; --j) r=r*x+A[j+1][i]*(j+1);
             result[0][i] = r;
         }
     }
@@ -78,39 +107,57 @@ MATRIX mat_poly_diff_eval(MATRIX a, mtype x, int dir, MATRIX result)
         for(i=0; i<m; ++i)
         {
             r = 0.0;
-            for(j=n-2; j>=0; --j) r=r*x+a[i][j+1]*(j+1);
+            for(j=n-2; j>=0; --j) r=r*x+A[i][j+1]*(j+1);
             result[i][0] = r;
         }
     }
     return result;
 }
 
-MATRIX mat_poly_add(MATRIX a, MATRIX b, MATRIX result)
+/** \brief Adds two polynomials
+ *
+ * \param[in] A First input polynomial matrix
+ * \param[in] B Second input polynomial matrix
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_add(MATRIX A, MATRIX B, MATRIX result)
 {
     int i, na, nb;
-    na = MatCol(a);
-    nb = MatCol(b);
-    if(na==nb) return mat_add(a, b, result);
+    na = MatCol(A);
+    nb = MatCol(B);
+    if(na==nb) return mat_add(A, B, result);
     if(na<nb)
     {
         if(result==NULL) if((result = mat_creat(1, nb, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-        for(i=0; i<na; ++i) result[0][i] = a[0][i]+b[0][i];
-        for(i=na; i<nb; ++i) result[0][i] = b[0][i];
+        for(i=0; i<na; ++i) result[0][i] = A[0][i]+B[0][i];
+        for(i=na; i<nb; ++i) result[0][i] = B[0][i];
     }
     else
     {
         if(result==NULL) if((result = mat_creat(1, na, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-        for(i=0; i<nb; ++i) result[0][i] = a[0][i]+b[0][i];
-        for(i=nb; i<na; ++i) result[0][i] = a[0][i];
+        for(i=0; i<nb; ++i) result[0][i] = A[0][i]+B[0][i];
+        for(i=nb; i<na; ++i) result[0][i] = A[0][i];
     }
     return result;
 }
 
-MATRIX mat_poly_mul(MATRIX a, MATRIX b, MATRIX result)
+/** \brief Multiplies two polynomials
+ *
+ * \param[in] a First input polynomial matrix
+ * \param[in] b Second input polynomial matrix
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_mul(MATRIX A, MATRIX B, MATRIX result)
 {
     int m, n, i, j, s;
-    m = MatCol(a);
-    n = MatCol(b);
+    m = MatCol(A);
+    n = MatCol(B);
     s = m+n-1;
     if(result==NULL) if((result = mat_creat(1, s, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
     result = mat_fill(result, 0.0);
@@ -118,19 +165,28 @@ MATRIX mat_poly_mul(MATRIX a, MATRIX b, MATRIX result)
     {
         for(j=0; j<n; ++j)
         {
-            result[0][i+j] += a[0][i]*b[0][j];
+            result[0][i+j] += A[0][i]*B[0][j];
         }
     }
     return result;
 }
 
-MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result)
+/** \brief Divides two polynomials
+ *
+ * \param[in] A First input polynomial matrix
+ * \param[in] B Second input polynomial matrix
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATSTACK mat_poly_div(MATRIX A, MATRIX B, MATSTACK result)
 {
     MATRIX tmp = NULL;
     int m, n, i, j;
     mtype s;
-    m = MatCol(a);
-    n = MatCol(b);
+    m = MatCol(A);
+    n = MatCol(B);
     if(m>=n)
     {
         if(result==NULL)
@@ -139,13 +195,13 @@ MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result)
             if((result[0] = mat_creat(1, m-n+1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
             if((result[1] = mat_creat(1, n-1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         }
-        tmp = mat_copy(a, NULL);
+        tmp = mat_copy(A, NULL);
         i = m;
-        s = b[0][n-1];
+        s = B[0][n-1];
         while((i)>=n)
         {
             result[0][0][i-n] = tmp[0][i-1]/s;
-            for(j=i-1; j>=(i-n); --j) tmp[0][j] -= b[0][j-i+n]*result[0][0][i-n];
+            for(j=i-1; j>=(i-n); --j) tmp[0][j] -= B[0][j-i+n]*result[0][0][i-n];
             --i;
         }
         for(i=0; i<(n-1); ++i) result[1][0][i] = tmp[0][i];
@@ -160,25 +216,48 @@ MATSTACK mat_poly_div(MATRIX a, MATRIX b, MATSTACK result)
             if((result[1] = mat_creat(1, n-1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
         }
         result[0] = mat_fill(result[0], 0.0);
-        for(i=0; i<m; ++i) result[1][0][i] = a[0][i];
+        for(i=0; i<m; ++i) result[1][0][i] = A[0][i];
     }
     return result;
 }
 
-MATRIX mat_poly_scale(MATRIX a, mtype s, MATRIX result)
+/** \brief Multiplies a polynomial with a scalar
+ *
+ * \param[in] A Input polynomial matrix
+ * \param[in] s Scalar
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_scale(MATRIX A, mtype s, MATRIX result)
 {
-    return mat_muls(a, s, result);
+    return mat_muls(A, s, result);
 }
 
-MATRIX mat_poly_shift(MATRIX a, int s, MATRIX result)
+/** \brief Shifts a polynomial
+ *
+ * \param[in] A Input polynomial matrix
+ * \param[in] s Scalar shift
+ * \param[in] result Matrix to store the result
+ * \return Output matrix
+ *
+ */
+
+MATRIX mat_poly_shift(MATRIX A, int s, MATRIX result)
 {
     int i, n;
-    n = MatCol(a)+s;
+    n = MatCol(A)+s;
     if(result==NULL) if((result = mat_creat(1, (n>0)?n:0, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
     mat_fill(result, 0.0);
-    for(i=(s>0)?s:0; i<n; ++i) result[0][i] = a[0][i-s];
+    for(i=(s>0)?s:0; i<n; ++i) result[0][i] = A[0][i-s];
     return result;
 }
+
+/** \brief Initializes the Chebyshev polynomial series
+ *
+ *
+ */
 
 void mat_cheby_init()
 {
@@ -188,6 +267,11 @@ void mat_cheby_init()
     mat_cheby_series_table[1][0][1] = 1;
 }
 
+/** \brief Initializes the Legendre polynomial series
+ *
+ *
+ */
+
 void mat_legendre_init()
 {
     mat_legendre_series_table = matstack_creat(512);
@@ -196,12 +280,24 @@ void mat_legendre_init()
     mat_legendre_series_table[1][0][1] = 1;
 }
 
+/** \brief Initializes the binomial series
+ *
+ *
+ */
+
 void mat_binom_init()
 {
     mat_binom_series_table = matstack_creat(512);
     mat_binom_series_table[0] = mat_creat(1, 1, ONES_MATRIX);
     mat_binom_series_table[1] = mat_creat(1, 2, ONES_MATRIX);
 }
+
+/** \brief Computes the \f$ n^{th} \f$ Chebyshev polynomial
+ *
+ * \param[in] n Polynomial series index
+ * \return Output polynomial matrix
+ *
+ */
 
 MATRIX mat_cheby(int n)
 {
@@ -218,6 +314,13 @@ MATRIX mat_cheby(int n)
     return mat_cheby_series_table[n];
 }
 
+/** \brief Computes the \f$ n^{th} \f$ Legendre polynomial
+ *
+ * \param[in] n Polynomial series index
+ * \return Output polynomial matrix
+ *
+ */
+
 MATRIX mat_legendre(int n)
 {
     if(mat_legendre_series_table[n]==NULL)
@@ -232,6 +335,14 @@ MATRIX mat_legendre(int n)
     }
     return mat_legendre_series_table[n];
 }
+
+/** \brief Computes a binomial co-efficient
+ *
+ * \param[in] n \f$ 1^{st} \f$ argument
+ * \param[in] k \f$ 2^{nd} \f$ argument
+ * \return \f$ \binom{n}{k} \f$
+ *
+ */
 
 mtype mat_binom(int n, int k)
 {
@@ -249,6 +360,14 @@ mtype mat_binom(int n, int k)
     return mat_binom_series_table[n][0][k];
 }
 
+/** \brief Converts Chebyshev co-efficients to a single polynomial
+ *
+ * \param[in] coeffs Chebyshev polynomial co-efficient matrix
+ * \param[in] result Matrix to store the result
+ * \return Polynomial matrix
+ *
+ */
+
 MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result)
 {
     int i, n;
@@ -264,6 +383,17 @@ MATRIX mat_cheby_coeffs_to_poly(MATRIX coeffs, MATRIX result)
     }
     return result;
 }
+
+/** \brief Approximates a function using Chebyshev polynomials
+ *
+ * \param[in] f Function to approximate
+ * \param[in] a Lower limit of domain of the function
+ * \param[in] b Upper limit of domain of the function
+ * \param[in] n Degree of the approximate polynomial
+ * \param[in] result Matrix to store the result
+ * \return Approximate polynomial matrix
+ *
+ */
 
 MATRIX mat_cheby_approx(mtype (*f)(mtype), mtype a, mtype b, int n, MATRIX result)
 {

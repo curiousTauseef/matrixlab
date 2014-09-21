@@ -1,6 +1,15 @@
 #include "matrix.h"
 
 
+/** \brief Computes fast Fourier transform
+ *
+ * \param[in] C Complex data matrix stack
+ * \param[in] dir FFT direction (ROWS/COLS)
+ * \param[in] result Matrix stack to store the result
+ * \return Transformed matrix stack
+ *
+ */
+
 MATSTACK mat_fft2(MATSTACK c, int dir, MATSTACK result)
 {
     int i, j, m, n, mm, nn, twopm;
@@ -33,6 +42,8 @@ MATSTACK mat_fft2(MATSTACK c, int dir, MATSTACK result)
     mat_free(imagt);
     return result;
 }
+
+/** \cond HIDDEN_SYMBOLS */
 
 int __mat_fft(int dir, int m, mtype *x,mtype *y)
 {
@@ -101,3 +112,4 @@ int __mat_fft(int dir, int m, mtype *x,mtype *y)
     return 0;
 }
 
+/** \endcond */

@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
+				<Option output="matrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
@@ -25,7 +25,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="libmatrixlab" prefix_auto="1" extension_auto="1" />
+				<Option output="matrixlab" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Release/" />
 				<Option type="2" />
@@ -150,7 +150,9 @@
 		<Unit filename="matrand.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="matrix.h" />
+		<Unit filename="matrix.h">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="matsearch.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -200,6 +202,12 @@
 				<doxyfile_dot />
 				<general />
 			</DoxyBlocks>
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -1,24 +1,52 @@
 #include "matrix.h"
 
 
-MATRIX mat_dump(MATRIX A)
+/** \brief Dumps a matrix in the stdout
+ *
+ * \param[in] A Input matrix
+ *
+ */
+
+void mat_dump(MATRIX A)
 {
     char s[] = "%.16g ";
-    return mat_fdumpf(A, s, stdout);
+    mat_fdumpf(A, s, stdout);
 }
 
-MATRIX mat_dumpf(MATRIX A, const char *s)
+/** \brief Dumps a matrix using a given format specifier in the stdout
+ *
+ * \param[in] A Input matrix
+ * \param[in] s Format specifier
+ *
+ */
+
+void mat_dumpf(MATRIX A, const char *s)
 {
-    return mat_fdumpf(A, s, stdout);
+    mat_fdumpf(A, s, stdout);
 }
 
-MATRIX mat_fdump(MATRIX A, FILE *fp)
+/** \brief Dumps a matrix in an opened file
+ *
+ * \param[in] A Input matrix
+ * \param[in] fp Pointer to an opened file
+ *
+ */
+
+void mat_fdump(MATRIX A, MAT_FILEPOINTER fp)
 {
     char s[] = "%.16g ";
-    return mat_fdumpf(A, s, fp);
+    mat_fdumpf(A, s, fp);
 }
 
-MATRIX mat_fdumpf(MATRIX A, const char *s, FILE *fp)
+/** \brief Dumps a matrix using a given format specifier in an opened file
+ *
+ * \param[in] A Input matrix
+ * \param[in] s Format specifier
+ * \param[in] fp Pointer to an opened file
+ *
+ */
+
+void mat_fdumpf(MATRIX A, const char *s, MAT_FILEPOINTER fp)
 {
     int i, j, m, n;
     if(A==NULL) gen_error(GEN_NOT_FOUND);
@@ -33,27 +61,54 @@ MATRIX mat_fdumpf(MATRIX A, const char *s, FILE *fp)
         fprintf(fp, "\n");
     }
     fflush(fp);
-    return A;
 }
 
-INT_VECTOR int_vec_dump(INT_VECTOR A)
+/** \brief Dumps an integer vector in the stdout
+ *
+ * \param[in] A Input vector
+ *
+ */
+
+void int_vec_dump(INT_VECTOR A)
 {
     char s[] = "%d ";
-    return int_vec_fdumpf(A, s, stdout);
+    int_vec_fdumpf(A, s, stdout);
 }
 
-INT_VECTOR int_vec_dumpf(INT_VECTOR A, const char *s)
+/** \brief Dumps an integer vector using a given format specifier in the stdout
+ *
+ * \param[in] A Input vector
+ * \param[in] s Format specifier
+ *
+ */
+
+void int_vec_dumpf(INT_VECTOR A, const char *s)
 {
-    return int_vec_fdumpf(A, s, stdout);
+    int_vec_fdumpf(A, s, stdout);
 }
 
-INT_VECTOR int_vec_fdump(INT_VECTOR A, FILE *fp)
+/** \brief Dumps an integer vector in an opened file
+ *
+ * \param[in] A Input vector
+ * \param[in] fp Pointer to an opened file
+ *
+ */
+
+void int_vec_fdump(INT_VECTOR A, MAT_FILEPOINTER fp)
 {
     char s[] = "%d ";
-    return int_vec_fdumpf(A, s, fp);
+    int_vec_fdumpf(A, s, fp);
 }
 
-INT_VECTOR int_vec_fdumpf(INT_VECTOR A, const char *s, FILE *fp)
+/** \brief Dumps an integer vector using a given format specifier in an opened file
+ *
+ * \param[in] A Input vector
+ * \param[in] s Format specifier
+ * \param[in] fp Pointer to an opened file
+ *
+ */
+
+void int_vec_fdumpf(INT_VECTOR A, const char *s, MAT_FILEPOINTER fp)
 {
     int i, n;
     if(A==NULL) gen_error(GEN_NOT_FOUND);
@@ -63,6 +118,5 @@ INT_VECTOR int_vec_fdumpf(INT_VECTOR A, const char *s, FILE *fp)
         fprintf(fp, s, A[i]);
     }
     fflush(fp);
-    return A;
 }
 

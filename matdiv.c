@@ -2,31 +2,58 @@
 #include "matrix.h"
 
 
-MATRIX mat_div_dot( MATRIX A, MATRIX B, MATRIX C)
+/** \brief Computes element-wise matrix division
+ *
+ * \param[in] A First input matrix
+ * \param[in] B Second input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ A./B \f$
+ *
+ */
+
+MATRIX mat_div_dot(MATRIX A, MATRIX B, MATRIX result)
 {
     int i, j, m, n, o, p;
     m = MatCol(A);
     n = MatRow(A);
     o = MatCol(B);
     p = MatRow(B);
-    if(C==NULL) if((C = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
+    if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            if(o==m &&p==n) C[i][j] = A[i][j]/B[i][j];
-            else if(o==1 && p!=1) C[i][j] = A[i][j]/B[i][0];
-            else if(p==1 && o!=1) C[i][j] = A[i][j]/B[0][j];
+            if(o==m &&p==n) result[i][j] = A[i][j]/B[i][j];
+            else if(o==1 && p!=1) result[i][j] = A[i][j]/B[i][0];
+            else if(p==1 && o!=1) result[i][j] = A[i][j]/B[0][j];
             else gen_error(GEN_SIZEMISMATCH);
         }
-    return C;
+    return result;
 }
 
-MATRIX mat_divs( MATRIX A, mtype s, MATRIX result )
+/** \brief Divides a matrix by a scalar
+ *
+ * \param[in] A Input matrix
+ * \param[in] s Scalar
+ * \param[in] result Matrix to store the result
+ * \return \f$ \dfrac{A}{s} \f$
+ *
+ */
+
+MATRIX mat_divs(MATRIX A, mtype s, MATRIX result)
 {
     return mat_muls(A, (1.0f/s), result);
 }
+
+/** \brief Computes element-wise integer vector division
+ *
+ * \param[in] A First input vector
+ * \param[in] B Second input vector
+ * \param[in] result Vector to store the result
+ * \return \f$ A./B \f$
+ *
+ */
 
 INT_VECTOR int_vec_div(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
 {
@@ -39,6 +66,15 @@ INT_VECTOR int_vec_div(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
     for(i=0; i<m; ++i) result[i] = A[i]/B[i];
     return result;
 }
+
+/** \brief Divides an integer vector by a scalar
+ *
+ * \param[in] A Input vector
+ * \param[in] s Scalar
+ * \param[in] result Vector to store the result
+ * \return \f$ \dfrac{A}{s} \f$
+ *
+ */
 
 INT_VECTOR int_vec_divs(INT_VECTOR A, int x, INT_VECTOR result)
 {
