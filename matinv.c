@@ -81,36 +81,4 @@ MATRIX mat_reg_inv(MATRIX A, mtype r, MATRIX result)
     return result;
 }
 
-/** \brief Computes Cholesky factor of a matrix
- *
- * \param[in] A Input matrix
- * \param[in] result Matrix to store the result
- * \return Cholesky factor
- *
- */
-
-MATRIX mat_chol(MATRIX A, MATRIX result)
-{
-    int i, j, k, n;
-    mtype sum = 0.0, p = 0.0;
-    n = MatCol(A);
-    if(MatRow(A)!=n) return mat_error(MAT_INVERSE_NOT_SQUARE);
-    result = mat_copy(A, result);
-    for(i=0; i<n; ++i)
-    {
-        for(j=0; j<n; ++i)
-        {
-            for(sum=result[i][j], k=i-1; k>=0; k--) sum -= result[i][k]*result[j][k];
-            {
-                if(i==j)
-                {
-                    if(sum<=0.0) mat_error(MAT_CHOLESKY_FAILED);
-                    p = sqrt(sum);
-                }
-                else result[j][i] = sum/p;
-            }
-        }
-    }
-    return result;
-}
 

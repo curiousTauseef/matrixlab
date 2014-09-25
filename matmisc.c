@@ -166,90 +166,90 @@ INT_VECTOR int_vec_permute_vect(int n, int k, INT_VECTOR result)
 
 /** \brief Extracts sub-vector from an integer vector
  *
- * \param[in] data Input vector
+ * \param[in] a Input vector
  * \param[in] indices Indices to extracted
  * \return Extracted vector
  *
  */
 
-INT_VECTOR mat_get_sub_vector(INT_VECTOR data, INT_VECTOR indices)
+INT_VECTOR mat_get_sub_vector(INT_VECTOR a, INT_VECTOR indices)
 {
     int i, n;
     INT_VECTOR subvec;
     n = Int_VecLen(indices);
     subvec = int_vec_creat(n, UNDEFINED);
-    for(i=0; i<n; ++i)subvec[i] = data[indices[i]];
+    for(i=0; i<n; ++i)subvec[i] = a[indices[i]];
     return subvec;
 }
 
 /** \brief Extracts sub-matrix from rows of a matrix
  *
- * \param[in] data Input matrix
+ * \param[in] A Input matrix
  * \param[in] indices Rows to extract
  * \param[in] result Matrix to store the result
  * \return Extracted matrix
  *
  */
 
-MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX result)
+MATRIX mat_get_sub_matrix_from_rows(MATRIX A, INT_VECTOR indices, MATRIX result)
 {
     int i, j, k, n;
-    k = MatCol(data);
+    k = MatCol(A);
     n = Int_VecLen(indices);
     if(result==NULL) if((result = mat_creat(n, k, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     for(i=0; i<n; ++i)
     {
-        for(j=0; j<k; ++j) result[i][j] = data[indices[i]][j];
+        for(j=0; j<k; ++j) result[i][j] = A[indices[i]][j];
     }
     return result;
 }
 
 /** \brief Extracts sub-matrix from columns of a matrix
  *
- * \param[in] data Input matrix
+ * \param[in] A Input matrix
  * \param[in] indices Columns to extract
  * \param[in] result Matrix to store the result
  * \return Extracted matrix
  *
  */
 
-MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX result)
+MATRIX mat_get_sub_matrix_from_cols(MATRIX A, INT_VECTOR indices, MATRIX result)
 {
     int i, j, k, n;
-    k = MatRow(data);
+    k = MatRow(A);
     n = Int_VecLen(indices);
     if(result==NULL) if((result = mat_creat(k, n, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     for(i=0; i<n; ++i)
     {
-        for(j=0; j<k; ++j) result[j][i] = data[j][indices[i]];
+        for(j=0; j<k; ++j) result[j][i] = A[j][indices[i]];
     }
     return result;
 }
 
 /** \brief Computes the Euclidean distances of  points from a given point
  *
- * \param[in] data Points matrix (d x N)
- * \param[in] curr_data Matrix point from which the distance to be computed (d x 1)
+ * \param[in] A Points matrix (d x N)
+ * \param[in] d Matrix point from which the distance to be computed (d x 1)
  * \param[in] result Matrix to store the result
  * \return Euclidean distance matrix
  *
  */
 
-MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result)
+MATRIX mat_calc_dist_sq(MATRIX A, MATRIX d, MATRIX result)
 {
     int i, j, m, n;
     mtype dist;
-    m = MatRow(data);
-    n = MatCol(data);
+    m = MatRow(A);
+    n = MatCol(A);
     if(result==NULL) if((result = mat_creat(1, n, ZERO_MATRIX))==NULL) return mat_error(MAT_MALLOC);;
     for(i=0; i<n; ++i)
     {
         dist = 0.0;
         for(j=0; j<m; ++j)
         {
-            dist += (data[j][i]-curr_data[j][0])*(data[j][i]-curr_data[j][0]);
+            dist += (A[j][i]-d[j][0])*(A[j][i]-d[j][0]);
         }
         result[0][i] = dist;
     }
@@ -258,22 +258,22 @@ MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result)
 
 /** \brief Finds points within a neighborhood
  *
- * \param[in] data Points matrix (d x N)
- * \param[in] curr_data Matrix point from which the distance to be computed (d x 1)
+ * \param[in] A Points matrix (d x N)
+ * \param[in] d Matrix point from which the distance to be computed (d x 1)
  * \param[in] range Radius to search within
  * \return Indices Vector
  *
  */
 
-INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range)
+INT_VECTOR mat_find_within_dist(MATRIX A, MATRIX d, mtype range)
 {
     int i, count = 0, n;
     INT_VECTOR indices = 0;
     MATRIX dist = NULL;
     mtype tmp0;
-    n = MatCol(data);
+    n = MatCol(A);
     tmp0 = range*range;
-    dist = mat_calc_dist_sq(data, curr_data, dist);
+    dist = mat_calc_dist_sq(A, d, dist);
     for(i=0; i<n; ++i)
     {
         if(dist[0][i]<tmp0)
@@ -291,37 +291,37 @@ INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range)
 
 /** \brief Picks a row from a matrix
  *
- * \param[in] data Input matrix
+ * \param[in] A Input matrix
  * \param[in] r Row index
  * \param[in] result Matrix to store the result
  * \return Row matrix
  *
  */
 
-MATRIX mat_pick_row(MATRIX data, int r, MATRIX result)
+MATRIX mat_pick_row(MATRIX A, int r, MATRIX result)
 {
     int m, i;
-    m = MatCol(data);
+    m = MatCol(A);
     if(result==NULL) if((result = mat_creat(1, m, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-    for(i=0; i<m; ++i) result[0][i] = data[r][i];
+    for(i=0; i<m; ++i) result[0][i] = A[r][i];
     return result;
 }
 
 /** \brief Picks a column from a matrix
  *
- * \param[in] data Input matrix
+ * \param[in] A Input matrix
  * \param[in] r Column index
  * \param[in] result Matrix to store the result
  * \return Column matrix
  *
  */
 
-MATRIX mat_pick_col(MATRIX data, int c, MATRIX result)
+MATRIX mat_pick_col(MATRIX A, int c, MATRIX result)
 {
     int n, i;
-    n = MatRow(data);
+    n = MatRow(A);
     if(result==NULL) if((result = mat_creat(n, 1, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-    for(i=0; i<n; ++i) result[i][0] = data[i][c];
+    for(i=0; i<n; ++i) result[i][0] = A[i][c];
     return result;
 }
 

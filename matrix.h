@@ -491,10 +491,10 @@ void int_vec_fdumpf(INT_VECTOR a, const char *s, MAT_FILEPOINTER fp);
 /* vector manipulations */
 INT_VECTOR int_vec_copy(INT_VECTOR a, INT_VECTOR result);
 INT_VECTOR int_vec_unique(INT_VECTOR a);
-INT_VECTOR int_vec_append(INT_VECTOR A, int i);
+INT_VECTOR int_vec_append(INT_VECTOR a, int i);
 INT_VECTOR int_vec_find(INT_VECTOR a, int rel_type, int n);
-INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
-INT_VECTOR mat_get_sub_vector(INT_VECTOR data, INT_VECTOR indices);
+INT_VECTOR int_vec_concat(INT_VECTOR a, INT_VECTOR b, INT_VECTOR result);
+INT_VECTOR mat_get_sub_vector(INT_VECTOR a, INT_VECTOR indices);
 
 /******************************************/
 /* error handling functions */
@@ -556,9 +556,8 @@ MATRIX mat_tran(MATRIX A, MATRIX result);
 MATRIX mat_inv(MATRIX A, MATRIX result);
 MATRIX mat_pinv(MATRIX A, MATRIX result);
 MATRIX mat_wpinv(MATRIX A, MATRIX w, MATRIX result);
-MATRIX mat_reg_inv(MATRIX A, mtype r_constant, MATRIX result);
+MATRIX mat_reg_inv(MATRIX A, mtype r, MATRIX result);
 MATRIX mat_symtoeplz(MATRIX R, MATRIX result);
-MATRIX mat_chol(MATRIX A, MATRIX result);
 
 /******************************************/
 /* linear system equation solver */
@@ -566,6 +565,7 @@ int mat_lu(MATRIX A, MATRIX P);
 void mat_backsubs1(MATRIX A, MATRIX B, MATRIX C, MATRIX P, int xcol);
 MATRIX mat_lsolve(MATRIX A, MATRIX b, MATRIX result);
 MATRIX mat_cholesky(MATRIX A, MATRIX result);
+MATRIX mat_conjgrad(MATRIX A, MATRIX b, MATRIX x0, mtype tol, int miters, MATRIX result);
 
 MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result);
 mtype mat_cofact(MATRIX A, int i, int j);
@@ -613,19 +613,19 @@ MATRIX mat_robust_fit(MATRIX A, MATRIX Y, int deg, int lossfunc, MATRIX result);
 /******************************************/
 /* matrix manipulations */
 MATRIX mat_concat(MATRIX A, MATRIX B , int dim);
-MATRIX mat_get_sub_matrix_from_rows(MATRIX data, INT_VECTOR indices, MATRIX result);
-MATRIX mat_get_sub_matrix_from_cols(MATRIX data, INT_VECTOR indices, MATRIX result);
-MATRIX mat_pick_row(MATRIX data, int r, MATRIX result);
-MATRIX mat_pick_col(MATRIX data, int c, MATRIX result);
-INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x);
+MATRIX mat_get_sub_matrix_from_rows(MATRIX A, INT_VECTOR indices, MATRIX result);
+MATRIX mat_get_sub_matrix_from_cols(MATRIX A, INT_VECTOR indices, MATRIX result);
+MATRIX mat_pick_row(MATRIX A, int r, MATRIX result);
+MATRIX mat_pick_col(MATRIX A, int c, MATRIX result);
+INT_VECSTACK mat_find(MATRIX A, int rel_type, mtype x);
 
 MATRIX mat_fliplr(MATRIX A, MATRIX result);
 MATRIX mat_flipud(MATRIX A, MATRIX result);
 
 /******************************************/
 /* distance tools */
-MATRIX mat_calc_dist_sq(MATRIX data, MATRIX curr_data, MATRIX result);
-INT_VECTOR mat_find_within_dist(MATRIX data, MATRIX curr_data, mtype range);
+MATRIX mat_calc_dist_sq(MATRIX A, MATRIX d, MATRIX result);
+INT_VECTOR mat_find_within_dist(MATRIX A, MATRIX d, mtype range);
 
 void __mat_cart2pol(mtype x, mtype y, mtype *rho, mtype *th);
 void __mat_pol2cart(mtype rho, mtype th, mtype *x, mtype *y);
@@ -638,6 +638,9 @@ mtype __mat_addfunc(mtype x, mtype y);
 mtype __mat_subfunc(mtype x, mtype y);
 mtype __mat_mulfunc(mtype x, mtype y);
 mtype __mat_divfunc(mtype x, mtype y);
+mtype __mat_sqrfunc(mtype x);
+mtype __mat_sqrtfunc(mtype x);
+
 
 mtype __mat_huber_wt(mtype x, mtype k);
 mtype __mat_bisquare_wt(mtype x, mtype k);
@@ -721,6 +724,7 @@ INT_VECTOR mat_bayes_classifier_test(MATRIX data, MAT_BAYES_MODEL b_model);
 MAT_PERCEPTRON mat_perceptron_train(MATRIX data, INT_VECTOR labels, int num_of_iterations);
 INT_VECTOR mat_perceptron_test(MATRIX data, MAT_PERCEPTRON p_model);
 MAT_PERCEPTRON mat_perceptron_train_(MATRIX data1, MATRIX data2, MAT_PERCEPTRON p_model, int class_num);
+MATVEC_DPOINTER mat_kmeans(MATRIX data, int k, int iters, MATVEC_DPOINTER result);
 
 /******************************************/
 /* basic search algorithms */
@@ -795,8 +799,6 @@ int mat_int_priorityqueue_is_empty(MAT_INT_PRIORITYQUEUE H);
 MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result);
 MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result);
 MATRIX __mat_mds_nonmetric(MATRIX d, int dims, MATRIX result);
-mtype __mat_sqr(mtype x);
-mtype __mat_sqrt(mtype x);
 
 /******************************************/
 /* graph */

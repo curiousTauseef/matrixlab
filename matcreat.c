@@ -459,22 +459,22 @@ int matvec_free(MATVEC_DPOINTER a)
 
 /** \brief Appends an integer to an integer vector
  *
- * \param[in] A Input vector
+ * \param[in] a Input vector
  * \param[in] i Integer to append
  * \return Appended vector
  *
  */
 
-INT_VECTOR int_vec_append(INT_VECTOR A, int i)
+INT_VECTOR int_vec_append(INT_VECTOR a, int i)
 {
     int l;
-    l = Int_VecLen(A);
-    A--;
-    if((A = (int *)realloc(A, sizeof(int)*(l+2)))==NULL) return int_vec_error(INT_VEC_MALLOC);
-    A[0]= l+1;
-    ++A;
-    A[l] = i;
-    return A;
+    l = Int_VecLen(a);
+    a--;
+    if((a = (int *)realloc(a, sizeof(int)*(l+2)))==NULL) return int_vec_error(INT_VEC_MALLOC);
+    a[0]= l+1;
+    ++a;
+    a[l] = i;
+    return a;
 }
 
 /** \brief Copies an integer vector

@@ -74,36 +74,44 @@ void mat_backsubs1(MATRIX A, MATRIX B, MATRIX X, MATRIX P, int xcol)
     }
 }
 
-MATRIX mat_lsolve(MATRIX a, MATRIX b, MATRIX result)
+MATRIX mat_lsolve(MATRIX A, MATRIX b, MATRIX result)
 {
-    MATRIX A, B, P;
+    MATRIX C, B, P;
     int n;
-    n = MatCol(a);
-    A = mat_copy(a, NULL);
+    n = MatCol(A);
+    C = mat_copy(A, NULL);
     B = mat_copy(b, NULL);
     if(result==NULL) if((result = mat_creat(n, 1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
     P = mat_creat(n, 1, UNDEFINED);
 
-    mat_lu(A, P);
-    mat_backsubs1(A, B, result, P, 0);
+    mat_lu(C, P);
+    mat_backsubs1(C, B, result, P, 0);
 
-    mat_free(A);
+    mat_free(C);
     mat_free(B);
     mat_free(P);
     return result;
 }
 
-MATRIX mat_cholesky(MATRIX a, MATRIX result)
+/** \brief Computes Cholesky factor of a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] result Matrix to store the result
+ * \return Cholesky factor
+ *
+ */
+
+MATRIX mat_cholesky(MATRIX A, MATRIX result)
 {
     int i, k, j, m, n;
     mtype r = 0.0, epsnorm, tmp0;
-    m = MatRow(a);
-    n = MatCol(a);
+    m = MatRow(A);
+    n = MatCol(A);
     if(m!=n) gen_error(GEN_SIZEMISMATCH);
-    if(result== NULL)if ((result = mat_copy(a, NULL)) == NULL)
+    if(result==NULL)if((result = mat_copy(A, NULL))==NULL)
             return mat_error(MAT_MALLOC);
 
-    for(k=0; k<n; ++k) if(a[k][k]>r) r = a[k][k];
+    for(k=0; k<n; ++k) if(A[k][k]>r) r = A[k][k];
     epsnorm = (mtype)eps*r;
 
     for(k=0; k<n; ++k)
@@ -124,9 +132,59 @@ MATRIX mat_cholesky(MATRIX a, MATRIX result)
         {
             tmp0 = 0.0;
             for(i=0; i<k; ++i)tmp0 += result[i][j]*result[i][k];
-            result[k][j] = (result[k][j] - tmp0)/r;
+            result[k][j] = (result[k][j]-tmp0)/r;
         }
     }
     return result;
 }
 
+/** \brief Solves a linear system with conjugate gradients method
+ *
+ * \param[in] A Input matrix
+ * \param[in] b Observed matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ x \f$
+ *
+ */
+
+MATRIX mat_conjgrad(MATRIX A, MATRIX b, MATRIX x0, mtype tol, int miters, MATRIX result)
+{
+    MATRIX rk = NULL, rkpo = NULL, Apk = NULL, pk = NULL, akpk = NULL;
+    int n, k;
+    mtype ak, bk;
+    n = MatCol(A);
+    if(x0==NULL)
+    {
+        if((result = mat_creat(n, 1, ZERO_MATRIX))==NULL) mat_error(MAT_MALLOC);
+    }
+    else result = mat_copy(x0, result);
+    rk = mat_mul(A, result, rk);
+    rk = mat_sub(b, rk, rk);
+    pk = mat_copy(rk, pk);
+    k = 0;
+    while(k<miters)
+    {
+        Apk = mat_mul(A, pk, Apk);
+        ak = mat_innerprod(rk, rk)/mat_innerprod(pk, Apk);
+
+        Apk = mat_muls(Apk, ak, Apk);
+        akpk = mat_muls(pk, ak, akpk);
+
+        result = mat_add(result, akpk, result);
+        rkpo = mat_sub(rk, Apk, rkpo);
+
+        if(mat_norm_one(rkpo)<tol) break;
+        bk = mat_innerprod(rkpo, rkpo)/mat_innerprod(rk, rk);
+
+        pk = mat_muls(pk, bk, pk);
+        pk = mat_add(rkpo, pk, pk);
+        rk = mat_copy(rkpo, rk);
+        ++k;
+    }
+    mat_free(rk);
+    mat_free(rkpo);
+    mat_free(Apk);
+    mat_free(pk);
+    mat_free(akpk);
+    return result;
+}

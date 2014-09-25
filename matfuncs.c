@@ -22,6 +22,16 @@ mtype __mat_divfunc(mtype x, mtype y)
     return (x/y);
 }
 
+mtype __mat_sqrfunc(mtype x)
+{
+    return (x*x);
+}
+
+mtype __mat_sqrtfunc(mtype x)
+{
+    return sqrt(x);
+}
+
 mtype __mat_huber_wt(mtype x, mtype k)
 {
     if(fabs(x)<= k) return 1.0;

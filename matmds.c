@@ -30,7 +30,7 @@ MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
     if(MatRow(d)!=MatCol(d)) mat_error(MAT_SIZEMISMATCH);
     if(result== NULL) if((result = mat_creat(MatRow(d), dims, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    P = mat_gfunc(d, __mat_sqr, P);
+    P = mat_gfunc(d, __mat_sqrfunc, P);
     J = mat_creat(MatRow(d), MatCol(d), UNIT_MATRIX);
     J = mat_subs(J, 1/((mtype)MatCol(d)), J);
     tmp = mat_mul(J, P, tmp);
@@ -46,7 +46,7 @@ MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
 
     J = mat_get_sub_matrix_from_cols(E[1], tmp2, NULL);
     tmp = mat_get_sub_matrix_from_rows(E[0], tmp2, NULL);
-    tmp = mat_gfunc(tmp, __mat_sqrt, tmp);
+    tmp = mat_gfunc(tmp, __mat_sqrtfunc, tmp);
 
     B = mat_tran(tmp, NULL);
     result = mat_bsxfun(J, B, __mat_mulfunc, result);
@@ -66,13 +66,4 @@ MATRIX __mat_mds_nonmetric(MATRIX d, int dims, MATRIX result)
     return result;
 }
 
-mtype __mat_sqr(mtype x)
-{
-    return (x*x);
-}
-
-mtype __mat_sqrt(mtype x)
-{
-    return sqrt(x);
-}
 

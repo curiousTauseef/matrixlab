@@ -106,14 +106,14 @@ INT_VECTOR int_vec_find(INT_VECTOR a, int rel_type, int n)
     return indices;
 }
 
-INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
+INT_VECSTACK mat_find(MATRIX A, int rel_type, mtype x)
 {
     int m, n, i, j, flag = 0, tmp0;
     INT_VECSTACK indices = int_vecstack_creat(2);
     indices[0] = int_vec_creat(1, UNDEFINED);
     indices[1] = int_vec_creat(1, UNDEFINED);
-    m = MatCol(a);
-    n = MatRow(a);
+    m = MatCol(A);
+    n = MatRow(A);
     indices[0][0]= -1;
     indices[1][0]= -1;
 
@@ -123,7 +123,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]>x;
+            tmp0 = A[i][j]>x;
             if(tmp0==1)
             {
                 if(flag==0)
@@ -144,7 +144,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]<x;
+            tmp0 = A[i][j]<x;
             if(tmp0==1)
             {
                 if(flag==0)
@@ -165,7 +165,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]!=x;
+            tmp0 = A[i][j]!=x;
             if(tmp0==1)
             {
                 if(flag==0)
@@ -186,7 +186,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]>=x;
+            tmp0 = A[i][j]>=x;
             if(tmp0==1)
             {
                 if(flag==0)
@@ -207,7 +207,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]<=x;
+            tmp0 = A[i][j]<=x;
             if(tmp0==1)
             {
                 if(flag==0)
@@ -229,7 +229,7 @@ INT_VECSTACK mat_find(MATRIX a, int rel_type, mtype x)
         for(i=0; i<n; ++i)
         for(j=0; j<m; ++j)
         {
-            tmp0 = a[i][j]==x;
+            tmp0 = A[i][j]==x;
             if(tmp0==1)
             {
                 if(flag==0)

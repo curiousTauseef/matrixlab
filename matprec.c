@@ -240,3 +240,47 @@ INT_VECTOR mat_perceptron_test(MATRIX data, MAT_PERCEPTRON p_model)
     return results;
 }
 
+MATVEC_DPOINTER mat_kmeans(MATRIX data, int k, int iters, MATVEC_DPOINTER result)
+{
+    MATRIX data_centers = NULL, sdata = NULL, curr_distances = NULL, curr_diff = NULL, curr_point = NULL;
+    INT_VECTOR data_membership = NULL, curr_cluster_indices = NULL;
+    MATVEC_DPOINTER mv = NULL;
+    int d, l, i, N;
+    d = MatRow(data);
+    N = MatCol(data);
+    if(result==NULL)
+    {
+        if((result = matvec_creat())==NULL) mat_error(MAT_MALLOC);
+        result[0] = mat_rand(d, k, NULL);
+        result[1] = int_vec_creat(N, UNDEFINED);
+    }
+    data_centers = (MATRIX)result[0];
+    data_membership = (INT_VECTOR)result[1];
+
+    for(l=0; l<iters; ++l)
+    {
+        for(i=0; i<N; ++i)
+        {
+            curr_point = mat_pick_col(data, i, curr_point);
+            curr_diff = mat_bsxfun(data_centers, curr_point, __mat_subfunc, curr_diff);
+            curr_diff = mat_gfunc(curr_diff, __mat_sqrfunc, curr_diff);
+            curr_distances = mat_sum_col(curr_diff, curr_distances);
+            mv = mat_min(curr_distances, COLS);
+            data_membership[i]= ((INT_VECTOR)mv[1])[0];
+            matvec_free(mv);
+        }
+        for(i=0; i<k; ++i)
+        {
+            curr_cluster_indices = int_vec_find(data_membership, GEN_EQUAL_TO, i);
+            sdata = mat_get_sub_matrix_from_cols(data, curr_cluster_indices, NULL);
+
+            curr_point = mat_mean_row(sdata, curr_point);
+            mat_free(sdata);
+            int_vec_free(curr_cluster_indices);
+            data_centers = mat_colcopy(curr_point, 0, i, data_centers);
+        }
+    }
+    return result;
+}
+
+

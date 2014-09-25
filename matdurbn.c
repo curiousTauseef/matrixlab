@@ -125,7 +125,7 @@ MATSTACK mat_qr(MATRIX A, MATSTACK qr)
             v[j][0] = ((j==i)?(u[j][0]+alpha):u[j][0]);
             mag += v[j][0]*v[j][0];
         }
-        mag = __mat_sqrt(mag);
+        mag = __mat_sqrtfunc(mag);
         if(mag<eps) continue;
         for(j=i; j<m; ++j) v[j][0]/= mag;
         tmp = mat_tran(v, tmp);

@@ -59,18 +59,18 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
 
 /** \brief Concatenates two integer vectors
  *
- * \param[in] A Input first vector
- * \param[in] B Input second vector
+ * \param[in] a Input first vector
+ * \param[in] b Input second vector
  * \param[in] dim Concatenation direction (ROWS/COLS)
- * \return \f$ \left[\begin{array}{cc} A & B \end{array}\right] \f$ or \f$ \left[\begin{array}{c} A \\ B \end{array}\right] \f$
+ * \return \f$ \left[\begin{array}{cc} a & b \end{array}\right] \f$ or \f$ \left[\begin{array}{c} a \\ b \end{array}\right] \f$
  *
  */
 
-INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
+INT_VECTOR int_vec_concat(INT_VECTOR a, INT_VECTOR b, INT_VECTOR result)
 {
     int i, m, n;
-    m = Int_VecLen(A);
-    n = Int_VecLen(B);
+    m = Int_VecLen(a);
+    n = Int_VecLen(b);
     if(result==NULL)
     {
         if((result = int_vec_creat(m+n, UNDEFINED))==NULL) return NULL;
@@ -80,8 +80,8 @@ INT_VECTOR int_vec_concat(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
         if(Int_VecLen(result)!=(m+n)) return int_vec_error(INT_VEC_SIZEMISMATCH);
     }
     #pragma omp parallel for
-    for(i=0; i<m; ++i) result[i] = A[i];
-    for(i=0; i<n; ++i) result[i+m] = B[i];
+    for(i=0; i<m; ++i) result[i] = a[i];
+    for(i=0; i<n; ++i) result[i+m] = b[i];
     return result;
 }
 
