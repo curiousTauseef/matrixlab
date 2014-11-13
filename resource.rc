@@ -1,0 +1,7 @@
+#ifndef __MATRIX__RESOURCE__
+#define __MATRIX__RESOURCE__
+
+MAINICON  ICON  "matrixlab.ico"
+
+#endif
+
