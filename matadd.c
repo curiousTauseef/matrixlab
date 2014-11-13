@@ -85,13 +85,13 @@ INT_VECTOR int_vec_add(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
  *
  */
 
-INT_VECTOR int_vec_adds(INT_VECTOR A, int x, INT_VECTOR result)
+INT_VECTOR int_vec_adds(INT_VECTOR A, int s, INT_VECTOR result)
 {
     int i, m;
     m = Int_VecLen(A);
     if(result==NULL) if((result = int_vec_creat(m, UNDEFINED))==NULL)
             int_vec_error(INT_VEC_MALLOC);
-    for(i=0; i<m; ++i) result[i] = A[i]+x;
+    for(i=0; i<m; ++i) result[i] = A[i]+s;
     return result;
 }
 
