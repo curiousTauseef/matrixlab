@@ -5,7 +5,7 @@
  *
  * \param[in] A Input matrix
  * \param[in] result Matrix to store the result
- * \return \f abs(A) \f
+ * \return \f$ abs(A) \f$
  *
  */
 
