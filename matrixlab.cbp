@@ -174,9 +174,6 @@
 		<Unit filename="matsum.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="matsvd.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="mattext.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -188,6 +185,9 @@
 		</Unit>
 		<Unit filename="mattran.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="resource.rc">
+			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Extensions>
 			<code_completion />

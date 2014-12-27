@@ -3,5 +3,36 @@
 
 MAINICON  ICON  "matrixlab.ico"
 
+1 VERSIONINFO
+FILEVERSION      1,2,0,0
+PRODUCTVERSION   1,2,0,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
+        BEGIN
+            VALUE "Build",            "January 2015\0"
+            VALUE "Comments",         "MatrixLab\0"
+            VALUE "CompanyName",      "Sk. Mohammadul Haque\0"
+            VALUE "Developer",        "Sk. Mohammadul Haque\0"
+            VALUE "FileDescription",  "MatrixLab\0"
+            VALUE "FileVersion",      "1.2.000\0"
+            VALUE "InternalName",     "matrixlab.dll\0"
+            VALUE "LegalCopyright",   "Copyright (C) 2012-2015 Sk. Mohammadul Haque\0"
+            VALUE "LegalTrademarks",  "All rights reserved.\0"
+            VALUE "OriginalFilename", "matrixlab.dll\0"
+            VALUE "PrivateBuild",     "\0"
+            VALUE "ProductName",      "MatrixLab\0"
+            VALUE "ProductVersion",   "1.2.000\0"
+            VALUE "SpecialBuild",     "\0"
+            VALUE "Support",          "http://mohammadulhaque.alotspace.com\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x809, 1252 // 1252 = 0x04E4
+    END
+END
+
 #endif
 

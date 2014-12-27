@@ -1,4 +1,3 @@
-#include <float.h>
 #include "matrix.h"
 
 

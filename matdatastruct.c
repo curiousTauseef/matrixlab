@@ -1,4 +1,3 @@
-#include <limits.h>
 #include <malloc.h>
 #include "matrix.h"
 
@@ -318,19 +317,16 @@ int mat_mtype_queue_is_empty(MAT_MTYPE_QUEUE s)
     return ((int)(s->head==NULL));
 }
 
-#ifndef INT_MAX
-#define INT_MAX 2147483647
-#define INT_MIN (-INT_MAX-1)
-#endif
-
-MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat()
+MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat(int type)
 {
     MAT_INT_PRIORITYQUEUE H;
     if((H = (MAT_INT_PRIORITYQUEUE) malloc(sizeof(mat_int_priorityqueue)))==NULL) pq_error(PQ_MALLOC);
     if((H->element = (MAT_INTPQNODE) malloc((STACK_MAX+1)*sizeof(mat_intpqnode)))==NULL) pq_error(PQ_MALLOC);
     H->length = STACK_MAX;
     H->p = 0;
-    H->element[0].priority = INT_MAX;
+    H->type = type;
+    if(type==MAT_PQ_MAX) H->element[0].priority = INT_MAX;
+    else H->element[0].priority = -INT_MAX;
     H->element[0].data = 0;
     return H;
 }
@@ -344,35 +340,59 @@ void mat_int_priorityqueue_enqueue(MAT_INT_PRIORITYQUEUE H, int data, int priori
         H->length += STACK_MAX;
     }
     i = ++(H->p);
-    while(H->element[i/2].priority<priority)
+    if(H->type==MAT_PQ_MAX)
     {
-        H->element[i] = H->element[i/2];
-        i /= 2;
+        while(H->element[i/2].priority<priority)
+        {
+            H->element[i] = H->element[i/2];
+            i /= 2;
+        }
+    }
+    else
+    {
+        while(H->element[i/2].priority>priority)
+        {
+            H->element[i] = H->element[i/2];
+            i /= 2;
+        }
     }
     H->element[i].priority = priority;
     H->element[i].data = data;
 }
 
-int mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H)
+mat_intpqnode mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H)
 {
     int i, child;
     mat_intpqnode min_element, last_element;
     if(H->p==0)
     {
         pq_error(PQ_EMPTY);
-        return H->element[0].data;
+        return H->element[0];
     }
     min_element = H->element[1];
     last_element = H->element[H->p--];
-    for(i=1; i*2<=H->p; i=child)
+    if(H->type==MAT_PQ_MAX)
     {
-        child = i*2;
-        if((child!=H->p) && (H->element[child+1].priority>H->element[child].priority)) ++child;
-        if(last_element.priority<H->element[child].priority) H->element[i] = H->element[child];
-        else break;
+        for(i=1; i*2<=H->p; i=child)
+        {
+            child = i*2;
+            if((child!=H->p) && (H->element[child+1].priority>H->element[child].priority)) ++child;
+            if(last_element.priority<H->element[child].priority) H->element[i] = H->element[child];
+            else break;
+        }
+    }
+    else
+    {
+        for(i=1; i*2<=H->p; i=child)
+        {
+            child = i*2;
+            if((child!=H->p) && (H->element[child+1].priority<H->element[child].priority)) ++child;
+            if(last_element.priority>H->element[child].priority) H->element[i] = H->element[child];
+            else break;
+        }
     }
     H->element[i] = last_element;
-    return min_element.data;
+    return min_element;
 }
 
 int mat_int_priorityqueue_free(MAT_INT_PRIORITYQUEUE H)
@@ -390,31 +410,62 @@ int mat_int_priorityqueue_update(MAT_INT_PRIORITYQUEUE H, int data, int priority
     for(i=1; i<=H->p; ++i) if(H->element[i].data==data) p = i;
     if(p!=0)
     {
-        if((type==0 || type==2) && H->element[p].priority>priority)
+        if(H->type==MAT_PQ_MAX)
         {
-            for(i=p; (i*2)<=H->p; i=child)
+            if((type==0 || type==2) && H->element[p].priority>priority)
             {
-                child = i*2;
-                if((child!=H->p)&&(H->element[child+1].priority<H->element[child].priority)) ++child;
-                if(priority>H->element[child].priority) H->element[i] = H->element[child];
-                else break;
+                for(i=p; (i*2)<=H->p; i=child)
+                {
+                    child = i*2;
+                    if((child!=H->p)&&(H->element[child+1].priority<H->element[child].priority)) ++child;
+                    if(priority>H->element[child].priority) H->element[i] = H->element[child];
+                    else break;
+                }
+                H->element[i].data = data;
+                H->element[i].priority = priority;
+                return -1;
             }
-            H->element[i].data = data;
-            H->element[i].priority = priority;
-            return -1;
+            else if((type<2) && H->element[p].priority<priority)
+            {
+                while(H->element[p/2].priority <priority)
+                {
+                    H->element[p] = H->element[p/2];
+                    p/= 2;
+                }
+                H->element[p].priority = priority;
+                H->element[p].data = data;
+                return 1;
+            }
+            else return 0;
         }
-        else if((type<2) && H->element[p].priority<priority)
+        else
         {
-            while(H->element[p/2].priority <priority)
+            if((type==0 || type==2) && H->element[p].priority<priority)
             {
-                H->element[p] = H->element[p/2];
-                p/= 2;
+                for(i=p; (i*2)<=H->p; i=child)
+                {
+                    child = i*2;
+                    if((child!=H->p)&&(H->element[child+1].priority>H->element[child].priority)) ++child;
+                    if(priority<H->element[child].priority) H->element[i] = H->element[child];
+                    else break;
+                }
+                H->element[i].data = data;
+                H->element[i].priority = priority;
+                return -1;
             }
-            H->element[p].priority = priority;
-            H->element[p].data = data;
-            return 1;
+            else if((type<2) && H->element[p].priority>priority)
+            {
+                while(H->element[p/2].priority>priority)
+                {
+                    H->element[p] = H->element[p/2];
+                    p/= 2;
+                }
+                H->element[p].priority = priority;
+                H->element[p].data = data;
+                return 1;
+            }
+            else return 0;
         }
-        else return 0;
     }
     else
     {
@@ -427,4 +478,168 @@ int mat_int_priorityqueue_is_empty(MAT_INT_PRIORITYQUEUE H)
 {
     return ((int)(H->p==0));
 }
+
+MAT_MTYPE_PRIORITYQUEUE mat_mtype_priorityqueue_creat(int type)
+{
+    MAT_MTYPE_PRIORITYQUEUE H;
+    if((H = (MAT_MTYPE_PRIORITYQUEUE) malloc(sizeof(mat_mtype_priorityqueue)))==NULL) pq_error(PQ_MALLOC);
+    if((H->element = (MAT_MTYPEPQNODE) malloc((STACK_MAX+1)*sizeof(mat_mtypepqnode)))==NULL) pq_error(PQ_MALLOC);
+    H->length = STACK_MAX;
+    H->p = 0;
+    H->type = type;
+    if(type==MAT_PQ_MAX) H->element[0].priority = MTYPE_MAX;
+    else H->element[0].priority = -MTYPE_MAX;
+    H->element[0].data = 0;
+    return H;
+}
+
+void mat_mtype_priorityqueue_enqueue(MAT_MTYPE_PRIORITYQUEUE H, mtype data, mtype priority)
+{
+    int i;
+    if(H->length==H->p)
+    {
+        if((H->element = (MAT_MTYPEPQNODE)realloc(H->element, sizeof(mat_mtypepqnode)*(H->length+STACK_MAX+1)))==NULL) pq_error(PQ_MALLOC);
+        H->length += STACK_MAX;
+    }
+    i = ++(H->p);
+    if(H->type==MAT_PQ_MAX)
+    {
+        while(H->element[i/2].priority<priority)
+        {
+            H->element[i] = H->element[i/2];
+            i /= 2;
+        }
+    }
+    else
+    {
+        while(H->element[i/2].priority>priority)
+        {
+            H->element[i] = H->element[i/2];
+            i /= 2;
+        }
+    }
+    H->element[i].priority = priority;
+    H->element[i].data = data;
+}
+
+mat_mtypepqnode mat_mtype_priorityqueue_dequeue(MAT_MTYPE_PRIORITYQUEUE H)
+{
+    int i, child;
+    mat_mtypepqnode min_element, last_element;
+    if(H->p==0)
+    {
+        pq_error(PQ_EMPTY);
+        return H->element[0];
+    }
+    min_element = H->element[1];
+    last_element = H->element[H->p--];
+    if(H->type==MAT_PQ_MAX)
+    {
+        for(i=1; i*2<=H->p; i=child)
+        {
+            child = i*2;
+            if((child!=H->p) && (H->element[child+1].priority>H->element[child].priority)) ++child;
+            if(last_element.priority<H->element[child].priority) H->element[i] = H->element[child];
+            else break;
+        }
+    }
+    else
+    {
+        for(i=1; i*2<=H->p; i=child)
+        {
+            child = i*2;
+            if((child!=H->p) && (H->element[child+1].priority<H->element[child].priority)) ++child;
+            if(last_element.priority>H->element[child].priority) H->element[i] = H->element[child];
+            else break;
+        }
+    }
+    H->element[i] = last_element;
+    return min_element;
+}
+
+int mat_mtype_priorityqueue_free(MAT_MTYPE_PRIORITYQUEUE H)
+{
+    if(H==NULL) return 0;
+    free(H->element);
+    H->element = NULL;
+    free(H);
+    return 1;
+}
+
+int mat_mtype_priorityqueue_update(MAT_MTYPE_PRIORITYQUEUE H, mtype data, mtype priority, int type)
+{
+    int i, child, p = 0;
+    for(i=1; i<=H->p; ++i) if(H->element[i].data==data) p = i;
+    if(p!=0)
+    {
+        if(H->type==MAT_PQ_MAX)
+        {
+            if((type==0 || type==2) && H->element[p].priority>priority)
+            {
+                for(i=p; (i*2)<=H->p; i=child)
+                {
+                    child = i*2;
+                    if((child!=H->p)&&(H->element[child+1].priority<H->element[child].priority)) ++child;
+                    if(priority>H->element[child].priority) H->element[i] = H->element[child];
+                    else break;
+                }
+                H->element[i].data = data;
+                H->element[i].priority = priority;
+                return -1;
+            }
+            else if((type<2) && H->element[p].priority<priority)
+            {
+                while(H->element[p/2].priority <priority)
+                {
+                    H->element[p] = H->element[p/2];
+                    p/= 2;
+                }
+                H->element[p].priority = priority;
+                H->element[p].data = data;
+                return 1;
+            }
+            else return 0;
+        }
+        else
+        {
+            if((type==0 || type==2) && H->element[p].priority<priority)
+            {
+                for(i=p; (i*2)<=H->p; i=child)
+                {
+                    child = i*2;
+                    if((child!=H->p)&&(H->element[child+1].priority>H->element[child].priority)) ++child;
+                    if(priority<H->element[child].priority) H->element[i] = H->element[child];
+                    else break;
+                }
+                H->element[i].data = data;
+                H->element[i].priority = priority;
+                return -1;
+            }
+            else if((type<2) && H->element[p].priority>priority)
+            {
+                while(H->element[p/2].priority >priority)
+                {
+                    H->element[p] = H->element[p/2];
+                    p/= 2;
+                }
+                H->element[p].priority = priority;
+                H->element[p].data = data;
+                return 1;
+            }
+            else return 0;
+        }
+    }
+    else
+    {
+        mat_mtype_priorityqueue_enqueue(H, data, priority);
+        return 2;
+    }
+}
+
+int mat_mtype_priorityqueue_is_empty(MAT_MTYPE_PRIORITYQUEUE H)
+{
+    return ((int)(H->p==0));
+}
+
+
 

@@ -1,5 +1,4 @@
 #include "matrix.h"
-#include <limits.h>
 
 
 mtype __mat_addfunc(mtype x, mtype y)

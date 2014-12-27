@@ -2140,8 +2140,10 @@
 1415896798 source:c:\cwork\matrixlab\matabs.c
 	"matrix.h"
 
-1411681695 c:\cwork\matrixlab\matrix.h
+1419672480 c:\cwork\matrixlab\matrix.h
 	<stdio.h>
+	<limits.h>
+	<float.h>
 	<time.h>
 	<math.h>
 	<omp.h>
@@ -2159,8 +2161,7 @@
 	<malloc.h>
 	"matrix.h"
 
-1408311763 source:c:\cwork\matrixlab\matdatastruct.c
-	<limits.h>
+1416782368 source:c:\cwork\matrixlab\matdatastruct.c
 	<malloc.h>
 	"matrix.h"
 
@@ -2194,14 +2195,12 @@
 1406449515 source:c:\cwork\matrixlab\matflip.c
 	"matrix.h"
 
-1411681317 source:c:\cwork\matrixlab\matfuncs.c
+1416086763 source:c:\cwork\matrixlab\matfuncs.c
 	"matrix.h"
-	<limits.h>
 
-1408313205 source:c:\cwork\matrixlab\matgraph.c
-	<malloc.h>
-	<limits.h>
+1419671869 source:c:\cwork\matrixlab\matgraph.c
 	"matrix.h"
+	<malloc.h>
 
 1406449515 source:c:\cwork\matrixlab\matinnerprod.c
 	"matrix.h"
@@ -2213,15 +2212,15 @@
 	<malloc.h>
 	"matrix.h"
 
-1411326600 source:c:\cwork\matrixlab\matkdtree.c
-	"matrix.h"
+1417110524 source:c:\cwork\matrixlab\matkdtree.c
 	<string.h>
 	<malloc.h>
+	"matrix.h"
 
 1406449515 source:c:\cwork\matrixlab\matmaxmin.c
 	"matrix.h"
 
-1411681409 source:c:\cwork\matrixlab\matmds.c
+1419590639 source:c:\cwork\matrixlab\matmds.c
 	"matrix.h"
 
 1406449515 source:c:\cwork\matrixlab\matmean.c
@@ -2235,7 +2234,7 @@
 1406449515 source:c:\cwork\matrixlab\matmul.c
 	"matrix.h"
 
-1406449515 source:c:\cwork\matrixlab\matpca.c
+1416172527 source:c:\cwork\matrixlab\matpca.c
 	"matrix.h"
 
 1409004831 source:c:\cwork\matrixlab\matpinv.c
@@ -2249,15 +2248,14 @@
 	<stdlib.h>
 	"matrix.h"
 
-1406449515 source:c:\cwork\matrixlab\matpursuit.c
-	<float.h>
+1416087011 source:c:\cwork\matrixlab\matpursuit.c
 	"matrix.h"
 
 1406449515 source:c:\cwork\matrixlab\matrand.c
 	<stdlib.h>
 	"matrix.h"
 
-1411655837 source:c:\cwork\matrixlab\matsearch.c
+1419671499 source:c:\cwork\matrixlab\matsearch.c
 	"matrix.h"
 	<malloc.h>
 
@@ -2280,7 +2278,7 @@
 1406449515 source:c:\cwork\matrixlab\matsum.c
 	"matrix.h"
 
-1406449515 source:c:\cwork\matrixlab\matsvd.c
+1416174786 source:c:\cwork\matrixlab\matsvd.c
 	<stdlib.h>
 	"matrix.h"
 
@@ -2298,4 +2296,14 @@
 
 1408903608 source:c:\cwork\matrixlab\mattran.c
 	"matrix.h"
+
+1419590355 source:c:\cwork\matrixlab\resource.rc
+
+1407239503 c:\cwork\matrixlab\allocator\leak_detector_c.h
+
+1416078728 source:c:\cwork\matrixlab\allocator\leak_detector_c.c
+	<stdio.h>
+	<malloc.h>
+	<string.h>
+	"leak_detector_c.h"
 

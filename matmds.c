@@ -17,11 +17,6 @@ MATRIX mat_mds(MATRIX d, int dims, int type, MATRIX result)
     return result;
 }
 
-mtype __mat_mulfunc(mtype x, mtype y)
-{
-    return (x*y);
-}
-
 MATRIX __mat_mds_metric(MATRIX d, int dims, MATRIX result)
 {
     MATRIX P = NULL, B = NULL, J = NULL, tmp = NULL;

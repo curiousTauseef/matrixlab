@@ -1,11 +1,11 @@
 #include "matrix.h"
-#define SIGN(a, b) ((b) < 0 ? -fabs(a) : fabs(a) )
+#define __mat_sgn(a,b) ((b)<0?-fabs(a):fabs(a))
 
 
 MATSTACK mat_pca(MATRIX data, int pca_type)
 {
     int i, j, k, k2, m, n;
-    MATRIX evals, interm;
+    MATRIX evals, im;
     MATSTACK tmmps0 = NULL;
     MATRIX symmat, symmat2;
     m = MatCol(data);
@@ -30,23 +30,23 @@ MATSTACK mat_pca(MATRIX data, int pca_type)
         break;
     }
     evals = mat_creat(m, 1, UNDEFINED);
-    interm = mat_creat(m, 1, UNDEFINED);
+    im = mat_creat(m, 1, UNDEFINED);
     symmat2 = mat_copy(symmat, NULL);
-    mat_tred2(symmat, evals, interm);
-    mat_tqli(evals, interm, symmat);
+    mat_tred2(symmat, evals, im);
+    mat_tqli(evals, im, symmat);
 
     for(i=0; i<n; ++i)
     {
         for(j=0; j<m; ++j)
         {
-            interm[j][0] = tmmps0[2][i][j];
+            im[j][0] = tmmps0[2][i][j];
         }
         for(k=0; k<3; ++k)
         {
             tmmps0[2][i][k] = 0.0;
             for(k2=0; k2<m; ++k2)
             {
-                tmmps0[2][i][k] += interm[k2][0] * symmat[k2][m-k-1];
+                tmmps0[2][i][k] += im[k2][0] * symmat[k2][m-k-1];
             }
         }
     }
@@ -55,14 +55,14 @@ MATSTACK mat_pca(MATRIX data, int pca_type)
     {
         for(k=0; k<m; ++k)
         {
-            interm[k][0] = symmat2[j][k];
+            im[k][0] = symmat2[j][k];
         }
         for(i=0; i<3; ++i)
         {
             symmat2[j][i] = 0.0;
             for (k2=0; k2<m; ++k2)
             {
-                symmat2[j][i] += interm[k2][0] * symmat[k2][m-i-1];
+                symmat2[j][i] += im[k2][0] * symmat[k2][m-i-1];
             }
             if(evals[m-i-1][0]>0.0005)
                 symmat2[j][i] /= (mtype)sqrt(evals[m-i-1][0]);
@@ -71,14 +71,14 @@ MATSTACK mat_pca(MATRIX data, int pca_type)
         }
     }
     mat_free(evals);
-    mat_free(interm);
+    mat_free(im);
     return tmmps0;
 }
 
 MATSTACK mat_eig_sym(MATRIX symmat, MATSTACK result)
 {
     int m, n;
-    MATRIX interm, tmp_result0 = NULL, tmp_result1 = NULL;
+    MATRIX im, tmp_result0 = NULL, tmp_result1 = NULL;
     INT_VECTOR indcs = NULL;
     MATSTACK tmp = NULL;
     m = MatCol(symmat);
@@ -91,18 +91,18 @@ MATSTACK mat_eig_sym(MATRIX symmat, MATSTACK result)
         result[0] = NULL;
         result[1] = NULL;
     }
-    interm = mat_creat(m, 1, UNDEFINED);
+    im = mat_creat(m, 1, UNDEFINED);
     tmp_result0 = mat_creat(m, 1, UNDEFINED);
     tmp_result1 = mat_copy(symmat, tmp_result1);
-    mat_tred2(tmp_result1, tmp_result0, interm);
-    mat_tqli(tmp_result0, interm, tmp_result1);
+    mat_tred2(tmp_result1, tmp_result0, im);
+    mat_tqli(tmp_result0, im, tmp_result1);
 
     tmp = mat_qsort(tmp_result0, ROWS, tmp);
     result[0] = mat_copy(tmp[0], result[0]);
     indcs = mat_2int_vec(tmp[1]);
     result[1] = mat_get_sub_matrix_from_cols(tmp_result1, indcs, result[1]);
     int_vec_free(indcs);
-    mat_free(interm);
+    mat_free(im);
     mat_free(tmp_result0);
     mat_free(tmp_result1);
 
@@ -332,7 +332,7 @@ void mat_tqli(MATRIX d, MATRIX e, MATRIX z)
                 if(iter++ == 50) gen_error(GEN_NOT_CONVERGED);
                 g = (d[l+1][0] - d[l][0]) / (2.0f * e[l][0]);
                 r = (mtype)sqrt((g * g) + 1.0f);
-                g = d[m][0] - d[l][0] + e[l][0] / (mtype)(g + SIGN(r, g));
+                g = d[m][0] - d[l][0] + e[l][0] / (mtype)(g + __mat_sgn(r, g));
                 s = c = 1.0;
                 p = 0.0;
                 for(i=m-1; i>=l; --i)

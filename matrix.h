@@ -17,12 +17,7 @@
  * \section intro_sec Introduction
  * Matrixlab is a generic C library for matrix routines. It contains over 250 functions for matrix operations. Many of the functions are multi-threaded.
  *
- * The functions are categorized as
- * \section install_sec Installation
  *
- * \subsection step1 Step 1: Opening the box
- *
- * etc...
  */
 
 #ifndef __MATRIX__
@@ -47,11 +42,28 @@ extern "C"
 #define mtype double /**< \def mtype is double. */
 #endif
 #include <stdio.h>
+#include <limits.h>
+#include <float.h>
 #include <time.h>
 #include <math.h>
 #include <omp.h>
 
 #define STACK_MAX 100
+
+#ifndef INT_MAX
+#define INT_MAX 2147483647
+#define INT_MIN (-INT_MAX-1)
+#endif
+
+#ifndef MTYPE_MAX
+#if mtype_n == 0
+#define MTYPE_MAX (FLT_MAX)
+#define MTYPE_MIN (0)
+#else
+#define MTYPE_MAX (DBL_MAX)
+#define MTYPE_MIN (0)
+#endif
+#endif
 #define MAT_PI (3.14159265359) /**< def MAT_PI pi */
 #define __6188123NAME2(fun,suffix) fun ## _ ## suffix
 #define __1267861NAME1(fun,suffix) __6188123NAME2(fun,suffix)
@@ -70,28 +82,26 @@ typedef struct _iobuf *MAT_FILEPOINTER; /**< \typedef FILEPOINTER is pointer to 
  *
  */
 
-struct mat_int_stack
+typedef struct mat_int_stack
 {
     int p; /**< Current stack position */
     int length; /**< Total allocated stack length */
     int *stack; /**< Pointer to stack data */
-};
-typedef struct mat_int_stack mat_int_stack; /**< Integer Stack */
-typedef struct mat_int_stack *MAT_INT_STACK; /**< Integer Stack Pointer */
+} mat_int_stack; /**< Integer Stack */
+typedef mat_int_stack *MAT_INT_STACK; /**< Integer Stack Pointer */
 
 /******************************************/
 /** \brief Mtype Stack Structure
  *
  */
 
-struct mat_mtype_stack
+typedef struct mat_mtype_stack
 {
     int p; /**< Current stack position */
     int length; /**< Total allocated stack length */
     mtype *stack; /**< Pointer to stack data */
-};
-typedef struct mat_mtype_stack mat_mtype_stack; /**< Mtype Stack */
-typedef struct mat_mtype_stack *MAT_MTYPE_STACK; /**< Mtype Stack Pointer */
+} mat_mtype_stack; /**< Mtype Stack */
+typedef mat_mtype_stack *MAT_MTYPE_STACK; /**< Mtype Stack Pointer */
 
 /******************************************/
 
@@ -99,26 +109,24 @@ typedef struct mat_mtype_stack *MAT_MTYPE_STACK; /**< Mtype Stack Pointer */
  *
  */
 
-struct mat_qintnode
+typedef struct mat_qintnode
 {
     int data; /**< Integer node data */
     struct mat_qintnode *next; /**< Pointer to next node */
-};
-typedef struct mat_qintnode mat_qintnode; /**< Integer Queue Node */
-typedef struct mat_qintnode *MAT_QINTNODE; /**< Integer Queue Node Pointer */
+} mat_qintnode; /**< Integer Queue Node */
+typedef mat_qintnode *MAT_QINTNODE; /**< Integer Queue Node Pointer */
 
 /** \brief Integer Queue Structure
  *
  */
 
-struct mat_int_queue
+typedef struct mat_int_queue
 {
     int p; /**< Current queue position */
     MAT_QINTNODE head; /**< Queue head node */
     MAT_QINTNODE tail; /**< Queue tail node */
-};
-typedef struct mat_int_queue mat_int_queue; /**< Integer Queue */
-typedef struct mat_int_queue *MAT_INT_QUEUE; /**< Integer Queue Pointer */
+} mat_int_queue; /**< Integer Queue */
+typedef mat_int_queue *MAT_INT_QUEUE; /**< Integer Queue Pointer */
 
 /******************************************/
 #define __mtype(x) __mtype ## x
@@ -126,90 +134,86 @@ typedef struct mat_int_queue *MAT_INT_QUEUE; /**< Integer Queue Pointer */
  *
  */
 
-struct mat_qmtypenode
+typedef struct mat_qmtypenode
 {
     mtype data; /**< Mtype node data */
     struct mat_qmtypenode *next; /**< Pointer to next node */
-};
-typedef struct mat_qmtypenode mat_qmtypenode; /**< Mtype Queue Node */
-typedef struct mat_qmtypenode *MAT_QMTYPENODE; /**< Mtype Queue Node Pointer */
+} mat_qmtypenode; /**< Mtype Queue Node */
+typedef mat_qmtypenode *MAT_QMTYPENODE; /**< Mtype Queue Node Pointer */
 /** \brief Mtype Queue Structure
  *
  */
 
-struct mat_mtype_queue
+typedef struct mat_mtype_queue
 {
     int p; /**< Current queue position */
     MAT_QMTYPENODE head; /**< Queue head node */
     MAT_QMTYPENODE tail; /**< Queue tail node */
-};
-typedef struct mat_mtype_queue mat_mtype_queue; /**< Mtype Queue */
-typedef struct mat_mtype_queue *MAT_MTYPE_QUEUE; /**< Mtype Queue Pointer */
+}mat_mtype_queue; /**< Mtype Queue */
+typedef mat_mtype_queue *MAT_MTYPE_QUEUE; /**< Mtype Queue Pointer */
 
 /******************************************/
 /** \brief Integer Priority Queue Node Structure
  *
  */
 
-struct mat_intpqnode
+typedef struct mat_intpqnode
 {
     int data; /**< Integer node data */
     int priority; /**< Node priority */
-};
-typedef struct mat_intpqnode mat_intpqnode; /**< Integer Priority Queue Node */
-typedef struct mat_intpqnode *MAT_INTPQNODE; /**< Integer Priority Queue Node Pointer */
+} mat_intpqnode; /**< Integer Priority Queue Node */
+typedef mat_intpqnode *MAT_INTPQNODE; /**< Integer Priority Queue Node Pointer */
 /** \brief Integer Priority Queue Structure
  *
  */
 
-struct mat_int_priorityqueue
+typedef struct mat_int_priorityqueue
 {
     int p; /**< Current priority queue position */
+    int type; /**< Priority type */
     int length; /**< Total allocated priority queue length*/
     MAT_INTPQNODE element; /**< Pointer to priority queue data */
-};
-typedef struct mat_int_priorityqueue mat_int_priorityqueue; /**< Integer Priority Queue */
-typedef struct mat_int_priorityqueue *MAT_INT_PRIORITYQUEUE; /**< Integer Priority Queue Pointer */
+} mat_int_priorityqueue; /**< Integer Priority Queue */
+typedef mat_int_priorityqueue *MAT_INT_PRIORITYQUEUE; /**< Integer Priority Queue Pointer */
 
 /******************************************/
 /** \brief Mtype Priority Queue Node Structure
  *
  */
 
-struct mat_mtypepqnode
+typedef struct mat_mtypepqnode
 {
     mtype data; /**< Mtype node data */
-    int priority; /**< Node priority */
-};
-typedef struct mat_mtypepqnode mat_mtypepqnode; /**< Mtype Priority Queue Node */
-typedef struct mat_mtypepqnode *MAT_MTYPEPQNODE; /**< Mtype Priority Queue Node Pointer */
+    mtype priority; /**< Node priority */
+} mat_mtypepqnode; /**< Mtype Priority Queue Node */
+typedef mat_mtypepqnode *MAT_MTYPEPQNODE; /**< Mtype Priority Queue Node Pointer */
+
 /** \brief Mtype Priority Queue Structure
  *
  */
 
-struct mat_mtype_priorityqueue
+typedef struct mat_mtype_priorityqueue
 {
     int p; /**< Current priority queue position */
+    int type; /**< Priority type */
     int length; /**< Total allocated priority queue length*/
     MAT_MTYPEPQNODE element; /**< Pointer to priority queue data */
-};
-typedef struct mat_mtype_priorityqueue mat_mtype_priorityqueue; /**< Mtype Priority Queue */
-typedef struct mat_mtype_priorityqueue *MAT_MTYPE_PRIORITYQUEUE; /**< Mtype Priority Queue Pointer */
+} mat_mtype_priorityqueue; /**< Mtype Priority Queue */
+typedef mat_mtype_priorityqueue *MAT_MTYPE_PRIORITYQUEUE; /**< Mtype Priority Queue Pointer */
 
 /******************************************/
 /** \brief Search Tree Node Structure
  *
  */
 
-struct mat_tree_node
+typedef struct mat_tree_node
 {
     mtype element; /**< Search tree node data */
     struct mat_tree_node *left; /**< Pointer to left child node */
     struct mat_tree_node *right;/**< Pointer to right child node */
-};
-typedef struct mat_tree_node mat_tree_node; /**< Search Tree Node */
-typedef struct mat_tree_node *MAT_TREE_NODE; /**< Search Tree Node Pointer */
-typedef struct mat_tree_node *MAT_TREE; /**< Search Tree Pointer */
+} mat_tree_node; /**< Search Tree Node */
+typedef mat_tree_node *MAT_TREE_NODE; /**< Search Tree Node Pointer */
+typedef mat_tree_node *MAT_TREE; /**< Search Tree Pointer */
 
 /******************************************/
 typedef int *INT_VECTOR; /**< Integer Vector */
@@ -241,7 +245,7 @@ typedef void **MATVEC_DPOINTER; /**< Mtype Matrix - Integer Vector Pair */
  *
  */
 
-struct mat_bayes_model
+typedef struct mat_bayes_model
 {
     int num_of_classes; /**< Number of training class */
     int num_of_features; /**< Number of training features */
@@ -249,16 +253,15 @@ struct mat_bayes_model
     MATRIX class_priors; /**< Training data prior information */
     MATSTACK class_means; /**< Training data class means */
     MATSTACK class_covars; /**< Training data class covariances */
-};
-typedef struct mat_bayes_model mat_bayes_model; /**< Bayes Classifier Model */
-typedef struct mat_bayes_model *MAT_BAYES_MODEL; /**< Bayes Classifier Model Pointer */
+} mat_bayes_model; /**< Bayes Classifier Model */
+typedef mat_bayes_model *MAT_BAYES_MODEL; /**< Bayes Classifier Model Pointer */
 
 /******************************************/
 /** \brief Perceptron Classifier Model Structure
  *
  */
 
-struct mat_perceptron
+typedef struct mat_perceptron
 {
     int num_of_classes; /**< Number of training classes */
     int num_of_features; /**< Number of training features */
@@ -266,30 +269,28 @@ struct mat_perceptron
     MATRIX class_weights; /**< Trained Classifier Weights */
     int istrained; /**< Is trained */
     int num_of_iterations; /**< Number of training iterations */
-};
-typedef struct mat_perceptron mat_perceptron; /**< Perceptron Classifier Model */
-typedef struct mat_perceptron *MAT_PERCEPTRON; /**< Perceptron Classifier Model Pointer */
+} mat_perceptron; /**< Perceptron Classifier Model */
+typedef mat_perceptron *MAT_PERCEPTRON; /**< Perceptron Classifier Model Pointer */
 
 /******************************************/
 /** \brief Graph Node Structure
  *
  */
 
-struct mat_gnode
+typedef struct mat_gnode
 {
     int v; /**< Value */
     double weight; /**< Node weight */
     struct mat_gnode *next; /**< Ponter to next node */
-};
-typedef struct mat_gnode mat_gnode; /**< Graph Node */
-typedef struct mat_gnode *MAT_GNODE; /**< Graph Node Pointer */
+} mat_gnode; /**< Graph Node */
+typedef mat_gnode *MAT_GNODE; /**< Graph Node Pointer */
 
 /******************************************/
 /** \brief Graph Structure
  *
  */
 
-struct mat_graph
+typedef struct mat_graph
 {
     int nvertices; /**< Number of vertices */
     int nedges; /**< Number of edges */
@@ -301,33 +302,30 @@ struct mat_graph
     int *dad;
     int weighted;
     MAT_INT_PRIORITYQUEUE pq;
-};
-typedef struct mat_graph mat_graph;
-typedef struct mat_graph *MAT_GRAPH;
+} mat_graph;
+typedef mat_graph *MAT_GRAPH;
 
 #ifndef MAT_KDTREE_MAX_DIMS
 #define MAT_KDTREE_MAX_DIMS 3
 #endif
 
-struct mat_kdnode
+typedef struct mat_kdnode
 {
     mtype x[MAT_KDTREE_MAX_DIMS];
     int idx;
     struct mat_kdnode *left, *right;
-};
-typedef struct mat_kdnode mat_kdnode;
-typedef struct mat_kdnode* MAT_KDNODE;
+} mat_kdnode;
+typedef mat_kdnode* MAT_KDNODE;
 
-struct mat_kdtree
+typedef struct mat_kdtree
 {
     int ndims;
     int length;
     int _is_allocated;
     MAT_KDNODE data;
     MAT_KDNODE kdtree;
-};
-typedef struct mat_kdtree mat_kdtree;
-typedef struct mat_kdtree* MAT_KDTREE;
+} mat_kdtree;
+typedef mat_kdtree* MAT_KDTREE;
 
 
 extern clock_t MAT_CLOCK_TIME;
@@ -434,6 +432,10 @@ extern MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_ser
 #define MAT_PCA_CORRELATION 0
 #define MAT_PCA_COVARIANCE 1
 #define MAT_PCA_SUMOFSQUARES 2
+
+
+#define MAT_PQ_MIN 0
+#define MAT_PQ_MAX 1
 
 
 /******************************************/
@@ -787,12 +789,19 @@ void mat_mtype_queue_enqueue(MAT_MTYPE_QUEUE s, mtype value);
 mtype mat_mtype_queue_dequeue(MAT_MTYPE_QUEUE s);
 int mat_mtype_queue_is_empty(MAT_MTYPE_QUEUE s);
 
-MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat(void);
+MAT_INT_PRIORITYQUEUE mat_int_priorityqueue_creat(int type);
 void mat_int_priorityqueue_enqueue(MAT_INT_PRIORITYQUEUE H, int data, int priority);
-int mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H);
+mat_intpqnode mat_int_priorityqueue_dequeue(MAT_INT_PRIORITYQUEUE H);
 int mat_int_priorityqueue_free(MAT_INT_PRIORITYQUEUE H);
 int mat_int_priorityqueue_update(MAT_INT_PRIORITYQUEUE H, int data, int priority, int type);
 int mat_int_priorityqueue_is_empty(MAT_INT_PRIORITYQUEUE H);
+
+MAT_MTYPE_PRIORITYQUEUE mat_mtype_priorityqueue_creat(int type);
+void mat_mtype_priorityqueue_enqueue(MAT_MTYPE_PRIORITYQUEUE H, mtype data, mtype priority);
+mat_mtypepqnode mat_mtype_priorityqueue_dequeue(MAT_MTYPE_PRIORITYQUEUE H);
+int mat_mtype_priorityqueue_free(MAT_MTYPE_PRIORITYQUEUE H);
+int mat_mtype_priorityqueue_update(MAT_MTYPE_PRIORITYQUEUE H, mtype data, mtype priority, int type);
+int mat_mtype_priorityqueue_is_empty(MAT_MTYPE_PRIORITYQUEUE H);
 
 /******************************************/
 /* mds */
@@ -816,9 +825,11 @@ MAT_GRAPH mat_graph_reverse(MAT_GRAPH g, MAT_GRAPH r);
 MAT_KDTREE mat_kdtree_make_tree(MATRIX A, MAT_KDTREE result);
 int mat_kdtree_free(MAT_KDTREE t);
 MATRIX mat_kdtree_nearest(MAT_KDTREE t, MATRIX A, MATRIX result);
+MATRIX mat_kdtree_k_nearest(MAT_KDTREE t, MATRIX A, int k, MATRIX result);
 MAT_KDNODE __mat_kdtree_make_tree(MAT_KDNODE t, int len, int i, int dim);
 MAT_KDNODE __mat_kd_find_median(MAT_KDNODE kd_start, MAT_KDNODE kd_end, int idx);
 void __mat_kdtree_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_KDNODE *best, mtype *best_dist);
+void __mat_kdtree_k_nearest(MAT_KDNODE root, MAT_KDNODE nd, int i, int dim, MAT_MTYPE_PRIORITYQUEUE pq, MATRIX bmax, MATRIX bmin);
 
 /******************************************/
 /* sparse */
@@ -827,7 +838,6 @@ MATSTACK mat_omp(MATRIX A, MATRIX b, int k, mtype tol, MATSTACK result);
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif
 

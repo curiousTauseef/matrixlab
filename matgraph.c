@@ -1,6 +1,5 @@
-#include <malloc.h>
-#include <limits.h>
 #include "matrix.h"
+#include <malloc.h>
 #define maxV 20
 #define unseen 0
 
@@ -141,7 +140,7 @@ MAT_INT_QUEUE mat_graph_search(MAT_GRAPH g, int connected, int mst)
 {
     int k;
     MAT_INT_QUEUE q = mat_int_queue_creat();
-    MAT_INT_PRIORITYQUEUE pq = mat_int_priorityqueue_creat();
+    MAT_INT_PRIORITYQUEUE pq = mat_int_priorityqueue_creat(MAT_PQ_MAX);
     g->id = 0;
     for(k=1; k<=g->nvertices; k++) g->val[k] = unseen;
     for(k=1; k<=g->nvertices; k++)
@@ -162,7 +161,7 @@ void mat_graph_visit(MAT_GRAPH g, int k, int connected, int mst, MAT_INT_PRIORIT
         if(mat_int_priorityqueue_update(pq, k, unseen, PQ_INCREASE)!=0) g->dad[k] = 0;
         while(pq->p)
         {
-            k = mat_int_priorityqueue_dequeue(pq);
+            k = mat_int_priorityqueue_dequeue(pq).data;
             g->val[k] = 1;
             if(connected) mat_int_queue_enqueue(q, k);
             g->vseq[++g->id] = k;
