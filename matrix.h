@@ -281,7 +281,7 @@ typedef struct mat_gnode
 {
     int v; /**< Value */
     double weight; /**< Node weight */
-    struct mat_gnode *next; /**< Ponter to next node */
+    struct mat_gnode *next; /**< Pointer to next node */
 } mat_gnode; /**< Graph Node */
 typedef mat_gnode *MAT_GNODE; /**< Graph Node Pointer */
 

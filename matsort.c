@@ -8,11 +8,10 @@
 }
 /** \endcond */
 
-/** \brief
+/** \brief Computes the median of elements of a given matrix
  *
- * \param
- * \param
- * \return
+ * \param[in] A Input matrix
+ * \return \f$ \textrm{median}\left(\left \{a_{ij}\right \}\right) \f$
  *
  */
 
@@ -47,6 +46,14 @@ mtype mat_median(MATRIX A)
     return med;
 }
 
+/** \brief Computes the \f$ k^{th} \f$ order statistic of elements of a given matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] k Order
+ * \return \f$ \textrm{O}_k\left(\left \{a_{ij}\right \}\right) \f$
+ *
+ */
+
 mtype mat_order_statistic(MATRIX A, int k)
 {
     MATRIX B;
@@ -76,6 +83,15 @@ mtype mat_order_statistic(MATRIX A, int k)
     mat_free(B);
     return korder;
 }
+
+/** \brief Sorts elements of a given matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] dim Direction of sort (ROWS/COLS)
+ * \param[out] result Output matrix stack
+ * \return Output matrix stack of sorted A and their positions
+ *
+ */
 
 MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
 {
@@ -116,6 +132,7 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
     return result;
 }
 
+/** \cond HIDDEN_SYMBOLS */
 void __mat_quicksort(MATRIX A, int l, int r, int offset, MATRIX ind)
 {
     mtype t;
@@ -153,4 +170,4 @@ void __mat_quicksort(MATRIX A, int l, int r, int offset, MATRIX ind)
     __mat_quicksort(A,l,j-1, offset, ind);
     __mat_quicksort(A,j+1,r, offset, ind);
 }
-
+/** \endcond */

@@ -1,2 +1,13 @@
 *.obj
 *.o
+*.tex
+*.html
+*.css
+*.js
+*.png
+*.dot
+*.log
+*.hkc
+*.hhk
+*.hhp
+*.md5

@@ -1,41 +1,103 @@
 #include "matrix.h"
 
 
+/** \brief Computes addition function
+ *
+ * \param[in] x
+ * \param[in] y
+ * \return \f$ x+y \f$
+ *
+ */
+
 mtype __mat_addfunc(mtype x, mtype y)
 {
     return (x+y);
 }
+
+/** \brief Computes subtraction function
+ *
+ * \param[in] x
+ * \param[in] y
+ * \return \f$ x-y \f$
+ *
+ */
 
 mtype __mat_subfunc(mtype x, mtype y)
 {
     return (x-y);
 }
 
+/** \brief Computes multiplication function
+ *
+ * \param[in] x
+ * \param[in] y
+ * \return \f$ xy \f$
+ *
+ */
+
 mtype __mat_mulfunc(mtype x, mtype y)
 {
     return (x*y);
 }
+
+/** \brief Computes division function
+ *
+ * \param[in] x
+ * \param[in] y
+ * \return \f$ \frac{x}{y} \f$
+ *
+ */
 
 mtype __mat_divfunc(mtype x, mtype y)
 {
     return (x/y);
 }
 
+/** \brief Computes square function
+ *
+ * \param[in] x
+ * \return \f$ x^{2} \f$
+ *
+ */
+
 mtype __mat_sqrfunc(mtype x)
 {
     return (x*x);
 }
+
+/** \brief Computes square root function
+ *
+ * \param[in] x
+ * \return \f$ \sqrt{x} \f$
+ *
+ */
 
 mtype __mat_sqrtfunc(mtype x)
 {
     return sqrt(x);
 }
 
+/** \brief Computes Huber weight function
+ *
+ * \param[in] x
+ * \param[in] k
+ * \return \f$ \begin{cases} 1, & \text{for } |x| \le k, \\ \frac{k}{|x|}, & \text{otherwise.}\end{cases} \f$
+ *
+ */
+
 mtype __mat_huber_wt(mtype x, mtype k)
 {
     if(fabs(x)<= k) return 1.0;
     else return (mtype)(k/fabs(x));
 }
+
+/** \brief Computes bisquare weight function
+ *
+ * \param[in] x
+ * \param[in] k
+ * \return \f$ \begin{cases} \left ( 1-\left ( \frac{x}{k} \right )^{2} \right )^{2}, & \text{for } |x| \le k, \\ 0, & \text{otherwise.}\end{cases} \f$
+ *
+ */
 
 mtype __mat_bisquare_wt(mtype x, mtype k)
 {
@@ -49,6 +111,7 @@ mtype __mat_bisquare_wt(mtype x, mtype k)
     else return 0.0;
 }
 
+/** \cond HIDDEN_SYMBOLS */
 __inline mtype __huber_wt(mtype x, mtype k)
 {
     if(fabs(x)<= k) return 1.0;
@@ -66,6 +129,14 @@ __inline mtype __bisquare_wt(mtype x, mtype k)
     }
     else return 0.0;
 }
+/** \endcond */
+
+/** \brief Computes inverse hyperbolic sine function
+ *
+ * \param[in] x
+ * \return \f$ \sinh^{-1}\left(x\right) \f$
+ *
+ */
 
 mtype __mat_arcsinh(mtype x)
 {
@@ -81,12 +152,26 @@ mtype __mat_arcsinh(mtype x)
     }
 }
 
+/** \brief Computes inverse hyperbolic cosine function
+ *
+ * \param[in] x
+ * \return \f$ \cosh^{-1}\left(x\right) \f$
+ *
+ */
+
 mtype __mat_arccosh(mtype x)
 {
     return (mtype)((x <= 1.0) ? 0.0 : ((x > 1.0e10) ?
                                 0.69314718055995+log(x) :
                                 log(x+sqrt((x-1.0)*(x+1.0)))));
 }
+
+/** \brief Computes inverse hyperbolic tangent function
+ *
+ * \param[in] x
+ * \return \f$ \tanh^{-1}\left(x\right) \f$
+ *
+ */
 
 mtype __mat_arctanh(mtype x)
 {
@@ -100,6 +185,13 @@ mtype __mat_arctanh(mtype x)
     }
 }
 
+/** \brief Computes logarithm plus one function
+ *
+ * \param[in] x
+ * \return \f$ \log\left(1+x\right) \f$
+ *
+ */
+
 mtype __mat_logplusone(mtype x)
 {
     mtype y,z;
@@ -112,6 +204,14 @@ mtype __mat_logplusone(mtype x)
         return (mtype)(z*(2.0+y*(0.66666666663366+y*(0.400000001206045+y*(0.285714091590488+y*(0.22223823332791+y*(0.1811136267967+y*0.16948212488)))))));
     }
 }
+
+/** \brief Computes Huber weight function element-wise on a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] k Huber parameter
+ * \return \f$ \mathbf{B},\, b_{ij}=f_k\left(a_{ij}\right) \f$ where \f$ f_k \f$ is the Huber weight function
+ *
+ */
 
 MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 {
@@ -130,6 +230,14 @@ MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
     return(result);
 }
 
+/** \brief Computes bisquare weight function element-wise on a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] k Bisquare parameter
+ * \return \f$ \mathbf{B},\, b_{ij}=f_k\left(a_{ij}\right) \f$ where \f$ f_k \f$ is the biquare weight function
+ *
+ */
+
 MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 {
     int	i, j, m, n;
@@ -146,6 +254,15 @@ MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
         }
     return(result);
 }
+
+
+/** \brief Computes a given function element-wise on a matrix
+ *
+ * \param[in] A Input matrix
+ * \param[in] f Given function
+ * \return \f$ \mathbf{B},\, b_{ij}=f\left(a_{ij}\right) \f$
+ *
+ */
 
 MATRIX mat_gfunc(MATRIX A, mtype (*pt2func)(mtype), MATRIX result)
 {

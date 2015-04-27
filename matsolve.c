@@ -126,7 +126,7 @@ MATRIX mat_cholesky(MATRIX A, MATRIX result)
             return NULL;
         };
 
-        result[k][k] = r = (float)sqrt(r);
+        result[k][k] = r = sqrt(r);
 
         for(j=k+1; j<n; ++j)
         {

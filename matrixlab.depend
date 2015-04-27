@@ -26,7 +26,7 @@
 	<math.h>
 	"matrix.h"
 
-1401512311 
+1419672480 
 
 1333433732 /media/sda1/cwork/matrix/matrix.h
 	<stdio.h>
@@ -2140,7 +2140,7 @@
 1415896798 source:c:\cwork\matrixlab\matabs.c
 	"matrix.h"
 
-1419672480 c:\cwork\matrixlab\matrix.h
+1430158524 c:\cwork\matrixlab\matrix.h
 	<stdio.h>
 	<limits.h>
 	<float.h>
@@ -2195,7 +2195,7 @@
 1406449515 source:c:\cwork\matrixlab\matflip.c
 	"matrix.h"
 
-1416086763 source:c:\cwork\matrixlab\matfuncs.c
+1430157132 source:c:\cwork\matrixlab\matfuncs.c
 	"matrix.h"
 
 1419671869 source:c:\cwork\matrixlab\matgraph.c
@@ -2259,11 +2259,11 @@
 	"matrix.h"
 	<malloc.h>
 
-1411680560 source:c:\cwork\matrixlab\matsolve.c
+1430152809 source:c:\cwork\matrixlab\matsolve.c
 	<malloc.h>
 	"matrix.h"
 
-1411326600 source:c:\cwork\matrixlab\matsort.c
+1430157759 source:c:\cwork\matrixlab\matsort.c
 	"matrix.h"
 
 1406449515 source:c:\cwork\matrixlab\matstdrels.c
@@ -2306,4 +2306,164 @@
 	<malloc.h>
 	<string.h>
 	"leak_detector_c.h"
+
+1416078728 ctor_c.h"
+
+1415896798 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matabs.c
+	"matrix.h"
+
+1419672480 /media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matrix.h
+	<stdio.h>
+	<limits.h>
+	<float.h>
+	<time.h>
+	<math.h>
+	<omp.h>
+
+1415896798 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matadd.c
+	"matrix.h"
+
+1411655769 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matconcat.c
+	"matrix.h"
+
+1408317273 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matconv.c
+	"matrix.h"
+
+1411679748 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matcreat.c
+	<malloc.h>
+	"matrix.h"
+
+1416782368 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matdatastruct.c
+	<malloc.h>
+	"matrix.h"
+
+1408895489 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matdet.c
+	"matrix.h"
+
+1408899560 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matdiv.c
+	<stdio.h>
+	"matrix.h"
+
+1408900663 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matdump.c
+	"matrix.h"
+
+1411681372 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matdurbn.c
+	"matrix.h"
+
+1408368846 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/materr.c
+	<stdlib.h>
+	"matrix.h"
+
+1411326414 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matfft.c
+	"matrix.h"
+
+1408903767 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matfilter.c
+	"matrix.h"
+
+1409172732 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matfit.c
+	<string.h>
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matflip.c
+	"matrix.h"
+
+1416086763 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matfuncs.c
+	"matrix.h"
+
+1419671869 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matgraph.c
+	"matrix.h"
+	<malloc.h>
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matinnerprod.c
+	"matrix.h"
+
+1411326414 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matintegrate.c
+	"matrix.h"
+
+1411656306 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matinv.c
+	<malloc.h>
+	"matrix.h"
+
+1417110524 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matkdtree.c
+	<string.h>
+	<malloc.h>
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matmaxmin.c
+	"matrix.h"
+
+1419590639 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matmds.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matmean.c
+	"matrix.h"
+
+1411655644 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matmisc.c
+	<string.h>
+	<stdlib.h>
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matmul.c
+	"matrix.h"
+
+1416172527 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matpca.c
+	"matrix.h"
+
+1409004831 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matpinv.c
+	<malloc.h>
+	"matrix.h"
+
+1411071114 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matpoly.c
+	"matrix.h"
+
+1411681471 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matprec.c
+	<stdlib.h>
+	"matrix.h"
+
+1416087011 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matpursuit.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matrand.c
+	<stdlib.h>
+	"matrix.h"
+
+1419671499 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsearch.c
+	"matrix.h"
+	<malloc.h>
+
+1411680560 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsolve.c
+	<malloc.h>
+	"matrix.h"
+
+1411326600 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsort.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matstdrels.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsub.c
+	"matrix.h"
+
+1408894458 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsubx.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/matsum.c
+	"matrix.h"
+
+1409002926 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/mattext.c
+	<ctype.h>
+	<stdlib.h>
+	"matrix.h"
+
+1409001710 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/mattimers.c
+	"matrix.h"
+
+1406449515 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/mattoepz.c
+	<stdlib.h>
+	"matrix.h"
+
+1408903608 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/mattran.c
+	"matrix.h"
+
+1419590355 source:/media/mohammadul/4C3C1F773C1F5B72/cwork/matrixlab/resource.rc
 
