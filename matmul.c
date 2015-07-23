@@ -38,7 +38,7 @@ MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result)
     if(result==NULL) if((result = mat_creat(n, o, ZERO_MATRIX))==NULL)
             return mat_error(MAT_MALLOC);
 
-    if(m<128)
+    if(n<128 || n%2|| m%2 ||p%2)
     {
         return mat_mul(A, B, result);
     }
@@ -46,59 +46,46 @@ MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result)
     hn = n/2;
     ho = o/2;
 
-    A11 = mat_xcopy(A, 0, hn, 0, hm, NULL);
-    A12 = mat_xcopy(A, 0, hn, hm, m, NULL);
-    A21 = mat_xcopy(A, hn, n, 0, hm, NULL);
-    A22 = mat_xcopy(A, hn, n, hm, m, NULL);
+    A11 = mat_xcopy(A, 0, hm, 0, hn, NULL);
+    A12 = mat_xcopy(A, 0, hm, hn, n, NULL);
+    A21 = mat_xcopy(A, hm, m, 0, hn, NULL);
+    A22 = mat_xcopy(A, hm, m, hn, n, NULL);
 
     B11 = mat_xcopy(B, 0, hn, 0, ho, NULL);
-    B12 = mat_xcopy(B, 0, hn, ho, m, NULL);
+    B12 = mat_xcopy(B, 0, hn, ho, o, NULL);
     B21 = mat_xcopy(B, hn, n, 0, ho, NULL);
-    B22 = mat_xcopy(B, hn, n, ho, m, NULL);
-
- /*   C11 = mat_mul_fast(A11, B11, NULL);
-    tmp1 = mat_mul_fast(A12, B21, NULL);
-    C11 = mat_add(C11, tmp1, C11);
-    mat_free(tmp1);
-
-    C12 = mat_mul_fast(A11, B12, NULL);
-    tmp2 = mat_mul_fast(A12, B22, NULL);
-    C12 = mat_add(C12, tmp2, C12);
-    mat_free(tmp2);
-
-    C21 = mat_mul_fast(A21, B11, NULL);
-    tmp1 = mat_mul_fast(A22, B21, NULL);
-    C21 = mat_add(C21, tmp1, C21);
-    mat_free(tmp1);
-
-    C22 = mat_mul_fast(A21, B12, NULL);
-    tmp2 = mat_mul_fast(A22, B22, NULL);
-    C22 = mat_add(C22, tmp2, C22);
-    mat_free(tmp2);*/
+    B22 = mat_xcopy(B, hn, n, ho, o, NULL);
 
     tmp1 = mat_add(A11, A22, NULL);
     tmp2 = mat_add(B11, B22, NULL);
-    M1 = mat_mul(tmp1, tmp2, NULL);
+    M1 = mat_mul_fast(tmp1, tmp2, NULL);
+    mat_free(tmp1);
+    mat_free(tmp2);
 
-    tmp1 = mat_add(A21, A22, tmp1);
-    M2 = mat_mul(tmp1, B11, NULL);
+    tmp1 = mat_add(A21, A22, NULL);
+    M2 = mat_mul_fast(tmp1, B11, NULL);
+    mat_free(tmp1);
 
-    tmp1 = mat_sub(B12, B22, tmp1);
-    M3 = mat_mul(A11, tmp1, NULL);
+    tmp1 = mat_sub(B12, B22, NULL);
+    M3 = mat_mul_fast(A11, tmp1, NULL);
+    mat_free(tmp1);
 
-    tmp1 = mat_sub(B21, B11, tmp1);
-    M4 = mat_mul(A22, tmp1, NULL);
+    tmp1 = mat_sub(B21, B11, NULL);
+    M4 = mat_mul_fast(A22, tmp1, NULL);
+    mat_free(tmp1);
 
-    tmp1 = mat_add(A11, A12, tmp1);
-    M5 = mat_mul(tmp1, B22, NULL);
+    tmp1 = mat_add(A11, A12, NULL);
+    M5 = mat_mul_fast(tmp1, B22, NULL);
 
     tmp1 = mat_sub(A21, A11, tmp1);
-    tmp2 = mat_add(B11, B12, tmp2);
-    M6 = mat_mul(tmp1, tmp2, NULL);
+    tmp2 = mat_add(B11, B12, NULL);
+    M6 = mat_mul_fast(tmp1, tmp2, NULL);
+    mat_free(tmp1);
+    mat_free(tmp2);
 
-    tmp1 = mat_sub(A12, A22, tmp1);
-    tmp2 = mat_add(B21, B22, tmp2);
-    M7 = mat_mul(tmp1, tmp2, NULL);
+    tmp1 = mat_sub(A12, A22, NULL);
+    tmp2 = mat_add(B21, B22, NULL);
+    M7 = mat_mul_fast(tmp1, tmp2, NULL);
 
     mat_free(tmp1);
     mat_free(tmp2);
@@ -112,8 +99,8 @@ MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result)
     C21 = mat_add(M2, M4, NULL);
 
     C22 = mat_sub(M1, M2, NULL);
-    C22 = mat_add(C11, M3, C22);
-    C22 = mat_add(C11, M6, C22);
+    C22 = mat_add(C22, M3, C22);
+    C22 = mat_add(C22, M6, C22);
 
     result = mat_xjoin(C11, C12, C21, C22, result);
 
