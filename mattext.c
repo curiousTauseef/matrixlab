@@ -12,7 +12,8 @@
 
 int mat_isnumeric(MAT_FILEPOINTER fp)
 {
-    char ch, flag = 0;
+    char flag = 0;
+    int ch;
     while((ch = getc(fp))!=EOF)
     {
         if(ch!=' ')
@@ -72,9 +73,8 @@ int mat_isnumeric(MAT_FILEPOINTER fp)
 
 int mat_go_next_word(MAT_FILEPOINTER fp)
 {
-    int flag = 0;
-    char ch = 0;
-    while((flag<2)&&((ch = (char)getc(fp))!=EOF))
+    int flag = 0, ch;
+    while((flag<2)&&((ch = getc(fp))!=EOF))
     {
         if((ch=='\v')||(ch=='\n')||(ch=='\t')||isspace(ch)||(ch==',')||(ch=='!')||(ch=='(')||(ch==')')||(ch=='{')||(ch=='}')||(ch=='[')||(ch==']'))
         {
@@ -100,10 +100,9 @@ int mat_go_next_word(MAT_FILEPOINTER fp)
 
 int mat_count_words_in_line(MAT_FILEPOINTER fp, int *count)
 {
-    int flag = -1;
-    char ch = 0;
+    int flag = -1, ch;
     *count = 0;
-    while((flag<3) && ((ch = (char)getc(fp))!=EOF))
+    while((flag<3) && ((ch = getc(fp))!=EOF))
     {
         if((ch=='\v')||(ch=='\n'))
         {
@@ -210,9 +209,8 @@ MATRIX mat_dlmread(const char *fname)
 
 int mat_read_word(MAT_FILEPOINTER fp, char *c_word)
 {
-    int flag = 0, t = 0;
-    char ch = 0;
-    while((flag<3)&&((ch = (char)getc(fp))!=EOF))/*no need for state 3 to be corrected*/
+    int flag = 0, t = 0, ch;
+    while((flag<3)&&((ch = getc(fp))!=EOF))/*no need for state 3 to be corrected*/
     {
         if((ch=='\v')||(ch=='\n')||(ch=='\t')||isspace(ch)||(ch==',')||(ch=='!')||(ch=='(')||(ch==')')||(ch=='{')||(ch=='}')||(ch=='[')||(ch==']'))
         {
