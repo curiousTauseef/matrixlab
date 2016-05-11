@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 
 /** \brief Generates error message for general errors and exits

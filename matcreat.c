@@ -1,6 +1,5 @@
-#include <malloc.h>
 #include "matrix.h"
-
+#include <stdlib.h>
 
 
 /** \cond HIDDEN_SYMBOLS */

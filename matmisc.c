@@ -1,6 +1,6 @@
+#include "matrix.h"
 #include <string.h>
 #include <stdlib.h>
-#include "matrix.h"
 
 
 /** \brief Checks if scalar is NaN

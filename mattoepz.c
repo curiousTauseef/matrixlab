@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 
 MATRIX mat_symtoeplz(MATRIX R, MATRIX result)

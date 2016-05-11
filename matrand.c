@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 
 unsigned int MAT_SEED = 0;

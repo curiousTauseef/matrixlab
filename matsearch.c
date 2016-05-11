@@ -1,5 +1,5 @@
 #include "matrix.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 
 INT_VECTOR int_vec_find(INT_VECTOR a, int rel_type, int n)

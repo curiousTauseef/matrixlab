@@ -1,6 +1,6 @@
+#include "matrix.h"
 #include <ctype.h>
 #include <stdlib.h>
-#include "matrix.h"
 
 
 /** \brief Checks if current word in an opened file is numeric or not

@@ -1,178 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="matprec.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="matcreat.c" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8527" topLine="175" />
+			<Cursor1 position="2892" topLine="143" />
+		</Cursor>
+	</File>
+	<File name="matrix.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8232" topLine="812" />
+		</Cursor>
+	</File>
+	<File name="matdatastruct.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6784" topLine="377" />
+		</Cursor>
+	</File>
+	<File name="mattext.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="281" topLine="5" />
 		</Cursor>
 		<Folding>
-			<Collapse line="211" />
+			<Collapse line="21" />
+			<Collapse line="33" />
+			<Collapse line="49" />
 		</Folding>
 	</File>
-	<File name="matsubx.c" open="0" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="matsearch.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="323" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="matpoly.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6038" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matsum.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="310" topLine="13" />
-		</Cursor>
-	</File>
-	<File name="matpinv.c" open="0" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="672" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="mattext.c" open="0" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5782" topLine="172" />
-		</Cursor>
-		<Folding>
-			<Collapse line="16" />
-			<Collapse line="20" />
-			<Collapse line="32" />
-			<Collapse line="48" />
-		</Folding>
-	</File>
-	<File name="matpca.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="mattimers.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="459" topLine="13" />
-		</Cursor>
-	</File>
-	<File name="matmul.c" open="0" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="287" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="mattoepz.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matmisc.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="499" topLine="428" />
-		</Cursor>
-	</File>
-	<File name="mattran.c" open="0" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="119" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matmean.c" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="resource.rc" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="286" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="matmds.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="369" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matmaxmin.c" open="0" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matkdtree.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="601" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="matinv.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1974" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matintegrate.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3956" topLine="96" />
-		</Cursor>
-	</File>
-	<File name="matinnerprod.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matgraph.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4497" topLine="131" />
-		</Cursor>
-	</File>
-	<File name="matfuncs.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1461" topLine="250" />
-		</Cursor>
-	</File>
-	<File name="matflip.c" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matfit.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="235" topLine="110" />
-		</Cursor>
-	</File>
-	<File name="matadd.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="166" topLine="66" />
-		</Cursor>
-	</File>
-	<File name="matfilter.c" open="0" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="477" topLine="27" />
-		</Cursor>
-	</File>
-	<File name="matfft.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2520" topLine="33" />
-		</Cursor>
-	</File>
-	<File name="materr.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="914" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="matdurbn.c" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3741" topLine="118" />
-		</Cursor>
-	</File>
-	<File name="matdump.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="829" topLine="39" />
-		</Cursor>
-	</File>
-	<File name="matpursuit.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="155" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matdiv.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2263" topLine="58" />
-		</Cursor>
-	</File>
-	<File name="matrand.c" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="5712" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="matdet.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -180,24 +37,9 @@
 			<Cursor1 position="853" topLine="39" />
 		</Cursor>
 	</File>
-	<File name="matrix.h" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="mattimers.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8232" topLine="272" />
-		</Cursor>
-	</File>
-	<File name="matdatastruct.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1193" topLine="307" />
-		</Cursor>
-	</File>
-	<File name="matsearch.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5712" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matcreat.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="145" topLine="310" />
+			<Cursor1 position="459" topLine="6" />
 		</Cursor>
 	</File>
 	<File name="matsolve.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -209,12 +51,17 @@
 			<Collapse line="52" />
 		</Folding>
 	</File>
-	<File name="matconv.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="matdiv.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1337" topLine="83" />
+			<Cursor1 position="2263" topLine="58" />
 		</Cursor>
 	</File>
-	<File name="matsort.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="mattoepz.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matsort.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1970" topLine="17" />
 		</Cursor>
@@ -222,9 +69,14 @@
 			<Collapse line="18" />
 		</Folding>
 	</File>
-	<File name="matconcat.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="matdump.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1712" topLine="0" />
+			<Cursor1 position="829" topLine="39" />
+		</Cursor>
+	</File>
+	<File name="mattran.c" open="0" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="119" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="matstdrels.c" open="0" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -232,9 +84,14 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="matabs.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="matdurbn.c" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="69" topLine="0" />
+			<Cursor1 position="3741" topLine="118" />
+		</Cursor>
+	</File>
+	<File name="resource.rc" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="12" />
 		</Cursor>
 	</File>
 	<File name="matsub.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -242,4 +99,148 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="materr.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="914" topLine="17" />
+		</Cursor>
+	</File>
+	<File name="matsubx.c" open="0" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="323" topLine="2" />
+		</Cursor>
+	</File>
+	<File name="matfft.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2520" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="matsum.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="310" topLine="11" />
+		</Cursor>
+	</File>
+	<File name="matfilter.c" open="0" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="477" topLine="27" />
+		</Cursor>
+	</File>
+	<File name="matfit.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="235" topLine="110" />
+		</Cursor>
+	</File>
+	<File name="matflip.c" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matfuncs.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1461" topLine="250" />
+		</Cursor>
+	</File>
+	<File name="matgraph.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4497" topLine="131" />
+		</Cursor>
+	</File>
+	<File name="matinnerprod.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matintegrate.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3956" topLine="96" />
+		</Cursor>
+	</File>
+	<File name="matinv.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="198" topLine="51" />
+		</Cursor>
+	</File>
+	<File name="matkdtree.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="601" topLine="9" />
+		</Cursor>
+	</File>
+	<File name="matmaxmin.c" open="0" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matmds.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="369" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matmean.c" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="matmisc.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="499" topLine="428" />
+		</Cursor>
+	</File>
+	<File name="matmul.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="60" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matpca.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matpinv.c" open="0" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="672" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matabs.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="69" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matpoly.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6038" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matadd.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2054" topLine="58" />
+		</Cursor>
+	</File>
+	<File name="matprec.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8527" topLine="175" />
+		</Cursor>
+		<Folding>
+			<Collapse line="211" />
+		</Folding>
+	</File>
+	<File name="matconcat.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1712" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matpursuit.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="155" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matconv.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1337" topLine="83" />
+		</Cursor>
+	</File>
+	<File name="matrand.c" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="449" topLine="72" />
+		</Cursor>
+	</File>
+	<EditorTabsLayout layout="071db550566c665c000050a000000003=0;matrixlab:matmul.c,1;matrixlab:resource.rc,2;matrixlab:mattext.c,*3;matrixlab:matcreat.c@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=528;besth=193;minw=528;minh=193;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=071db550566c665c000050a000000003;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
 </CodeBlocks_layout_file>

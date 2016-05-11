@@ -1,5 +1,5 @@
 #include "matrix.h"
-#include <malloc.h>
+#include <stdlib.h>
 #define maxV 20
 #define unseen 0
 

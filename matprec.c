@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 
 MAT_BAYES_MODEL mat_bayes_classifier_train(MATRIX data, INT_VECTOR labels)

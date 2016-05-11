@@ -1,5 +1,5 @@
-#include <malloc.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 
 /** \brief Computes the inverse of a matrix

@@ -35,12 +35,11 @@ extern "C"
 #endif
 
 #if mtype_n == 0
-#define MTYPE FLOAT /**< \def MTYPE is FLOAT. */
 #define mtype float /**< \def mtype is float. */
 #else
-#define MTYPE DOUBLE /**< \def MTYPE is DOUBLE. */
 #define mtype double /**< \def mtype is double. */
 #endif
+#define MTYPE mtype* /**< \def MTYPE is mtype pointer. */
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
@@ -568,6 +567,7 @@ void mat_backsubs1(MATRIX A, MATRIX B, MATRIX C, MATRIX P, int xcol);
 MATRIX mat_lsolve(MATRIX A, MATRIX b, MATRIX result);
 MATRIX mat_cholesky(MATRIX A, MATRIX result);
 MATRIX mat_conjgrad(MATRIX A, MATRIX b, MATRIX x0, mtype tol, int miters, MATRIX result);
+MATSTACK mat_svd(MATRIX a, int niters, MATSTACK result);
 
 MATRIX mat_submat(MATRIX A, int i, int j, MATRIX result);
 mtype mat_cofact(MATRIX A, int i, int j);

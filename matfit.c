@@ -1,5 +1,5 @@
-#include <string.h>
 #include "matrix.h"
+#include <string.h>
 #define MAX_ITERS_RB 20
 
 

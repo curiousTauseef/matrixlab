@@ -1,16 +1,23 @@
-#include <malloc.h>
 #include "matrix.h"
+#include <stdlib.h>
 
+/** \brief Computes LU decomposition of a matrix
+ *
+ * \param[in] A Input matrix overwritten by matrices L and U
+ * \param[in] P Matrix to store  permutation matrix P
+ * \return p Status
+ *
+ */
 
 int mat_lu(MATRIX A, MATRIX P)
 {
     int i, j, k, n;
     int maxi;
     mtype c, c1, tmp;
-    int p;
+    int p = 0;
 
     n = MatCol(A);
-    for(p=0,i=0; i<n; ++i)
+    for(i=0; i<n; ++i)
     {
         P[i][0] = (mtype)i;
     }
@@ -73,6 +80,15 @@ void mat_backsubs1(MATRIX A, MATRIX B, MATRIX X, MATRIX P, int xcol)
         X[k][xcol] = (B[(int)P[k][0]][0]-sum)/A[(int)P[k][0]][k];
     }
 }
+
+/** \brief Solves linear equations \f$ \mathbf{A}\mathbf{x} = \mathbf{b} \f$
+ *
+ * \param[in] A Input matrix \f$ \mathbf{A} \f$
+ * \param[in] b Input matrix \f$ \mathbf{b} \f$
+ * \param[in] result Matrix to store the result
+ * \return Output matrix\f$ \mathbf{x} \f$
+ *
+ */
 
 MATRIX mat_lsolve(MATRIX A, MATRIX b, MATRIX result)
 {

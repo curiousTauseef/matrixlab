@@ -1,5 +1,5 @@
-#include <malloc.h>
 #include "matrix.h"
+#include <stdlib.h>
 
 MAT_TREE mat_bs_make_null(void)
 {
