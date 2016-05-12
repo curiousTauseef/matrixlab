@@ -48,10 +48,10 @@ MATSTACK mat_svd(MATRIX a, int niters, MATSTACK result)
             if(scale>0.0)
             {
                 for(j=i; j<m; ++j)
-				{
-					ac[j][i] /= scale;
-					s += ac[j][i]*ac[j][i];
-				}
+                {
+                    ac[j][i] /= scale;
+                    s += ac[j][i]*ac[j][i];
+                }
                 f = ac[i][i];
                 p = sqrt(s);
                 if(f>=0.0) p = -p;
