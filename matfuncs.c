@@ -112,13 +112,13 @@ mtype __mat_bisquare_wt(mtype x, mtype k)
 }
 
 /** \cond HIDDEN_SYMBOLS */
-__inline mtype __huber_wt(mtype x, mtype k)
+static __inline mtype __huber_wt(mtype x, mtype k)
 {
     if(fabs(x)<= k) return 1.0;
     else return (mtype)(k/fabs(x));
 }
 
-__inline mtype __bisquare_wt(mtype x, mtype k)
+static __inline mtype __bisquare_wt(mtype x, mtype k)
 {
     mtype a;
     if(fabs(x)<= k)

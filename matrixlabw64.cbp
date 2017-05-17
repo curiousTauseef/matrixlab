@@ -39,15 +39,14 @@
 				<Option type="2" />
 				<Option compiler="gnu_gcc_compiler_w64" />
 				<Option createDefFile="1" />
-				<Option projectCompilerOptionsRelation="-1" />
-				<Option projectLinkerOptionsRelation="-1" />
 				<Option projectIncludeDirsRelation="-1" />
 				<Option projectLibDirsRelation="-1" />
 				<Compiler>
-					<Add option="-fwhole-program" />
+					<Add option="-march=core2" />
+					<Add option="-fopenmp" />
 				</Compiler>
 				<Linker>
-					<Add option="-fwhole-program" />
+					<Add option="-fopenmp" />
 				</Linker>
 				<MakeCommands>
 					<Build command="" />

@@ -4,7 +4,7 @@
 
 /** \cond HIDDEN_SYMBOLS */
 
-__inline mtype __kd_dist(MAT_KDNODE a, MAT_KDNODE b, int dim)
+static __inline mtype __kd_dist(MAT_KDNODE a, MAT_KDNODE b, int dim)
 {
     mtype t, d = 0.0;
     while(--dim>=0)
@@ -15,7 +15,7 @@ __inline mtype __kd_dist(MAT_KDNODE a, MAT_KDNODE b, int dim)
     return d;
 }
 
-__inline void __kd_swap(MAT_KDNODE x, MAT_KDNODE y)
+static __inline void __kd_swap(MAT_KDNODE x, MAT_KDNODE y)
 {
     mtype tmp[MAT_KDTREE_MAX_DIMS];
     int idx;
