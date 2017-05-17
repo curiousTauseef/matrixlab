@@ -1,4 +1,4 @@
-![alt tag](https://raw.githubusercontent.com/mohammadul/matrixlab/master/matrixlab.ico) Matrixlab  
+![alt tag](https://raw.githubusercontent.com/mohammadul/matrixlab/master/matrixlab.ico) Matrixlab [![Build Status](https://travis-ci.org/mohammadul/matrixlab.svg?branch=master)](https://travis-ci.org/mohammadul/matrixlab) 
 =======
 
 **A C Matrix Library**  
