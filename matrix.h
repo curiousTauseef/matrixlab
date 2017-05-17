@@ -327,7 +327,7 @@ typedef struct mat_kdtree
 typedef mat_kdtree* MAT_KDTREE;
 
 
-#if defined(__STDC_VERSION__) && __STDC_VERSION__>201112L
+#if defined(__STDC_VERSION__) && __STDC_VERSION__>=201112L
 extern _Thread_local clock_t MAT_CLOCK_TIME;
 #elif defined(__GNUC__) || defined (__clang__)
 extern __thread clock_t MAT_CLOCK_TIME;

@@ -2,7 +2,7 @@
 1494995222 source:d:\cwork.pcdn\matrixlab\matabs.c
 	"matrix.h"
 
-1494994339 d:\cwork.pcdn\matrixlab\matrix.h
+1494999420 d:\cwork.pcdn\matrixlab\matrix.h
 	<stdio.h>
 	<limits.h>
 	<float.h>
@@ -45,7 +45,7 @@
 1494992431 source:d:\cwork.pcdn\matrixlab\matfilter.c
 	"matrix.h"
 
-1494992885 source:d:\cwork.pcdn\matrixlab\matfit.c
+1494996636 source:d:\cwork.pcdn\matrixlab\matfit.c
 	"matrix.h"
 	<string.h>
 
@@ -80,7 +80,7 @@
 1419590639 source:d:\cwork.pcdn\matrixlab\matmds.c
 	"matrix.h"
 
-1494995632 source:d:\cwork.pcdn\matrixlab\matmean.c
+1494996607 source:d:\cwork.pcdn\matrixlab\matmean.c
 	"matrix.h"
 
 1462858154 source:d:\cwork.pcdn\matrixlab\matmisc.c
@@ -143,7 +143,7 @@
 	<ctype.h>
 	<stdlib.h>
 
-1494994439 source:d:\cwork.pcdn\matrixlab\mattimers.c
+1494999384 source:d:\cwork.pcdn\matrixlab\mattimers.c
 	"matrix.h"
 
 1494992431 source:d:\cwork.pcdn\matrixlab\mattoepz.c

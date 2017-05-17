@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-#if defined(__STDC_VERSION__) && __STDC_VERSION__>201112L
+#if defined(__STDC_VERSION__) && __STDC_VERSION__>=201112L
 _Thread_local clock_t MAT_CLOCK_TIME;
 #elif defined(__GNUC__) || defined (__clang__)
 __thread clock_t MAT_CLOCK_TIME;
