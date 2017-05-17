@@ -9,7 +9,6 @@ CC = gcc
 CXX = g++
 AR = ar
 LD = g++
-WINDRES = windres
 
 INC = 
 CFLAGS = -Wmain -pedantic -Wextra -Wall
@@ -124,9 +123,6 @@ $(OBJDIR_DEBUG)/mattoepz.o: mattoepz.c
 
 $(OBJDIR_DEBUG)/mattran.o: mattran.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattran.c -o $(OBJDIR_DEBUG)/mattran.o
-
-$(OBJDIR_DEBUG)/resource.o: resource.rc
-	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_DEBUG)/resource.o -O coff $(INC_DEBUG)
 
 $(OBJDIR_DEBUG)/matabs.o: matabs.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matabs.c -o $(OBJDIR_DEBUG)/matabs.o
@@ -278,9 +274,6 @@ $(OBJDIR_RELEASE)/mattoepz.o: mattoepz.c
 
 $(OBJDIR_RELEASE)/mattran.o: mattran.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattran.c -o $(OBJDIR_RELEASE)/mattran.o
-
-$(OBJDIR_RELEASE)/resource.o: resource.rc
-	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_RELEASE)/resource.o -O coff $(INC_RELEASE)
 
 $(OBJDIR_RELEASE)/matabs.o: matabs.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matabs.c -o $(OBJDIR_RELEASE)/matabs.o
