@@ -3,18 +3,18 @@
 #------------------------------------------------------------------------------#
 
 
-WORKDIR = %cd%
+WORKDIR = `pwd`
 
-CC = gcc.exe
-CXX = g++.exe
-AR = ar.exe
-LD = g++.exe
-WINDRES = windres.exe
+CC = gcc
+CXX = g++
+AR = ar
+LD = g++
+WINDRES = windres
 
 INC = 
 CFLAGS = -Wmain -pedantic -Wextra -Wall
 RESINC = 
-LIBDIR = lib
+LIBDIR = 
 LIB = 
 LDFLAGS = 
 
@@ -22,35 +22,35 @@ INC_DEBUG = $(INC)
 CFLAGS_DEBUG = $(CFLAGS) -Wmain -pedantic -Wall -g -fopenmp
 RESINC_DEBUG = $(RESINC)
 RCFLAGS_DEBUG = $(RCFLAGS)
-LIBDIR_DEBUG = $(LIBDIR)\\Debug
+LIBDIR_DEBUG = $(LIBDIR)
 LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG = $(LDFLAGS) -fopenmp
-OBJDIR_DEBUG = obj\\Debug
+OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
-OUT_DEBUG = $(LIBDIR_DEBUG)\\libmatrixlab.a
+OUT_DEBUG = lib/Debug/libmatrixlab.a
 
 INC_RELEASE = $(INC)
-CFLAGS_RELEASE = $(CFLAGS) -O2 -Wredundant-decls -Wmissing-include-dirs -Wmain -pedantic -Wextra -Wall -ansi -fopenmp
+CFLAGS_RELEASE = $(CFLAGS) -march=core2 -O2 -Wredundant-decls -Wmissing-include-dirs -Wmain -pedantic -Wextra -Wall -ansi -fopenmp
 RESINC_RELEASE = $(RESINC)
 RCFLAGS_RELEASE = $(RCFLAGS)
-LIBDIR_RELEASE = $(LIBDIR)\\Release
+LIBDIR_RELEASE = $(LIBDIR)
 LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE = $(LDFLAGS) -s -fopenmp
-OBJDIR_RELEASE = obj\\Release
+OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = $(LIBDIR_RELEASE)\\libmatrixlab.a
+OUT_RELEASE = lib/Release/libmatrixlab.a
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)\\matmean.o $(OBJDIR_DEBUG)\\matmisc.o $(OBJDIR_DEBUG)\\matmul.o $(OBJDIR_DEBUG)\\matpca.o $(OBJDIR_DEBUG)\\matpinv.o $(OBJDIR_DEBUG)\\matpoly.o $(OBJDIR_DEBUG)\\matprec.o $(OBJDIR_DEBUG)\\matpursuit.o $(OBJDIR_DEBUG)\\matrand.o $(OBJDIR_DEBUG)\\matsearch.o $(OBJDIR_DEBUG)\\matsolve.o $(OBJDIR_DEBUG)\\matsort.o $(OBJDIR_DEBUG)\\matstdrels.o $(OBJDIR_DEBUG)\\matsub.o $(OBJDIR_DEBUG)\\matsubx.o $(OBJDIR_DEBUG)\\matsum.o  $(OBJDIR_DEBUG)\\mattext.o $(OBJDIR_DEBUG)\\mattimers.o $(OBJDIR_DEBUG)\\mattoepz.o $(OBJDIR_DEBUG)\\mattran.o $(OBJDIR_DEBUG)\\matabs.o $(OBJDIR_DEBUG)\\matadd.o $(OBJDIR_DEBUG)\\matconcat.o $(OBJDIR_DEBUG)\\matconv.o $(OBJDIR_DEBUG)\\matcreat.o $(OBJDIR_DEBUG)\\matdatastruct.o $(OBJDIR_DEBUG)\\matdet.o $(OBJDIR_DEBUG)\\matdiv.o $(OBJDIR_DEBUG)\\matdump.o $(OBJDIR_DEBUG)\\matdurbn.o $(OBJDIR_DEBUG)\\materr.o $(OBJDIR_DEBUG)\\matfft.o $(OBJDIR_DEBUG)\\matfilter.o $(OBJDIR_DEBUG)\\matfit.o $(OBJDIR_DEBUG)\\matflip.o $(OBJDIR_DEBUG)\\matfuncs.o $(OBJDIR_DEBUG)\\matgraph.o $(OBJDIR_DEBUG)\\matinnerprod.o $(OBJDIR_DEBUG)\\matintegrate.o $(OBJDIR_DEBUG)\\matinv.o $(OBJDIR_DEBUG)\\matkdtree.o $(OBJDIR_DEBUG)\\matmaxmin.o $(OBJDIR_DEBUG)\\matmds.o $(OBJDIR_DEBUG)\\matsvd.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/matmean.o $(OBJDIR_DEBUG)/matmisc.o $(OBJDIR_DEBUG)/matmul.o $(OBJDIR_DEBUG)/matpca.o $(OBJDIR_DEBUG)/matpinv.o $(OBJDIR_DEBUG)/matpoly.o $(OBJDIR_DEBUG)/matprec.o $(OBJDIR_DEBUG)/matpursuit.o $(OBJDIR_DEBUG)/matrand.o $(OBJDIR_DEBUG)/matrix.o $(OBJDIR_DEBUG)/matsearch.o $(OBJDIR_DEBUG)/matsolve.o $(OBJDIR_DEBUG)/matsort.o $(OBJDIR_DEBUG)/matstdrels.o $(OBJDIR_DEBUG)/matsub.o $(OBJDIR_DEBUG)/matsubx.o $(OBJDIR_DEBUG)/matsum.o $(OBJDIR_DEBUG)/matsvd.o $(OBJDIR_DEBUG)/mattext.o $(OBJDIR_DEBUG)/mattimers.o $(OBJDIR_DEBUG)/mattoepz.o $(OBJDIR_DEBUG)/mattran.o $(OBJDIR_DEBUG)/resource.o $(OBJDIR_DEBUG)/matabs.o $(OBJDIR_DEBUG)/matadd.o $(OBJDIR_DEBUG)/matconcat.o $(OBJDIR_DEBUG)/matconv.o $(OBJDIR_DEBUG)/matcreat.o $(OBJDIR_DEBUG)/matdatastruct.o $(OBJDIR_DEBUG)/matdet.o $(OBJDIR_DEBUG)/matdiv.o $(OBJDIR_DEBUG)/matdump.o $(OBJDIR_DEBUG)/matdurbn.o $(OBJDIR_DEBUG)/materr.o $(OBJDIR_DEBUG)/matfft.o $(OBJDIR_DEBUG)/matfilter.o $(OBJDIR_DEBUG)/matfit.o $(OBJDIR_DEBUG)/matflip.o $(OBJDIR_DEBUG)/matfuncs.o $(OBJDIR_DEBUG)/matgraph.o $(OBJDIR_DEBUG)/matinnerprod.o $(OBJDIR_DEBUG)/matintegrate.o $(OBJDIR_DEBUG)/matinv.o $(OBJDIR_DEBUG)/matkdtree.o $(OBJDIR_DEBUG)/matmaxmin.o $(OBJDIR_DEBUG)/matmds.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)\\matmean.o $(OBJDIR_RELEASE)\\matmisc.o $(OBJDIR_RELEASE)\\matmul.o $(OBJDIR_RELEASE)\\matpca.o $(OBJDIR_RELEASE)\\matpinv.o $(OBJDIR_RELEASE)\\matpoly.o $(OBJDIR_RELEASE)\\matprec.o $(OBJDIR_RELEASE)\\matpursuit.o $(OBJDIR_RELEASE)\\matrand.o $(OBJDIR_RELEASE)\\matsearch.o $(OBJDIR_RELEASE)\\matsolve.o $(OBJDIR_RELEASE)\\matsort.o $(OBJDIR_RELEASE)\\matstdrels.o $(OBJDIR_RELEASE)\\matsub.o $(OBJDIR_RELEASE)\\matsubx.o $(OBJDIR_RELEASE)\\matsum.o $(OBJDIR_RELEASE)\\mattext.o $(OBJDIR_RELEASE)\\mattimers.o $(OBJDIR_RELEASE)\\mattoepz.o $(OBJDIR_RELEASE)\\mattran.o $(OBJDIR_RELEASE)\\matabs.o $(OBJDIR_RELEASE)\\matadd.o $(OBJDIR_RELEASE)\\matconcat.o $(OBJDIR_RELEASE)\\matconv.o $(OBJDIR_RELEASE)\\matcreat.o $(OBJDIR_RELEASE)\\matdatastruct.o $(OBJDIR_RELEASE)\\matdet.o $(OBJDIR_RELEASE)\\matdiv.o $(OBJDIR_RELEASE)\\matdump.o $(OBJDIR_RELEASE)\\matdurbn.o $(OBJDIR_RELEASE)\\materr.o $(OBJDIR_RELEASE)\\matfft.o $(OBJDIR_RELEASE)\\matfilter.o $(OBJDIR_RELEASE)\\matfit.o $(OBJDIR_RELEASE)\\matflip.o $(OBJDIR_RELEASE)\\matfuncs.o $(OBJDIR_RELEASE)\\matgraph.o $(OBJDIR_RELEASE)\\matinnerprod.o $(OBJDIR_RELEASE)\\matintegrate.o $(OBJDIR_RELEASE)\\matinv.o $(OBJDIR_RELEASE)\\matkdtree.o $(OBJDIR_RELEASE)\\matmaxmin.o $(OBJDIR_RELEASE)\\matmds.o $(OBJDIR_RELEASE)\\matsvd.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/matmean.o $(OBJDIR_RELEASE)/matmisc.o $(OBJDIR_RELEASE)/matmul.o $(OBJDIR_RELEASE)/matpca.o $(OBJDIR_RELEASE)/matpinv.o $(OBJDIR_RELEASE)/matpoly.o $(OBJDIR_RELEASE)/matprec.o $(OBJDIR_RELEASE)/matpursuit.o $(OBJDIR_RELEASE)/matrand.o $(OBJDIR_RELEASE)/matrix.o $(OBJDIR_RELEASE)/matsearch.o $(OBJDIR_RELEASE)/matsolve.o $(OBJDIR_RELEASE)/matsort.o $(OBJDIR_RELEASE)/matstdrels.o $(OBJDIR_RELEASE)/matsub.o $(OBJDIR_RELEASE)/matsubx.o $(OBJDIR_RELEASE)/matsum.o $(OBJDIR_RELEASE)/matsvd.o $(OBJDIR_RELEASE)/mattext.o $(OBJDIR_RELEASE)/mattimers.o $(OBJDIR_RELEASE)/mattoepz.o $(OBJDIR_RELEASE)/mattran.o $(OBJDIR_RELEASE)/resource.o $(OBJDIR_RELEASE)/matabs.o $(OBJDIR_RELEASE)/matadd.o $(OBJDIR_RELEASE)/matconcat.o $(OBJDIR_RELEASE)/matconv.o $(OBJDIR_RELEASE)/matcreat.o $(OBJDIR_RELEASE)/matdatastruct.o $(OBJDIR_RELEASE)/matdet.o $(OBJDIR_RELEASE)/matdiv.o $(OBJDIR_RELEASE)/matdump.o $(OBJDIR_RELEASE)/matdurbn.o $(OBJDIR_RELEASE)/materr.o $(OBJDIR_RELEASE)/matfft.o $(OBJDIR_RELEASE)/matfilter.o $(OBJDIR_RELEASE)/matfit.o $(OBJDIR_RELEASE)/matflip.o $(OBJDIR_RELEASE)/matfuncs.o $(OBJDIR_RELEASE)/matgraph.o $(OBJDIR_RELEASE)/matinnerprod.o $(OBJDIR_RELEASE)/matintegrate.o $(OBJDIR_RELEASE)/matinv.o $(OBJDIR_RELEASE)/matkdtree.o $(OBJDIR_RELEASE)/matmaxmin.o $(OBJDIR_RELEASE)/matmds.o
 
 all: debug release
 
 clean: clean_debug clean_release
 
 before_debug: 
-	cmd /c if not exist $(OBJDIR_DEBUG) md $(OBJDIR_DEBUG)
-	cmd /c if not exist $(LIBDIR_DEBUG) md $(LIBDIR_DEBUG)
+	test -d lib/Debug || mkdir -p lib/Debug
+	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
 
 after_debug: 
 
@@ -59,147 +59,152 @@ debug: before_debug out_debug after_debug
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(AR) rcs $(OUT_DEBUG) $(OBJ_DEBUG)
 
-$(OBJDIR_DEBUG)\\matmean.o: matmean.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmean.c -o $(OBJDIR_DEBUG)\\matmean.o
+$(OBJDIR_DEBUG)/matmean.o: matmean.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmean.c -o $(OBJDIR_DEBUG)/matmean.o
 
-$(OBJDIR_DEBUG)\\matmisc.o: matmisc.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmisc.c -o $(OBJDIR_DEBUG)\\matmisc.o
+$(OBJDIR_DEBUG)/matmisc.o: matmisc.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmisc.c -o $(OBJDIR_DEBUG)/matmisc.o
 
-$(OBJDIR_DEBUG)\\matmul.o: matmul.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmul.c -o $(OBJDIR_DEBUG)\\matmul.o
+$(OBJDIR_DEBUG)/matmul.o: matmul.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmul.c -o $(OBJDIR_DEBUG)/matmul.o
 
-$(OBJDIR_DEBUG)\\matpca.o: matpca.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpca.c -o $(OBJDIR_DEBUG)\\matpca.o
+$(OBJDIR_DEBUG)/matpca.o: matpca.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpca.c -o $(OBJDIR_DEBUG)/matpca.o
 
-$(OBJDIR_DEBUG)\\matpinv.o: matpinv.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpinv.c -o $(OBJDIR_DEBUG)\\matpinv.o
+$(OBJDIR_DEBUG)/matpinv.o: matpinv.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpinv.c -o $(OBJDIR_DEBUG)/matpinv.o
 
-$(OBJDIR_DEBUG)\\matpoly.o: matpoly.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpoly.c -o $(OBJDIR_DEBUG)\\matpoly.o
+$(OBJDIR_DEBUG)/matpoly.o: matpoly.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpoly.c -o $(OBJDIR_DEBUG)/matpoly.o
 
-$(OBJDIR_DEBUG)\\matprec.o: matprec.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matprec.c -o $(OBJDIR_DEBUG)\\matprec.o
+$(OBJDIR_DEBUG)/matprec.o: matprec.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matprec.c -o $(OBJDIR_DEBUG)/matprec.o
 
-$(OBJDIR_DEBUG)\\matpursuit.o: matpursuit.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpursuit.c -o $(OBJDIR_DEBUG)\\matpursuit.o
+$(OBJDIR_DEBUG)/matpursuit.o: matpursuit.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matpursuit.c -o $(OBJDIR_DEBUG)/matpursuit.o
 
-$(OBJDIR_DEBUG)\\matrand.o: matrand.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matrand.c -o $(OBJDIR_DEBUG)\\matrand.o
+$(OBJDIR_DEBUG)/matrand.o: matrand.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matrand.c -o $(OBJDIR_DEBUG)/matrand.o
 
-$(OBJDIR_DEBUG)\\matsearch.o: matsearch.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsearch.c -o $(OBJDIR_DEBUG)\\matsearch.o
-
-$(OBJDIR_DEBUG)\\matsolve.o: matsolve.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsolve.c -o $(OBJDIR_DEBUG)\\matsolve.o
-
-$(OBJDIR_DEBUG)\\matsort.o: matsort.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsort.c -o $(OBJDIR_DEBUG)\\matsort.o
-
-$(OBJDIR_DEBUG)\\matstdrels.o: matstdrels.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matstdrels.c -o $(OBJDIR_DEBUG)\\matstdrels.o
-
-$(OBJDIR_DEBUG)\\matsub.o: matsub.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsub.c -o $(OBJDIR_DEBUG)\\matsub.o
-
-$(OBJDIR_DEBUG)\\matsubx.o: matsubx.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsubx.c -o $(OBJDIR_DEBUG)\\matsubx.o
-
-$(OBJDIR_DEBUG)\\matsum.o: matsum.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsum.c -o $(OBJDIR_DEBUG)\\matsum.o
-
-$(OBJDIR_DEBUG)\\mattext.o: mattext.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattext.c -o $(OBJDIR_DEBUG)\\mattext.o
-
-$(OBJDIR_DEBUG)\\mattimers.o: mattimers.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattimers.c -o $(OBJDIR_DEBUG)\\mattimers.o
-
-$(OBJDIR_DEBUG)\\mattoepz.o: mattoepz.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattoepz.c -o $(OBJDIR_DEBUG)\\mattoepz.o
-
-$(OBJDIR_DEBUG)\\mattran.o: mattran.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattran.c -o $(OBJDIR_DEBUG)\\mattran.o
-
-$(OBJDIR_DEBUG)\\matabs.o: matabs.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matabs.c -o $(OBJDIR_DEBUG)\\matabs.o
-
-$(OBJDIR_DEBUG)\\matadd.o: matadd.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matadd.c -o $(OBJDIR_DEBUG)\\matadd.o
-
-$(OBJDIR_DEBUG)\\matconcat.o: matconcat.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matconcat.c -o $(OBJDIR_DEBUG)\\matconcat.o
-
-$(OBJDIR_DEBUG)\\matconv.o: matconv.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matconv.c -o $(OBJDIR_DEBUG)\\matconv.o
-
-$(OBJDIR_DEBUG)\\matcreat.o: matcreat.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matcreat.c -o $(OBJDIR_DEBUG)\\matcreat.o
-
-$(OBJDIR_DEBUG)\\matdatastruct.o: matdatastruct.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdatastruct.c -o $(OBJDIR_DEBUG)\\matdatastruct.o
-
-$(OBJDIR_DEBUG)\\matdet.o: matdet.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdet.c -o $(OBJDIR_DEBUG)\\matdet.o
-
-$(OBJDIR_DEBUG)\\matdiv.o: matdiv.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdiv.c -o $(OBJDIR_DEBUG)\\matdiv.o
-
-$(OBJDIR_DEBUG)\\matdump.o: matdump.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdump.c -o $(OBJDIR_DEBUG)\\matdump.o
-
-$(OBJDIR_DEBUG)\\matdurbn.o: matdurbn.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdurbn.c -o $(OBJDIR_DEBUG)\\matdurbn.o
-
-$(OBJDIR_DEBUG)\\materr.o: materr.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c materr.c -o $(OBJDIR_DEBUG)\\materr.o
-
-$(OBJDIR_DEBUG)\\matfft.o: matfft.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfft.c -o $(OBJDIR_DEBUG)\\matfft.o
-
-$(OBJDIR_DEBUG)\\matfilter.o: matfilter.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfilter.c -o $(OBJDIR_DEBUG)\\matfilter.o
-
-$(OBJDIR_DEBUG)\\matfit.o: matfit.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfit.c -o $(OBJDIR_DEBUG)\\matfit.o
-
-$(OBJDIR_DEBUG)\\matflip.o: matflip.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matflip.c -o $(OBJDIR_DEBUG)\\matflip.o
-
-$(OBJDIR_DEBUG)\\matfuncs.o: matfuncs.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfuncs.c -o $(OBJDIR_DEBUG)\\matfuncs.o
-
-$(OBJDIR_DEBUG)\\matgraph.o: matgraph.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matgraph.c -o $(OBJDIR_DEBUG)\\matgraph.o
-
-$(OBJDIR_DEBUG)\\matinnerprod.o: matinnerprod.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matinnerprod.c -o $(OBJDIR_DEBUG)\\matinnerprod.o
-
-$(OBJDIR_DEBUG)\\matintegrate.o: matintegrate.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matintegrate.c -o $(OBJDIR_DEBUG)\\matintegrate.o
-
-$(OBJDIR_DEBUG)\\matinv.o: matinv.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matinv.c -o $(OBJDIR_DEBUG)\\matinv.o
-
-$(OBJDIR_DEBUG)\\matkdtree.o: matkdtree.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matkdtree.c -o $(OBJDIR_DEBUG)\\matkdtree.o
-
-$(OBJDIR_DEBUG)\\matmaxmin.o: matmaxmin.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmaxmin.c -o $(OBJDIR_DEBUG)\\matmaxmin.o
-
-$(OBJDIR_DEBUG)\\matmds.o: matmds.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmds.c -o $(OBJDIR_DEBUG)\\matmds.o
+$(OBJDIR_DEBUG)/matrix.o: matrix.h
 	
-$(OBJDIR_DEBUG)\\matsvd.o: matsvd.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsvd.c -o $(OBJDIR_DEBUG)\\matsvd.o
 
+$(OBJDIR_DEBUG)/matsearch.o: matsearch.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsearch.c -o $(OBJDIR_DEBUG)/matsearch.o
+
+$(OBJDIR_DEBUG)/matsolve.o: matsolve.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsolve.c -o $(OBJDIR_DEBUG)/matsolve.o
+
+$(OBJDIR_DEBUG)/matsort.o: matsort.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsort.c -o $(OBJDIR_DEBUG)/matsort.o
+
+$(OBJDIR_DEBUG)/matstdrels.o: matstdrels.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matstdrels.c -o $(OBJDIR_DEBUG)/matstdrels.o
+
+$(OBJDIR_DEBUG)/matsub.o: matsub.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsub.c -o $(OBJDIR_DEBUG)/matsub.o
+
+$(OBJDIR_DEBUG)/matsubx.o: matsubx.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsubx.c -o $(OBJDIR_DEBUG)/matsubx.o
+
+$(OBJDIR_DEBUG)/matsum.o: matsum.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsum.c -o $(OBJDIR_DEBUG)/matsum.o
+
+$(OBJDIR_DEBUG)/matsvd.o: matsvd.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matsvd.c -o $(OBJDIR_DEBUG)/matsvd.o
+
+$(OBJDIR_DEBUG)/mattext.o: mattext.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattext.c -o $(OBJDIR_DEBUG)/mattext.o
+
+$(OBJDIR_DEBUG)/mattimers.o: mattimers.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattimers.c -o $(OBJDIR_DEBUG)/mattimers.o
+
+$(OBJDIR_DEBUG)/mattoepz.o: mattoepz.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattoepz.c -o $(OBJDIR_DEBUG)/mattoepz.o
+
+$(OBJDIR_DEBUG)/mattran.o: mattran.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mattran.c -o $(OBJDIR_DEBUG)/mattran.o
+
+$(OBJDIR_DEBUG)/resource.o: resource.rc
+	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_DEBUG)/resource.o -O coff $(INC_DEBUG)
+
+$(OBJDIR_DEBUG)/matabs.o: matabs.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matabs.c -o $(OBJDIR_DEBUG)/matabs.o
+
+$(OBJDIR_DEBUG)/matadd.o: matadd.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matadd.c -o $(OBJDIR_DEBUG)/matadd.o
+
+$(OBJDIR_DEBUG)/matconcat.o: matconcat.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matconcat.c -o $(OBJDIR_DEBUG)/matconcat.o
+
+$(OBJDIR_DEBUG)/matconv.o: matconv.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matconv.c -o $(OBJDIR_DEBUG)/matconv.o
+
+$(OBJDIR_DEBUG)/matcreat.o: matcreat.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matcreat.c -o $(OBJDIR_DEBUG)/matcreat.o
+
+$(OBJDIR_DEBUG)/matdatastruct.o: matdatastruct.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdatastruct.c -o $(OBJDIR_DEBUG)/matdatastruct.o
+
+$(OBJDIR_DEBUG)/matdet.o: matdet.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdet.c -o $(OBJDIR_DEBUG)/matdet.o
+
+$(OBJDIR_DEBUG)/matdiv.o: matdiv.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdiv.c -o $(OBJDIR_DEBUG)/matdiv.o
+
+$(OBJDIR_DEBUG)/matdump.o: matdump.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdump.c -o $(OBJDIR_DEBUG)/matdump.o
+
+$(OBJDIR_DEBUG)/matdurbn.o: matdurbn.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matdurbn.c -o $(OBJDIR_DEBUG)/matdurbn.o
+
+$(OBJDIR_DEBUG)/materr.o: materr.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c materr.c -o $(OBJDIR_DEBUG)/materr.o
+
+$(OBJDIR_DEBUG)/matfft.o: matfft.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfft.c -o $(OBJDIR_DEBUG)/matfft.o
+
+$(OBJDIR_DEBUG)/matfilter.o: matfilter.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfilter.c -o $(OBJDIR_DEBUG)/matfilter.o
+
+$(OBJDIR_DEBUG)/matfit.o: matfit.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfit.c -o $(OBJDIR_DEBUG)/matfit.o
+
+$(OBJDIR_DEBUG)/matflip.o: matflip.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matflip.c -o $(OBJDIR_DEBUG)/matflip.o
+
+$(OBJDIR_DEBUG)/matfuncs.o: matfuncs.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matfuncs.c -o $(OBJDIR_DEBUG)/matfuncs.o
+
+$(OBJDIR_DEBUG)/matgraph.o: matgraph.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matgraph.c -o $(OBJDIR_DEBUG)/matgraph.o
+
+$(OBJDIR_DEBUG)/matinnerprod.o: matinnerprod.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matinnerprod.c -o $(OBJDIR_DEBUG)/matinnerprod.o
+
+$(OBJDIR_DEBUG)/matintegrate.o: matintegrate.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matintegrate.c -o $(OBJDIR_DEBUG)/matintegrate.o
+
+$(OBJDIR_DEBUG)/matinv.o: matinv.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matinv.c -o $(OBJDIR_DEBUG)/matinv.o
+
+$(OBJDIR_DEBUG)/matkdtree.o: matkdtree.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matkdtree.c -o $(OBJDIR_DEBUG)/matkdtree.o
+
+$(OBJDIR_DEBUG)/matmaxmin.o: matmaxmin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmaxmin.c -o $(OBJDIR_DEBUG)/matmaxmin.o
+
+$(OBJDIR_DEBUG)/matmds.o: matmds.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matmds.c -o $(OBJDIR_DEBUG)/matmds.o
 
 clean_debug: 
-	cmd /c del /f $(OBJ_DEBUG) $(OUT_DEBUG) 
-	cmd /c rd $(OBJDIR_DEBUG)
-	cmd /c rd	$(LIBDIR_DEBUG)
+	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
+	rm -rf lib/Debug
+	rm -rf $(OBJDIR_DEBUG)
 
 before_release: 
-	cmd /c if not exist $(OBJDIR_RELEASE) md $(OBJDIR_RELEASE)
-	cmd /c if not exist $(LIBDIR_RELEASE) md $(LIBDIR_RELEASE)
+	test -d lib/Release || mkdir -p lib/Release
+	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
 
 after_release: 
 
@@ -208,142 +213,148 @@ release: before_release out_release after_release
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(AR) rcs $(OUT_RELEASE) $(OBJ_RELEASE)
 
-$(OBJDIR_RELEASE)\\matmean.o: matmean.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmean.c -o $(OBJDIR_RELEASE)\\matmean.o
+$(OBJDIR_RELEASE)/matmean.o: matmean.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmean.c -o $(OBJDIR_RELEASE)/matmean.o
 
-$(OBJDIR_RELEASE)\\matmisc.o: matmisc.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmisc.c -o $(OBJDIR_RELEASE)\\matmisc.o
+$(OBJDIR_RELEASE)/matmisc.o: matmisc.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmisc.c -o $(OBJDIR_RELEASE)/matmisc.o
 
-$(OBJDIR_RELEASE)\\matmul.o: matmul.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmul.c -o $(OBJDIR_RELEASE)\\matmul.o
+$(OBJDIR_RELEASE)/matmul.o: matmul.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmul.c -o $(OBJDIR_RELEASE)/matmul.o
 
-$(OBJDIR_RELEASE)\\matpca.o: matpca.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpca.c -o $(OBJDIR_RELEASE)\\matpca.o
+$(OBJDIR_RELEASE)/matpca.o: matpca.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpca.c -o $(OBJDIR_RELEASE)/matpca.o
 
-$(OBJDIR_RELEASE)\\matpinv.o: matpinv.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpinv.c -o $(OBJDIR_RELEASE)\\matpinv.o
+$(OBJDIR_RELEASE)/matpinv.o: matpinv.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpinv.c -o $(OBJDIR_RELEASE)/matpinv.o
 
-$(OBJDIR_RELEASE)\\matpoly.o: matpoly.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpoly.c -o $(OBJDIR_RELEASE)\\matpoly.o
+$(OBJDIR_RELEASE)/matpoly.o: matpoly.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpoly.c -o $(OBJDIR_RELEASE)/matpoly.o
 
-$(OBJDIR_RELEASE)\\matprec.o: matprec.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matprec.c -o $(OBJDIR_RELEASE)\\matprec.o
+$(OBJDIR_RELEASE)/matprec.o: matprec.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matprec.c -o $(OBJDIR_RELEASE)/matprec.o
 
-$(OBJDIR_RELEASE)\\matpursuit.o: matpursuit.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpursuit.c -o $(OBJDIR_RELEASE)\\matpursuit.o
+$(OBJDIR_RELEASE)/matpursuit.o: matpursuit.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matpursuit.c -o $(OBJDIR_RELEASE)/matpursuit.o
 
-$(OBJDIR_RELEASE)\\matrand.o: matrand.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matrand.c -o $(OBJDIR_RELEASE)\\matrand.o
+$(OBJDIR_RELEASE)/matrand.o: matrand.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matrand.c -o $(OBJDIR_RELEASE)/matrand.o
 
-$(OBJDIR_RELEASE)\\matsearch.o: matsearch.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsearch.c -o $(OBJDIR_RELEASE)\\matsearch.o
+$(OBJDIR_RELEASE)/matrix.o: matrix.h
+	
 
-$(OBJDIR_RELEASE)\\matsolve.o: matsolve.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsolve.c -o $(OBJDIR_RELEASE)\\matsolve.o
+$(OBJDIR_RELEASE)/matsearch.o: matsearch.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsearch.c -o $(OBJDIR_RELEASE)/matsearch.o
 
-$(OBJDIR_RELEASE)\\matsort.o: matsort.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsort.c -o $(OBJDIR_RELEASE)\\matsort.o
+$(OBJDIR_RELEASE)/matsolve.o: matsolve.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsolve.c -o $(OBJDIR_RELEASE)/matsolve.o
 
-$(OBJDIR_RELEASE)\\matstdrels.o: matstdrels.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matstdrels.c -o $(OBJDIR_RELEASE)\\matstdrels.o
+$(OBJDIR_RELEASE)/matsort.o: matsort.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsort.c -o $(OBJDIR_RELEASE)/matsort.o
 
-$(OBJDIR_RELEASE)\\matsub.o: matsub.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsub.c -o $(OBJDIR_RELEASE)\\matsub.o
+$(OBJDIR_RELEASE)/matstdrels.o: matstdrels.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matstdrels.c -o $(OBJDIR_RELEASE)/matstdrels.o
 
-$(OBJDIR_RELEASE)\\matsubx.o: matsubx.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsubx.c -o $(OBJDIR_RELEASE)\\matsubx.o
+$(OBJDIR_RELEASE)/matsub.o: matsub.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsub.c -o $(OBJDIR_RELEASE)/matsub.o
 
-$(OBJDIR_RELEASE)\\matsum.o: matsum.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsum.c -o $(OBJDIR_RELEASE)\\matsum.o
+$(OBJDIR_RELEASE)/matsubx.o: matsubx.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsubx.c -o $(OBJDIR_RELEASE)/matsubx.o
 
-$(OBJDIR_RELEASE)\\mattext.o: mattext.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattext.c -o $(OBJDIR_RELEASE)\\mattext.o
+$(OBJDIR_RELEASE)/matsum.o: matsum.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsum.c -o $(OBJDIR_RELEASE)/matsum.o
 
-$(OBJDIR_RELEASE)\\mattimers.o: mattimers.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattimers.c -o $(OBJDIR_RELEASE)\\mattimers.o
+$(OBJDIR_RELEASE)/matsvd.o: matsvd.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsvd.c -o $(OBJDIR_RELEASE)/matsvd.o
 
-$(OBJDIR_RELEASE)\\mattoepz.o: mattoepz.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattoepz.c -o $(OBJDIR_RELEASE)\\mattoepz.o
+$(OBJDIR_RELEASE)/mattext.o: mattext.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattext.c -o $(OBJDIR_RELEASE)/mattext.o
 
-$(OBJDIR_RELEASE)\\mattran.o: mattran.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattran.c -o $(OBJDIR_RELEASE)\\mattran.o
+$(OBJDIR_RELEASE)/mattimers.o: mattimers.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattimers.c -o $(OBJDIR_RELEASE)/mattimers.o
 
-$(OBJDIR_RELEASE)\\matabs.o: matabs.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matabs.c -o $(OBJDIR_RELEASE)\\matabs.o
+$(OBJDIR_RELEASE)/mattoepz.o: mattoepz.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattoepz.c -o $(OBJDIR_RELEASE)/mattoepz.o
 
-$(OBJDIR_RELEASE)\\matadd.o: matadd.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matadd.c -o $(OBJDIR_RELEASE)\\matadd.o
+$(OBJDIR_RELEASE)/mattran.o: mattran.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mattran.c -o $(OBJDIR_RELEASE)/mattran.o
 
-$(OBJDIR_RELEASE)\\matconcat.o: matconcat.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matconcat.c -o $(OBJDIR_RELEASE)\\matconcat.o
+$(OBJDIR_RELEASE)/resource.o: resource.rc
+	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_RELEASE)/resource.o -O coff $(INC_RELEASE)
 
-$(OBJDIR_RELEASE)\\matconv.o: matconv.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matconv.c -o $(OBJDIR_RELEASE)\\matconv.o
+$(OBJDIR_RELEASE)/matabs.o: matabs.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matabs.c -o $(OBJDIR_RELEASE)/matabs.o
 
-$(OBJDIR_RELEASE)\\matcreat.o: matcreat.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matcreat.c -o $(OBJDIR_RELEASE)\\matcreat.o
+$(OBJDIR_RELEASE)/matadd.o: matadd.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matadd.c -o $(OBJDIR_RELEASE)/matadd.o
 
-$(OBJDIR_RELEASE)\\matdatastruct.o: matdatastruct.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdatastruct.c -o $(OBJDIR_RELEASE)\\matdatastruct.o
+$(OBJDIR_RELEASE)/matconcat.o: matconcat.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matconcat.c -o $(OBJDIR_RELEASE)/matconcat.o
 
-$(OBJDIR_RELEASE)\\matdet.o: matdet.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdet.c -o $(OBJDIR_RELEASE)\\matdet.o
+$(OBJDIR_RELEASE)/matconv.o: matconv.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matconv.c -o $(OBJDIR_RELEASE)/matconv.o
 
-$(OBJDIR_RELEASE)\\matdiv.o: matdiv.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdiv.c -o $(OBJDIR_RELEASE)\\matdiv.o
+$(OBJDIR_RELEASE)/matcreat.o: matcreat.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matcreat.c -o $(OBJDIR_RELEASE)/matcreat.o
 
-$(OBJDIR_RELEASE)\\matdump.o: matdump.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdump.c -o $(OBJDIR_RELEASE)\\matdump.o
+$(OBJDIR_RELEASE)/matdatastruct.o: matdatastruct.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdatastruct.c -o $(OBJDIR_RELEASE)/matdatastruct.o
 
-$(OBJDIR_RELEASE)\\matdurbn.o: matdurbn.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdurbn.c -o $(OBJDIR_RELEASE)\\matdurbn.o
+$(OBJDIR_RELEASE)/matdet.o: matdet.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdet.c -o $(OBJDIR_RELEASE)/matdet.o
 
-$(OBJDIR_RELEASE)\\materr.o: materr.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c materr.c -o $(OBJDIR_RELEASE)\\materr.o
+$(OBJDIR_RELEASE)/matdiv.o: matdiv.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdiv.c -o $(OBJDIR_RELEASE)/matdiv.o
 
-$(OBJDIR_RELEASE)\\matfft.o: matfft.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfft.c -o $(OBJDIR_RELEASE)\\matfft.o
+$(OBJDIR_RELEASE)/matdump.o: matdump.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdump.c -o $(OBJDIR_RELEASE)/matdump.o
 
-$(OBJDIR_RELEASE)\\matfilter.o: matfilter.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfilter.c -o $(OBJDIR_RELEASE)\\matfilter.o
+$(OBJDIR_RELEASE)/matdurbn.o: matdurbn.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matdurbn.c -o $(OBJDIR_RELEASE)/matdurbn.o
 
-$(OBJDIR_RELEASE)\\matfit.o: matfit.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfit.c -o $(OBJDIR_RELEASE)\\matfit.o
+$(OBJDIR_RELEASE)/materr.o: materr.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c materr.c -o $(OBJDIR_RELEASE)/materr.o
 
-$(OBJDIR_RELEASE)\\matflip.o: matflip.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matflip.c -o $(OBJDIR_RELEASE)\\matflip.o
+$(OBJDIR_RELEASE)/matfft.o: matfft.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfft.c -o $(OBJDIR_RELEASE)/matfft.o
 
-$(OBJDIR_RELEASE)\\matfuncs.o: matfuncs.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfuncs.c -o $(OBJDIR_RELEASE)\\matfuncs.o
+$(OBJDIR_RELEASE)/matfilter.o: matfilter.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfilter.c -o $(OBJDIR_RELEASE)/matfilter.o
 
-$(OBJDIR_RELEASE)\\matgraph.o: matgraph.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matgraph.c -o $(OBJDIR_RELEASE)\\matgraph.o
+$(OBJDIR_RELEASE)/matfit.o: matfit.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfit.c -o $(OBJDIR_RELEASE)/matfit.o
 
-$(OBJDIR_RELEASE)\\matinnerprod.o: matinnerprod.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matinnerprod.c -o $(OBJDIR_RELEASE)\\matinnerprod.o
+$(OBJDIR_RELEASE)/matflip.o: matflip.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matflip.c -o $(OBJDIR_RELEASE)/matflip.o
 
-$(OBJDIR_RELEASE)\\matintegrate.o: matintegrate.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matintegrate.c -o $(OBJDIR_RELEASE)\\matintegrate.o
+$(OBJDIR_RELEASE)/matfuncs.o: matfuncs.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matfuncs.c -o $(OBJDIR_RELEASE)/matfuncs.o
 
-$(OBJDIR_RELEASE)\\matinv.o: matinv.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matinv.c -o $(OBJDIR_RELEASE)\\matinv.o
+$(OBJDIR_RELEASE)/matgraph.o: matgraph.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matgraph.c -o $(OBJDIR_RELEASE)/matgraph.o
 
-$(OBJDIR_RELEASE)\\matkdtree.o: matkdtree.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matkdtree.c -o $(OBJDIR_RELEASE)\\matkdtree.o
+$(OBJDIR_RELEASE)/matinnerprod.o: matinnerprod.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matinnerprod.c -o $(OBJDIR_RELEASE)/matinnerprod.o
 
-$(OBJDIR_RELEASE)\\matmaxmin.o: matmaxmin.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmaxmin.c -o $(OBJDIR_RELEASE)\\matmaxmin.o
+$(OBJDIR_RELEASE)/matintegrate.o: matintegrate.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matintegrate.c -o $(OBJDIR_RELEASE)/matintegrate.o
 
-$(OBJDIR_RELEASE)\\matmds.o: matmds.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmds.c -o $(OBJDIR_RELEASE)\\matmds.o
+$(OBJDIR_RELEASE)/matinv.o: matinv.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matinv.c -o $(OBJDIR_RELEASE)/matinv.o
 
-$(OBJDIR_RELEASE)\\matsvd.o: matsvd.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matsvd.c -o $(OBJDIR_RELEASE)\\matsvd.o
+$(OBJDIR_RELEASE)/matkdtree.o: matkdtree.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matkdtree.c -o $(OBJDIR_RELEASE)/matkdtree.o
+
+$(OBJDIR_RELEASE)/matmaxmin.o: matmaxmin.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmaxmin.c -o $(OBJDIR_RELEASE)/matmaxmin.o
+
+$(OBJDIR_RELEASE)/matmds.o: matmds.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matmds.c -o $(OBJDIR_RELEASE)/matmds.o
 
 clean_release: 
-	cmd /c del /f $(OBJ_RELEASE) $(OUT_RELEASE)
-	cmd /c rd $(OBJDIR_RELEASE)
-	cmd /c rd $(LIBDIR_RELEASE)
+	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
+	rm -rf lib/Release
+	rm -rf $(OBJDIR_RELEASE)
 
 .PHONY: before_debug after_debug clean_debug before_release after_release clean_release
 

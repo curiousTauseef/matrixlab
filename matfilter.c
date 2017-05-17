@@ -14,42 +14,47 @@
 MATRIX mat_conv2(MATRIX A, MATRIX mask, MATRIX scratch, MATRIX result)
 {
     int i, j, k, l, m, n, o, p, ii, jj, mm, nn, flag = 0;
-    mtype acc = 0.0;
     m = MatCol(A);
     n = MatRow(A);
     o = MatCol(mask);
     p = MatRow(mask);
     if((o%2)!=1 ||(p%2)!=1) gen_error(GEN_SIZE_ERROR);
-    ii = (o - 1)/2;
-    jj = (p - 1)/2;
-    mm = ii+ii+m;
-    nn = jj+jj+n;
-    k = ii+m;
-    l = jj+n;
-    if(scratch == NULL)
+    ii = (p-1)/2;
+    jj = (o-1)/2;
+    mm = jj+jj+m;
+    nn = ii+ii+n;
+    l = jj+m;
+    k = ii+n;
+    if(scratch==NULL)
     {
         if((scratch = mat_creat(nn, mm, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         flag = 1;
-        for(i=0; i<mm; ++i)
+    }
+#pragma omp parallel for private(j) firstprivate(mm, ii, jj, k, l)
+    for(i=0; i<nn; ++i)
+    {
+        for(j=0; j<mm; ++j)
         {
-            for(j=0; j<nn; ++j)
-            {
-                if(i<ii || j<jj || i>=k || j>=l ) scratch[j][i] = 0.0;
-                else scratch[j][i] = A[j-jj][i-ii];
-            }
+            if(i<ii || j<jj || i>=k || j>=l ) scratch[i][j] = 0.0;
+            else scratch[i][j] = A[i-ii][j-jj];
         }
     }
 
     if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
-    for(i=0; i<m; ++i)
+#pragma omp parallel for private(j) firstprivate(m, ii, jj, k, l)
+    for(i=0; i<n; ++i)
     {
-        for(j=0; j<n; ++j)
+        for(j=0; j<m; ++j)
         {
-            acc = 0.0;
+            mtype acc = 0.0;
             for(k = -ii; k<=ii; ++k)
+            {
                 for(l = -jj; l<=jj; ++l)
-                    acc += scratch[j+jj+l][i+ii+k]*mask[jj-l][ii-k];
-            result[j][i] = acc;
+                {
+                    acc += scratch[i+ii+k][j+jj+l]*mask[ii-k][jj-l];
+                }
+            }
+            result[i][j] = acc;
         }
     }
     if(flag==1) mat_free(scratch);

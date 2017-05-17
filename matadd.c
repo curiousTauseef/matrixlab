@@ -3,8 +3,8 @@
 
 /** \brief Adds two matrices
  *
- * \param[in] A Input matrix
- * \param[in] B Input matrix
+ * \param[in] A First input matrix
+ * \param[in] B Second input matrix
  * \param[in] result Matrix to store the result
  * \return \f$ \mathbf{A}+\mathbf{B} \f$
  *
@@ -19,15 +19,40 @@ MATRIX mat_add(MATRIX A, MATRIX B, MATRIX result)
     p = MatRow(B);
     if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    #pragma omp parallel for private(j)
-    for(i=0; i<n; ++i)
-        for(j=0; j<m; ++j)
+    if(o==m &&p==n)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
         {
-            if(o==m &&p==n) result[i][j] = A[i][j]+B[i][j];
-            else if(o==1 && p!=1) result[i][j] = A[i][j]+B[i][0];
-            else if(p==1 && o!=1) result[i][j] = A[i][j]+B[0][j];
-            else gen_error(GEN_SIZEMISMATCH);
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]+B[i][j];
+            }
         }
+    }
+    else if(o==1 && p!=1)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]+B[i][0];
+            }
+        }
+    }
+    else if(p==1 && o!=1)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]+B[0][j];
+            }
+        }
+    }
+    else gen_error(GEN_SIZEMISMATCH);
     return result;
 }
 
@@ -49,10 +74,12 @@ MATRIX mat_adds(MATRIX A, mtype s, MATRIX result)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
             result[i][j] = A[i][j]+s;
         }
+    }
     return result;
 }
 

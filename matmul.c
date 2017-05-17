@@ -1,6 +1,13 @@
 #include "matrix.h"
-#define __min(x,y) (((x)>(y))?(y):(x))
 
+/** \brief Computes matrix multiplication
+ *
+ * \param[in] A First input matrix
+ * \param[in] B Second input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ \mathbf{A}\mathbf{B} \f$
+ *
+ */
 
 MATRIX mat_mul(MATRIX A, MATRIX B, MATRIX result)
 {
@@ -14,13 +21,26 @@ MATRIX mat_mul(MATRIX A, MATRIX B, MATRIX result)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j, k)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<o; ++j)
+        {
             for(k=0, result[i][j]=0.0; k<m; ++k)
             {
-                result[i][j] += A[i][k] * B[k][j];
+                result[i][j] += A[i][k]*B[k][j];
             }
+        }
+    }
     return (result);
 }
+
+/** \brief Computes fast matrix multiplication (not implemented)
+ *
+ * \param[in] A First input matrix
+ * \param[in] B Second input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ \mathbf{A}\mathbf{B} \f$
+ *
+ */
 
 MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result)
 {
@@ -130,42 +150,94 @@ MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result)
     return result;
 }
 
-MATRIX mat_muls(MATRIX A, mtype s, MATRIX B)
+/** \brief Multiplies a matrix by a scalar
+ *
+ * \param[in] A Input matrix
+ * \param[in] s Scalar
+ * \param[in] result Matrix to store the result
+ * \return \f$ s\mathbf{A} \f$
+ *
+ */
+
+MATRIX mat_muls(MATRIX A, mtype s, MATRIX result)
 {
     int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
-    if(B==NULL) if((B = mat_creat(n, m, UNDEFINED))==NULL)
+    if(result==NULL) if((result = mat_creat(n, m, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
-            B[i][j] = A[i][j] * s;
+            result[i][j] = A[i][j]*s;
         }
-    return (B);
+    }
+    return (result);
 }
 
-MATRIX mat_mul_dot(MATRIX A, MATRIX B, MATRIX C)
+/** \brief Computes element-wise matrix multiplication
+ *
+ * \param[in] A First input matrix
+ * \param[in] B Second input matrix
+ * \param[in] result Matrix to store the result
+ * \return \f$ \mathbf{A}.*\mathbf{B} \f$
+ *
+ */
+
+MATRIX mat_mul_dot(MATRIX A, MATRIX B, MATRIX result)
 {
     int	i, j, m, n, o, p;
     m = MatCol(A);
     n = MatRow(A);
     o = MatCol(B);
     p = MatRow(B);
-    if(C==NULL) if((C = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
+    if(result==NULL) if((result = mat_creat(MatRow(A), MatCol(A), UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
-    #pragma omp parallel for private(j)
-    for(i=0; i<n; ++i)
-        for(j=0; j<m; ++j)
+    if(o==m &&p==n)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
         {
-            if(o==m &&p==n) C[i][j] = A[i][j]*B[i][j];
-            else if(o==1 && p!=1) C[i][j] = A[i][j]*B[i][0];
-            else if(p==1 && o!=1) C[i][j] = A[i][j]*B[0][j];
-            else gen_error(GEN_SIZEMISMATCH);
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]*B[i][j];
+            }
         }
-    return C;
+    }
+    else if(o==1 && p!=1)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]*B[i][0];
+            }
+        }
+    }
+    else if(p==1 && o!=1)
+    {
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j]*B[0][j];
+            }
+        }
+    }
+    else gen_error(GEN_SIZEMISMATCH);
+    return result;
 }
+
+/** \brief Computes matrix diagonal product
+ *
+ * \param[in] A Input matrix
+ * \return \f$ \textrm{prod}(\textrm{diag}(\mathbf{A})) \f$
+ *
+ */
 
 mtype mat_diagmul(MATRIX A)
 {
@@ -179,6 +251,15 @@ mtype mat_diagmul(MATRIX A)
     return result;
 }
 
+/** \brief Computes element-wise integer vector multiplication
+ *
+ * \param[in] A First input vector
+ * \param[in] B Second input vector
+ * \param[in] result Vector to store the result
+ * \return \f$ A.*B \f$
+ *
+ */
+
 INT_VECTOR int_vec_mul(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
 {
     int i, m;
@@ -189,6 +270,15 @@ INT_VECTOR int_vec_mul(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result)
     for(i=0; i<m; ++i) result[i] = A[i]*B[i];
     return result;
 }
+
+/** \brief Multiplies an integer vector by a scalar
+ *
+ * \param[in] A Input vector
+ * \param[in] s Scalar
+ * \param[in] result Vector to store the result
+ * \return \f$ sA \f$
+ *
+ */
 
 INT_VECTOR int_vec_muls(INT_VECTOR A, int x, INT_VECTOR result)
 {

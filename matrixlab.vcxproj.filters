@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="matabs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matadd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matcompress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matconcat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matconv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matcreat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matdatastruct.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matdet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matdiv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matdump.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matdurbn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="materr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matfft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matfilter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matfit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matflip.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matfuncs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matgraph.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matinnerprod.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matintegrate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matinv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matkdtree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matmaxmin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matmds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matmean.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matmisc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matmul.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matpca.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matpinv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matpoly.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matprec.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matpursuit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matrand.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matrix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsearch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsolve.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matstdrels.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsubx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsum.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matsvd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mattext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mattimers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mattoepz.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mattran.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

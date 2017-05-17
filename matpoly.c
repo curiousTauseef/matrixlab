@@ -19,7 +19,7 @@ MATRIX mat_poly_eval(MATRIX A, mtype x, int dir, MATRIX result)
     mtype r;
     m = MatRow(A);
     n = MatCol(A);
-    if(dir==0)
+    if(dir==ROWS)
     {
         if(result==NULL) if((result = mat_creat(1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)
@@ -56,7 +56,7 @@ MATRIX mat_poly_diff(MATRIX A, int dir, MATRIX result)
     int m, n, i, j;
     m = MatRow(A);
     n = MatCol(A);
-    if(dir==0)
+    if(dir==ROWS)
     {
         if(result==NULL) if((result = mat_creat(m-1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)
@@ -91,7 +91,7 @@ MATRIX mat_poly_diff_eval(MATRIX A, mtype x, int dir, MATRIX result)
     mtype r;
     m = MatRow(A);
     n = MatCol(A);
-    if(dir==0)
+    if(dir==ROWS)
     {
         if(result==NULL) if((result = mat_creat(1, n, UNDEFINED))==NULL) mat_error(MAT_MALLOC);
         for(i=0; i<n; ++i)

@@ -148,7 +148,7 @@ MATRIX mat_fill(MATRIX A, mtype val)
 
 MATRIX mat_fill_type(MATRIX A, int type)
 {
-    int i, j, m, n;
+    int i, j, k, m, n;
     m = MatCol(A);
     n = MatRow(A);
     switch(type)
@@ -156,26 +156,36 @@ MATRIX mat_fill_type(MATRIX A, int type)
     case UNDEFINED:
         break;
     case ZERO_MATRIX:
+        #pragma omp parallel for private(j)
+        for(i=0; i<n; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                A[i][j] = 0.0;
+            }
+        }
+        break;
     case UNIT_MATRIX:
         #pragma omp parallel for private(j)
         for(i=0; i<n; ++i)
+        {
             for(j=0; j<m; ++j)
             {
-                if(type==UNIT_MATRIX)
-                {
-                    if(i==j)
-                    {
-                        A[i][j] = 1.0;
-                        continue;
-                    }
-                }
                 A[i][j] = 0.0;
             }
+        }
+        k = (m<n)? m:n;
+        for(i=0; i<k; ++i)
+        {
+            A[i][i] = 1.0;
+        }
         break;
     case ONES_MATRIX:
         #pragma omp parallel for private(j)
         for(i=0; i<n; ++i)
+        {
             for(j=0; j<m; ++j) A[i][j] = 1.0;
+        }
         break;
     }
     return A;
@@ -510,10 +520,12 @@ MATRIX mat_copy(MATRIX A, MATRIX result)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
             result[i][j] = A[i][j];
         }
+    }
     return result;
 }
 
@@ -534,15 +546,17 @@ MATRIX mat_xcopy(MATRIX A, int si, int ei, int sj, int ej, MATRIX result)
     int i, j, m, n;
     m = MatCol(A);
     n = MatRow(A);
-    if(si<0 || sj<0 || ei>n || ei>m) mat_error(MAT_SIZEMISMATCH);
+    if(si<0 || sj<0 || ei>n || ej>m) mat_error(MAT_SIZEMISMATCH);
     if(result== NULL) if((result = mat_creat(ei-si, ej-sj, UNDEFINED))==NULL)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=si; i<ei; ++i)
+    {
         for(j=sj; j<ej; ++j)
         {
             result[i-si][j-sj] = A[i][j];
         }
+    }
     return result;
 }
 
@@ -566,28 +580,36 @@ MATRIX mat_xjoin(MATRIX A11, MATRIX A12, MATRIX A21, MATRIX A22, MATRIX result)
             return mat_error(MAT_MALLOC);
     #pragma omp parallel for private(j)
     for(i=0; i<MatRow(A11); ++i)
+    {
         for(j=0; j<MatCol(A11); ++j)
         {
             result[i][j] = A11[i][j];
         }
+    }
     #pragma omp parallel for private(j)
     for(i=0; i<MatRow(A12); ++i)
+    {
         for(j=0; j<MatCol(A12); ++j)
         {
             result[i][j+MatCol(A11)] = A12[i][j];
         }
+    }
     #pragma omp parallel for private(j)
     for(i=0; i<MatRow(A21); ++i)
+    {
         for(j=0; j<MatCol(A21); ++j)
         {
             result[i+MatRow(A21)][j] = A21[i][j];
         }
+    }
     #pragma omp parallel for private(j)
     for(i=0; i<MatRow(A22); ++i)
+    {
         for(j=0; j<MatCol(A22); ++j)
         {
             result[i+MatRow(A11)][j+MatCol(A22)] = A22[i][j];
         }
+    }
     return result;
 
 }

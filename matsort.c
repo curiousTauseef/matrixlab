@@ -11,7 +11,7 @@
 /** \brief Computes the median of elements of a given matrix
  *
  * \param[in] A Input matrix
- * \return \f$ \textrm{median}\left(\left \{a_{ij}\right \}\right) \f$
+ * \return \f$ \textrm{med}\left(\left \{a_{ij}\right \}\right) \f$
  *
  */
 
@@ -88,7 +88,7 @@ mtype mat_order_statistic(MATRIX A, int k)
  *
  * \param[in] A Input matrix
  * \param[in] dim Direction of sort (ROWS/COLS)
- * \param[out] result Output matrix stack
+ * \param[in] result Matrix stack to store the result
  * \return Output matrix stack of sorted A and their positions
  *
  */
@@ -104,7 +104,7 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
         if((result = matstack_creat(2))==NULL)
             return matstack_error(MATSTACK_MALLOC);
     }
-    if(dim==0)
+    if(dim==ROWS)
     {
         B = mat_tran(A, NULL);
         ind = mat_creat(m, n, UNDEFINED);
@@ -116,7 +116,7 @@ MATSTACK mat_qsort(MATRIX A, int dim, MATSTACK result)
         result[0] = mat_tran(B, result[0]);
         mat_free(B);
     }
-    else if(dim==1)
+    else if(dim==COLS)
     {
         result[0] = mat_copy(A, NULL);
         ind = mat_creat(n, m, UNDEFINED);

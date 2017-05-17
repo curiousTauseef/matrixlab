@@ -5,7 +5,7 @@
  *
  * \param[in] A Input matrix
  * \param[in] result Matrix to store the result
- * \return \f$ abs(A) \f$
+ * \return \f$ \textrm{abs}(\mathbf{A}) \f$
  *
  */
 
@@ -25,5 +25,23 @@ MATRIX mat_abs(MATRIX A, MATRIX result)
             result[i][j] = (mtype)fabs(A[i][j]);
         }
     return (result);
+}
+
+/** \brief Computes absolute value of an integer vector
+ *
+ * \param[in] A Input integer vector
+ * \param[in] result Vector to store the result
+ * \return \f$ \textrm{abs}(A) \f$
+ *
+ */
+
+INT_VECTOR int_vec_abs(INT_VECTOR A, INT_VECTOR result)
+{
+    int i, m;
+    m = Int_VecLen(A);
+    if(result==NULL) if((result = int_vec_creat(m, UNDEFINED))==NULL)
+            int_vec_error(INT_VEC_MALLOC);
+    for(i=0; i<m; ++i) result[i] = abs(A[i]);
+    return result;
 }
 

@@ -205,6 +205,33 @@ mtype __mat_logplusone(mtype x)
     }
 }
 
+/** \brief Rounds a number away from zero
+ *
+ * \param[in] x Input value
+ * \return \f$ \textrm{sgn}(x) \left\lfloor \left| x \right| + 0.5 \right\rfloor \f$
+ *
+ */
+
+mtype __mat_round_away_zero(mtype x)
+{
+    if(x>0) return ceil(x);
+    else return floor(x);
+}
+
+/** \brief Rounds a number towards zero
+ *
+ * \param[in] x Input value
+ * \return \f$ \textrm{sgn}(x) \left\lceil \left| x \right| - 0.5 \right\rceil \f$
+ *
+ */
+
+mtype __mat_round_towards_zero(mtype x)
+{
+    if(x>0) return floor(x);
+    else return ceil(x);
+}
+
+
 /** \brief Computes Huber weight function element-wise on a matrix
  *
  * \param[in] A Input matrix
@@ -223,10 +250,12 @@ MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
             result[i][j] = __huber_wt(A[i][j]/sigma, k);
         }
+    }
     return(result);
 }
 
@@ -248,10 +277,12 @@ MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result)
 
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
             result[i][j] = __bisquare_wt(A[i][j]/sigma, k);
         }
+    }
     return(result);
 }
 
@@ -275,10 +306,12 @@ MATRIX mat_gfunc(MATRIX A, mtype (*pt2func)(mtype), MATRIX result)
 
     #pragma omp parallel for private(j)
     for(i=0; i<n; ++i)
+    {
         for(j=0; j<m; ++j)
         {
             result[i][j] = (*pt2func)(A[i][j]);
         }
+    }
     return(result);
 }
 

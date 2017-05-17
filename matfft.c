@@ -4,7 +4,7 @@
 /** \brief Computes fast Fourier transform
  *
  * \param[in] C Complex data matrix stack
- * \param[in] dir FFT direction (ROWS/COLS)
+ * \param[in] dir FFT direction (MAT_FFT2_FORWARD/MAT_FFT2_BACKWARD)
  * \param[in] result Matrix stack to store the result
  * \return Transformed matrix stack
  *
@@ -27,11 +27,12 @@ MATSTACK mat_fft2(MATSTACK c, int dir, MATSTACK result)
         gen_error(GEN_MATH_ERROR);
     if(!__mat_powerof2(n, &nn, &twopm) || twopm!=n)
         gen_error(GEN_MATH_ERROR);
-
+#pragma omp parallel for
     for(j=0; j<n; ++j) __mat_fft(dir, mm, real[j], imag[j]);
     realt = mat_tran(real, NULL);
     imagt = mat_tran(imag, NULL);
 
+#pragma omp parallel for
     for(i=0; i<m; ++i) __mat_fft(dir, nn,realt[i],imagt[i]);
     mat_free(real);
     mat_free(imag);
@@ -52,7 +53,7 @@ int __mat_fft(int dir, int m, mtype *x,mtype *y)
 
     nn = 1;
     for(i=0; i<m; ++i) nn *= 2;
-    i2 = nn >> 1;
+    i2 = nn>>1;
     j = 0;
     for(i=0; i<nn-1; ++i)
     {

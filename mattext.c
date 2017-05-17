@@ -93,7 +93,7 @@ int mat_go_next_word(MAT_FILEPOINTER fp)
 /** \brief Count words in current line in an opened file
  *
  * \param[in] fp Pointer to an opened file
- * \param[out] count Pointer to output count
+ * \param[in] count Pointer to output count
  * \return EOF reached
  *
  */
@@ -202,7 +202,7 @@ MATRIX mat_dlmread(const char *fname)
 /** \brief Reads current word from an opened file
  *
  * \param[in] fp Pointer to an opened file
- * \param[out] c_word Pointer to word read
+ * \param[in] c_word Pointer to word read
  * \return EOF reached
  *
  */

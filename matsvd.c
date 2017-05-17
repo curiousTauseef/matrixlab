@@ -1,5 +1,14 @@
 #include "matrix.h"
 
+/** \brief Computes the SVD of a matrix
+ *
+ * \param[in] a Input matrix
+ * \param[in] niters Iterations to use
+ * \param result Matrix stack to store the result
+ * \return MATSTACK ( \f$ \mathbf{U}, \mathbf{S}, \mathbf{V} \f$ )
+ *
+ */
+
 MATSTACK mat_svd(MATRIX a, int niters, MATSTACK result)
 {
     int i, j, k, l, m, n, iter;
@@ -255,3 +264,4 @@ MATSTACK mat_svd(MATRIX a, int niters, MATSTACK result)
     mat_free(e);
     return result;
 }
+

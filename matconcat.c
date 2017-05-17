@@ -32,25 +32,35 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
         o = MatCol(B);
         p = MatRow(B);
     }
-    if((dim==1)&&((m==o) ||!((m==0)&&(o==0))))
+    if((dim==ROWS)&&((m==o) ||!((m==0)&&(o==0))))
     {
         if((result = mat_creat(n+p, m, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
-        for(i=0; i<m; i++)
+        for(i=0; i<n; ++i)
         {
-            for(j=0; j<n; j++) result[j][i] = A[j][i];
-            for(j=0; j<p; j++) result[j+n][i] = B[j][i];
+            for(j=0; j<m; ++j)
+            {
+                result[i][j] = A[i][j];
+            }
+        }
+        #pragma omp parallel for private(j)
+        for(i=0; i<p; ++i)
+        {
+            for(j=0; j<m; ++j)
+            {
+                result[i+n][j] = B[i][j];
+            }
         }
         return result;
     }
-    if((dim==2)&&((n==p) ||!((n==0)&&(p==0))))
+    if((dim==COLS)&&((n==p) ||!((n==0)&&(p==0))))
     {
         if((result = mat_creat(n, m+o, UNDEFINED))==NULL) return NULL;
         #pragma omp parallel for private(j)
-        for(i=0; i<n; i++)
+        for(i=0; i<n; ++i)
         {
-            for(j=0; j<m; j++) result[i][j] = A[i][j];
-            for(j=0; j<o; j++) result[i][j+m] = B[i][j];
+            for(j=0; j<m; ++j) result[i][j] = A[i][j];
+            for(j=0; j<o; ++j) result[i][j+m] = B[i][j];
         }
         return result;
     }
@@ -61,7 +71,7 @@ MATRIX mat_concat(MATRIX A, MATRIX B, int dim)
  *
  * \param[in] a Input first vector
  * \param[in] b Input second vector
- * \param[in] dim Concatenation direction (ROWS/COLS)
+ * \param[in] result Vector to store the result
  * \return \f$ \left[\begin{array}{cc} a & b \end{array}\right] \f$ or \f$ \left[\begin{array}{c} a \\ b \end{array}\right] \f$
  *
  */
@@ -81,6 +91,7 @@ INT_VECTOR int_vec_concat(INT_VECTOR a, INT_VECTOR b, INT_VECTOR result)
     }
     #pragma omp parallel for
     for(i=0; i<m; ++i) result[i] = a[i];
+    #pragma omp parallel for
     for(i=0; i<n; ++i) result[i+m] = b[i];
     return result;
 }

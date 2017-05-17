@@ -148,7 +148,7 @@ typedef struct mat_mtype_queue
     int p; /**< Current queue position */
     MAT_QMTYPENODE head; /**< Queue head node */
     MAT_QMTYPENODE tail; /**< Queue tail node */
-}mat_mtype_queue; /**< Mtype Queue */
+} mat_mtype_queue; /**< Mtype Queue */
 typedef mat_mtype_queue *MAT_MTYPE_QUEUE; /**< Mtype Queue Pointer */
 
 /******************************************/
@@ -327,7 +327,16 @@ typedef struct mat_kdtree
 typedef mat_kdtree* MAT_KDTREE;
 
 
+#if defined(__STDC_VERSION__) && __STDC_VERSION__>201112L
+extern _Thread_local clock_t MAT_CLOCK_TIME;
+#elif defined(__GNUC__) || defined (__clang__)
+extern __thread clock_t MAT_CLOCK_TIME;
+#elif defined(_MSC_VER) || defined (__INTEL_COMPILER)
+extern __declspec(thread) clock_t MAT_CLOCK_TIME;
+#else
 extern clock_t MAT_CLOCK_TIME;
+#endif
+
 extern unsigned int MAT_SEED;
 extern int MAT_SET_SEED;
 extern MATSTACK mat_cheby_series_table, mat_legendre_series_table, mat_binom_series_table;
@@ -510,39 +519,51 @@ int pq_error(int err_);
 int graph_error(int err_);
 
 /******************************************/
-/* basic matrix operations */
-mtype mat_mean(MATRIX A);
-MATRIX mat_mean_row(MATRIX A, MATRIX result);
-MATRIX mat_mean_col(MATRIX A, MATRIX result);
+/* basic matrix and integer vector operations */
+int int_vec_sum(INT_VECTOR A);
+mtype int_vec_mean(INT_VECTOR A);
 
 mtype mat_sum(MATRIX A);
 MATRIX mat_sum_row(MATRIX A, MATRIX result);
 MATRIX mat_sum_col(MATRIX A, MATRIX result);
 
-MATRIX mat_abs(MATRIX A, MATRIX result);
+mtype mat_mean(MATRIX A);
+MATRIX mat_mean_row(MATRIX A, MATRIX result);
+MATRIX mat_mean_col(MATRIX A, MATRIX result);
 
+INT_VECTOR int_vec_abs(INT_VECTOR A, INT_VECTOR result);
 INT_VECTOR int_vec_add(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_adds(INT_VECTOR A, int s, INT_VECTOR result);
+
 INT_VECTOR int_vec_sub(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_subs(INT_VECTOR A, int s, INT_VECTOR result);
+INT_VECTOR int_vec_subs_neg(INT_VECTOR A, int s, INT_VECTOR result);
+
 INT_VECTOR int_vec_mul(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_muls(INT_VECTOR A, int s, INT_VECTOR result);
+
+INT_VECTOR int_vec_inv(INT_VECTOR A, INT_VECTOR result);
 INT_VECTOR int_vec_div(INT_VECTOR A, INT_VECTOR B, INT_VECTOR result);
 INT_VECTOR int_vec_divs(INT_VECTOR A, int s, INT_VECTOR result);
+INT_VECTOR int_vec_divs_inv(INT_VECTOR A, int s, INT_VECTOR result);
 
+MATRIX mat_abs(MATRIX A, MATRIX result);
 MATRIX mat_add(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_adds(MATRIX A, mtype s, MATRIX result);
 
 MATRIX mat_sub(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_subs(MATRIX A, mtype s, MATRIX result);
+MATRIX mat_subs_neg(MATRIX A, mtype s, MATRIX result);
 
 MATRIX mat_mul(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_mul_fast(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_mul_dot(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_muls(MATRIX A, mtype s, MATRIX result);
 
+MATRIX mat_inv_dot(MATRIX A, MATRIX result);
 MATRIX mat_div_dot(MATRIX A, MATRIX B, MATRIX result);
 MATRIX mat_divs(MATRIX A, mtype s, MATRIX result);
+MATRIX mat_divs_inv(MATRIX A, mtype s, MATRIX result);
 
 /******************************************/
 /* norm calculations */
@@ -614,7 +635,7 @@ MATRIX mat_robust_fit(MATRIX A, MATRIX Y, int deg, int lossfunc, MATRIX result);
 
 /******************************************/
 /* matrix manipulations */
-MATRIX mat_concat(MATRIX A, MATRIX B , int dim);
+MATRIX mat_concat(MATRIX A, MATRIX B, int dim);
 MATRIX mat_get_sub_matrix_from_rows(MATRIX A, INT_VECTOR indices, MATRIX result);
 MATRIX mat_get_sub_matrix_from_cols(MATRIX A, INT_VECTOR indices, MATRIX result);
 MATRIX mat_pick_row(MATRIX A, int r, MATRIX result);
@@ -650,6 +671,8 @@ mtype __mat_logplusone(mtype x);
 mtype __mat_arcsinh(mtype x);
 mtype __mat_arccosh(mtype x);
 mtype __mat_arctanh(mtype x);
+mtype __mat_round_away_zero(mtype x);
+mtype __mat_round_towards_zero(mtype x);
 
 MATRIX mat_bisquare_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
 MATRIX mat_huber_wt(MATRIX A, mtype k, mtype sigma, MATRIX result);
@@ -745,7 +768,6 @@ int mat_bs_inorder(MAT_TREE T, int index, mtype **ordered);
 int gen_gt(mtype a);
 int gen_lt(mtype a);
 int gen_eq(mtype a);
-mtype gen_abs_ceil(mtype a);
 
 /******************************************/
 /* textfunctions */
