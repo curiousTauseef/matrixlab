@@ -11,5 +11,5 @@ Originally adapted from Small Matrix Toolbox for C programmers, ver. 0.4 by Patr
 * Many of the functions are multi-threaded.  
 
 --------------
-** For more details and updates, visit http://mohammadulhaque.alotspace.com.
+** For more details and updates, visit http://www.mohammadulhaque.in.
 
