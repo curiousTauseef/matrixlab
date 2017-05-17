@@ -6,7 +6,7 @@ Originally adapted from Small Matrix Toolbox for C programmers, ver. 0.4 by Patr
 
 --------------
 
-* Matrixlab is a generic C library for matrix routines.  
+* Matrixlab is a general C library for matrix routines.  
 * It contains over 250 functions for matrix operations.  
 * Many of the functions are multi-threaded.  
 
